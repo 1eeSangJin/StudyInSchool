@@ -75,7 +75,7 @@
         </table>
     </div>
     <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록">
-    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php'" value="수정">
+    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $msg['Num'] ?>'" value="수정">
     <input type="button" class="btn btn-warning" onclick="delReq(<?= $msg['Num'] ?>)" value="삭제">
 </body>
 </html>

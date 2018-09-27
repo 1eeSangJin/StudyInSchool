@@ -17,24 +17,40 @@
     <title>Document</title>
 </head>
 <body>
+<?php
+    require_once("BoardDao.php");
+    require_once("tools.php");
+
+    $num = requestValue('num');
+
+    $dao = new BoardDao();
+    $getMsg = $dao->getMsg($num);
+    /* 
+     *  1. 클라이언트가 송신한 num값을 읽는다
+     *  2. 그 값으로 해당하는 게시글을 읽는다.
+     *  3. 그 게시글 정보를 이용해 html을 동적으로 생성한다. 
+     * 
+    */
+?>
     <div class="container">
-    <h2>새 글쓰기 폼</h2>
+    <h2>글 수정 폼</h2>
     <p>아래의 모든 필드를 채워주세요</p>
-    <form action="write.php" method="POST">
+    <form action="modify.php?num=<?= $num ?>" method="POST">
         <div class="form-group">
             <label for="title">제목:</label>
-            <input type="text" class="form-control" id="title" name="title" required>
+            <input type="text" class="form-control" id="title" name="title" value="<?= $getMsg["Title"] ?>">
         </div>
         <div class="form-group">
             <label for="writer"> 작성자:</label>
-            <input type="text" class="form-control" id="writer" name="writer" required>
+            <input type="text" class="form-control" id="writer" name="writer" value="<?= $getMsg["Writer"] ?>">
         </div>
         <div class="form-group">
             <label for="content">내용:</label>
-            <textarea class = "form-control" name="content" id="content" cols="30" rows="10" required></textarea>
+            <textarea class = "form-control" name="content" id="content" cols="30" rows="10"><?= $getMsg["Content"] ?></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">글 등록</button>
-        <button type="button" class="btn btn-danger" onclick="location.href='board.php'">목록으로</button>
+        <button type="submit" class="btn btn-primary">수정하기</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='board.php'">돌아가기</button>
     </form>
+    </div>
 </body>
 </html>

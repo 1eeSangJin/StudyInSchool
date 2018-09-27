@@ -52,7 +52,7 @@
 
         function deleteMsg($num) {
             try{
-                $pstmt = $this->db->prepare("delete from board where num=:num");
+                $pstmt = $this->db->prepare("delete from board where Num=:Num");
                 $pstmt->bindValue(":num", $Num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -60,13 +60,27 @@
             }
         }
 
-        function getManyMsgs(){
+        function updateMsg($writer, $title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update board set Writer=:Writer, Title=:Title, Content=:Content where Num=:Num");
+                $pstmt->bindValue(":Writer",$writer, PDO::PARAM_STR);
+                $pstmt->bindValue(":Title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":Content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":Num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+
+        function getManyMsgs(){ //populate.php, rows.txt 활용
             try{
                 $sql = "select * from board";
                 $pstmt = $this->db->prepare($sql);
                 $pstmt->execute(); //결과집합이 생성된다
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
-
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
