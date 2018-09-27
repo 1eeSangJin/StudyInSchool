@@ -51,4 +51,12 @@
                 exit($e->getMessage());
             }
         }
+
+        function viewBoard(){
+            try{
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
 ?>
