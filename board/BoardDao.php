@@ -59,6 +59,19 @@
                 exit($e->getMessage());
             }
         }
+
+        function getManyMsgs(){
+            try{
+                $sql = "select * from board";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute(); //결과집합이 생성된다
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
     }
 
 ?>

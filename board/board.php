@@ -10,8 +10,56 @@
     <title>Document</title>
 </head>
 <body>
-<div class="container">
+<div class="jumbotron">
     <h2>게시글 리스트</h2>
+
+    <?php
+        require_once("tools.php");
+        require_once("BoardDao.php");
+      /*
+       * 1. DB에 등록된 게시글 리스트를 인출(boardDao에게 요청) 
+       *    <table>
+       *        <tr>
+       *            <td>번호</td>
+       *            <td>제목</td>
+       *            <td>작성자</td>
+       *            <td>작성일시</td>
+       *            <td>조회수</td>
+       *        </tr>
+       * 2. 2차원 배열로 반환된 게시글 리스트 각각에 대해 
+       *    2-1. HTML 문서를 동적으로 생성
+       *            <tr>
+       *                <td></td>
+       *                <td></td>
+       *            /<tr>
+       * 3. </table>
+       * 
+       * 4. 글쓰기 버튼 생성
+       */
+      $dao = new BoardDao();
+      $msgs = $dao->getManyMsgs();
+
+
+    ?>
+    <table class="table table-hover">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일시</th>
+            <th>조회수</th>
+        </tr>
+        <?php foreach($msgs as $row) : ?>
+            <tr>
+                <td><?= $row["Num"]?></td>
+                <td><?= $row["Title"]?></td>
+                <td><?= $row["Writer"]?></td>
+                <td><?= $row["Regtime"]?></td>
+                <td><?= $row["Hits"]?></td>
+            </tr>
+        <?php endforeach ?>
+    </table>
 </div>
+<input type="button" class = "btn btn-primary"value="글쓰기" onclick="location.href='write_form.php'">
 </body>
 </html>
