@@ -54,7 +54,8 @@
 
         function viewBoard(){
             try{
-
+                $sql = "select * from board"
+                $pstmt = $this->db->prepare($sql);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
