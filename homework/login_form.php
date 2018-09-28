@@ -12,16 +12,16 @@
 <body>
 <div class="jumbotron">
     <form action="login.php" method="POST">
-    <div class="form-group">
-        <label for="exampleInputEmail1">ID</label>
-        <input type="text" class="form-control" name="id" placeholder="ID">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" name="pw" placeholder="Password">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+            <label for="exampleInputEmail1">ID</label>
+            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary">로그인</button>
+        <button type="button" class="btn btn-danger">회원가입</button>
     </form>
 </div>
 </body>

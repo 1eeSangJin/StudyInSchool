@@ -12,7 +12,7 @@
 
         function insertMsg($writer, $title, $content){
             try{
-                $sql = "insert into board(writer, title, content, regtime, hits) values(:writer, :title, :content, now(), 0)";
+                $sql = "insert into boards(writer, title, content, regtime, hits) values(:writer, :title, :content, now(), 0)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":writer", $writer, PDO::PARAM_STR);
@@ -28,8 +28,8 @@
         
         function increseHits($num){
             try{
-                $pstmt = $this->db->prepare("update board set Hits=Hits+1 where Num=:Num");
-                $pstmt->bindValue(":Num", $num, PDO::PARAM_INT);
+                $pstmt = $this->db->prepare("update boards set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -38,8 +38,8 @@
 
         function deleteMsg($num) {
             try{
-                $pstmt = $this->db->prepare("delete from board where Num=:Num");
-                $pstmt->bindValue(":num", $Num, PDO::PARAM_INT);
+                $pstmt = $this->db->prepare("delete from boards where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -48,11 +48,11 @@
 
         function updateMsg($writer, $title, $content, $num){
             try{
-                $pstmt = $this->db->prepare("update board set Writer=:Writer, Title=:Title, Content=:Content where Num=:Num");
-                $pstmt->bindValue(":Writer",$writer, PDO::PARAM_STR);
-                $pstmt->bindValue(":Title",$title, PDO::PARAM_STR);
-                $pstmt->bindValue(":Content",$content, PDO::PARAM_STR);
-                $pstmt->bindValue(":Num",$num, PDO::PARAM_INT);
+                $pstmt = $this->db->prepare("update boards set writer=:writer, title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":wwriter",$writer, PDO::PARAM_STR);
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOExcetion $e){
@@ -60,9 +60,9 @@
             }
         }
 
-        function getManyMsgs(){ 
+        function getBoard(){ 
             try{
-                $sql = "select * from board";
+                $sql = "select * from boards";
                 $pstmt = $this->db->prepare($sql);
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);

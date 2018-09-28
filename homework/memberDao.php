@@ -12,7 +12,7 @@
         
         function insertUser($userId, $userPw, $userNick){
             try{
-                $sql = "insert into userinfo(userId, userPw, userNick) values(:userId, :userPw, :userNick)";
+                $sql = "insert into users(userId, userPw, userNick) values(:userId, :userPw, :userNick)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
@@ -25,9 +25,9 @@
             }
         }
 
-        function login($userId){
+        function getUser($userId){
             try{
-                $sql = "select * from userinfo where userId=:userId";
+                $sql = "select * from users where userId=:userId";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
@@ -39,6 +39,14 @@
                 exit($e->getMessage());
             }
             return $result;
+        }
+
+        function updateUser($userId, $userPw, $userNick){
+            try{
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
         }
     }
 ?>

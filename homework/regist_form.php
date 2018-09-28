@@ -11,17 +11,21 @@
 </head>
 <body>
 <div class="jumbotron">
-    <form action="login.php" method="POST">
-    <div class="form-group">
-        <label for="exampleInputEmail1">ID</label>
-        <input type="text" class="form-control" name="id" placeholder="ID">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" name="pw" placeholder="Password">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <form action="regist.php" method="POST">
+        <div class="form-group">
+            <label for="exampleInputEmail1">ID</label>
+            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">NickName</label>
+            <input type="text" class="form-control" name="userNick" id="userNick" placeholder="Enter NickName">
+        </div>
+        <button type="submit" class="btn btn-danger">회원가입</button>
+        <button type="button" class="btn btn-primary" onclick="location.href='board.php'">돌아가기</button>
     </form>
 </div>
 </body>
