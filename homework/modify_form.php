@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -22,19 +18,23 @@
 </head>
 <body>
 <?php
+    session_start();
+
     require_once("boardDao.php");
     require_once("tools.php");
 
     $num = requestValue('num');
-
     $dao = new boardDao();
-    $getMsg = $dao->getBoard($num);
-    /* 
-     *  1. 클라이언트가 송신한 num값을 읽는다
-     *  2. 그 값으로 해당하는 게시글을 읽는다.
-     *  3. 그 게시글 정보를 이용해 html을 동적으로 생성한다. 
-     * 
-    */
+    $userNick = $dao->checkUser($num);
+
+    foreach($userNick as $check){
+        if($_SESSION['userNick'] == $check['userNick']){
+            $getMsg = $dao->getBoard($num);
+        }else{
+            echo "<script>alert('본인만 수정할 수 있습니다.')</script>";
+            echo "<script>location.replace('board.php');</script>";
+        }
+    }
 ?>
     <div class="container">
     <h2>글 수정 폼</h2>

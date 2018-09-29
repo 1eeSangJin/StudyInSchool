@@ -36,6 +36,19 @@
             }
         }
 
+        function checkUser($num){
+            try{
+                $sql = "select userNick from boards where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $users = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $users;
+        }
+
         function deleteBoard($num) {
             try{
                 $pstmt = $this->db->prepare("delete from boards where num=:num");
