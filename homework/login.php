@@ -8,9 +8,9 @@
 
     if($user_id && $user_pw) {
         $mdao = new memberDao();
-        $member = $mdao->login($user_id);
+        $member = $mdao->getUser($user_id);
 
-        if($mdao->login($user_id)) {
+        if($mdao->getUser($user_id)) {
             if($member['userPw'] = $user_pw) {
                 session_start();
                 $_SESSION['userId'] = $user_id;

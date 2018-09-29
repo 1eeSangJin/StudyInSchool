@@ -10,12 +10,12 @@
             }
         }
 
-        function insertMsg($writer, $title, $content){
+        function insertBoard($userNick, $title, $content){
             try{
-                $sql = "insert into boards(writer, title, content, regtime, hits) values(:writer, :title, :content, now(), 0)";
+                $sql = "insert into boards(userNick, title, content, date, hits) values(:userNick, :title, :content, now(), 0)";
                 $pstmt = $this->db->prepare($sql);
 
-                $pstmt->bindValue(":writer", $writer, PDO::PARAM_STR);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
 
@@ -36,7 +36,7 @@
             }
         }
 
-        function deleteMsg($num) {
+        function deleteBoard($num) {
             try{
                 $pstmt = $this->db->prepare("delete from boards where num=:num");
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -46,7 +46,7 @@
             }
         }
 
-        function updateMsg($writer, $title, $content, $num){
+        function updateBoard($writer, $title, $content, $num){
             try{
                 $pstmt = $this->db->prepare("update boards set writer=:writer, title=:title, content=:content where num=:num");
                 $pstmt->bindValue(":wwriter",$writer, PDO::PARAM_STR);
@@ -60,7 +60,21 @@
             }
         }
 
-        function getBoard(){ 
+        function getBoard($num){ 
+            try{
+                $sql = "select * from boards where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllboard(){
             try{
                 $sql = "select * from boards";
                 $pstmt = $this->db->prepare($sql);

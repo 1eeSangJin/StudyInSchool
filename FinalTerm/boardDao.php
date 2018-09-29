@@ -54,10 +54,11 @@
 
         function viewBoard(){
             try{
-                $sql = "select * from board"
+                $sql = "select * from boards";
                 $pstmt = $this->db->prepare($sql);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
         }
+    }
 ?>
