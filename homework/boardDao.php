@@ -42,11 +42,11 @@
                 $pstmt=$this->db->prepare($sql);
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
-                $users = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
-            return $users;
+            return $user;
         }
 
         function deleteBoard($num) {
@@ -59,10 +59,10 @@
             }
         }
 
-        function updateBoard($writer, $title, $content, $num){
+        function updateBoard($userNick, $title, $content, $num){
             try{
-                $pstmt = $this->db->prepare("update boards set writer=:writer, title=:title, content=:content where num=:num");
-                $pstmt->bindValue(":wwriter",$writer, PDO::PARAM_STR);
+                $pstmt = $this->db->prepare("update boards set userNick=:userNick, title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":userNick",$userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
                 $pstmt->bindValue(":num",$num, PDO::PARAM_INT);

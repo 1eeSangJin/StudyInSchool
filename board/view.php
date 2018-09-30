@@ -30,17 +30,6 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-        <script>
-            function delReq(){
-                var delete = confirm("정말 삭제하시겠습니까?");
-                
-                if(delete == false){
-                    return
-                }else{
-                    location.href("delete.php?num=" + num);
-                }
-            }
-        </script>
     <title>Document</title>
 </head>
 <body>
@@ -75,7 +64,7 @@
         </table>
     </div>
     <input type="button" class="btn btn-primary" onclick="location.href='board.php'" value="목록">
-    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $msg['Num'] ?>'" value="수정">
-    <input type="button" class="btn btn-warning" onclick="delReq(<?= $msg['Num'] ?>)" value="삭제">
+    <input type="button" class="btn btn-success" onclick="location.href='modify_form.php?num=<?= $msg['num'] ?>'" value="수정">
+    <input type="button" class="btn btn-warning" onclick="delReq(<?= $msg['num'] ?>)" value="삭제">
 </body>
 </html>

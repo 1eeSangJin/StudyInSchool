@@ -31,7 +31,7 @@
             <?php
                     if(!isset($_SESSION['userId']) || !isset($_SESSION['userNick'])){
                         echo "<button type='submit' class='btn btn-dark' onclick=location.href='login_form.php'>로그인</button>";
-                        echo "<button type='button' class='btn btn-primary'>회원가입</button>";
+                        echo "<button type='button' class='btn btn-primary' onclick=location.href='regist_form.php'>회원가입</button>";
                     }
                     else{
                         $user_id = $_SESSION['userId'];
