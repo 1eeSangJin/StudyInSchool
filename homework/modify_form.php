@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--  
+    작성자 : 1501204 이상진
+    기능 : 사용자의 닉네임 정보와 게시글을 쓴 작성자의 닉네임 정보를 비교해
+           수정의 가능 여부를 확인하고, 수정을 할 수 있게 하는 기능
+    설명 : 그 게시글의 num값을 $num에 받아 
+ -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

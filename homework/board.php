@@ -24,21 +24,20 @@
         require_once("boardDao.php");
 
         $dao = new boardDao();
-        $msgs = $dao->getAllboard();
+        $msgs = $dao->getAllboard();    //boards 테이블에 있는 모든 글들을 불러옴
     ?>
     <div class="jumbotron">
-        <p align="right">
+        <p align="right">       <!--버튼 우측정렬 -->
             <?php
-                    if(!isset($_SESSION['userId']) || !isset($_SESSION['userNick'])){
-                        echo "<button type='submit' class='btn btn-dark' onclick=location.href='login_form.php'>로그인</button>";
-                        echo "<button type='button' class='btn btn-primary' onclick=location.href='regist_form.php'>회원가입</button>";
+                    if(!isset($_SESSION['userId'])){       //로그인이 되어있지 않을 때
+                        echo "<button type='submit' class='btn btn-dark' onclick=location.href='login_form.php'>로그인</button>";           //로그인 버튼 생성
+                        echo "<button type='button' class='btn btn-primary' onclick=location.href='regist_form.php'>회원가입</button>";     //회원가입 버튼 생성
                     }
                     else{
-                        $user_id = $_SESSION['userId'];
-                        $user_nick = $_SESSION['userNick'];
+                        $user_nick = $_SESSION['userNick'];                 //로그인한 사람의 닉네임을 따와 저장한다
                     
-                        echo "<strong>$user_nick</strong> 님 환영합니다.";
-                        echo "<button onclick=location.href='logout.php' class='btn btn-danger'>로그아웃</a></button>";
+                        echo "<strong>$user_nick</strong> 님 환영합니다.";   //로그인한 사람의 닉네임을 띄운다
+                        echo "<button onclick=location.href='logout.php' class='btn btn-danger'>로그아웃</a></button>";     //로그아웃창 띄움, 누를 시 로그아웃이 진행됨
                     }
             ?>
         </p>
@@ -52,27 +51,27 @@
                 <th>작성일시</th>
                 <th>조회수</th>
             </tr>
-            <?php foreach($msgs as $row) : ?>
+            <?php foreach($msgs as $row) : ?>                           <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
                 <tr>
                     <td>
-                        <?= $row['num'] ?>
+                        <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
                     </td>
                     <td>
-                        <a href="viewBoard.php?num=<?= $row['num'] ?>">
-                            <?= $row['title'] ?>
+                        <a href="viewBoard.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                            <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
                         </a>
                     </td>
                     <td>
-                        <?= $row['userNick'] ?>
+                        <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
                     </td>
                     <td>
-                        <?= $row['date'] ?>
+                        <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
                     </td>
                     <td>
-                        <?= $row['hits'] ?>
+                        <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
                     </td>
                 </tr>
-            <?php endforeach ?>
+            <?php endforeach ?>                                         <!-- foreach문 종료 -->
         </table>
     </div>
 </body>
