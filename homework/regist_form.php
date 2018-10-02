@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+    작성자 : 1501204 이상진
+    기능 : 회원가입 페이지
+    설명 : 이용자에게 id, password, nickname을 입력받ㄷ아 regist.php로 보내는 기능을 수행한다
+-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

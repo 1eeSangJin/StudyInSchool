@@ -25,7 +25,7 @@
             <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
-        <button type="button" class="btn btn-danger">회원가입</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='regist_form.php'">회원가입</button>
     </form>
 </div>
 </body>
