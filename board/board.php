@@ -21,6 +21,51 @@
     <?php
         require_once("tools.php");
         require_once("BoardDao.php");
+
+        $qurrentPage = requestValue("page");
+        // http://localhost/php/board/board.php?page=-3
+        if($currentPage<1){
+            %currentPage = 1;
+        }
+        /*
+         * currentPage는 주어지는 것이고 계산해야하는 것은 startPage, endPage, prevLink, newxtLink 
+         */
+        $dao = new BoardDao();
+
+        //집단함수, aggregate function
+        //select count(*) from board;
+        $totalCount = $dao->getNumMsgs();
+
+        if($totalCount > 0){
+            $startPage = floor(($currentPage-1)/NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;   //floor는 내림 함수
+            $endPage = $startPage + NUM_PAGE_LINKS - 1;
+            $totalPages = ceil($totalCount/NUM_LINES);
+            // total page : ceil(전체 게시글 수 /NUM_LINES)
+
+            if($endPage > $totalPages){
+                $endPage = $tatalPages;
+            }
+
+            if($startPage > 1){
+                $prev = true;
+            }
+
+            if($endPage < $totalPages){
+                $next = true;
+            }
+        }
+
+        // select * from board order by regtime limit start, count
+
+        /*
+         * currentPage 1 : start = 0, count = NUM_LINES
+         * currentPage 2 : start = NUM_LINES, count = MUM_LINES
+         * currentPage 3 : start = NUM_LINES * 2, count = MUM_LINES
+         * currentPage 4 : start = NUM_LINES * 3, count = MUM_LINES
+         */
+
+         $startRecord = ($currentPage-1) * NUM_LINES;
+
       /*
        * 1. DB에 등록된 게시글 리스트를 인출(boardDao에게 요청) 
        *    <table>
@@ -41,8 +86,8 @@
        * 
        * 4. 글쓰기 버튼 생성
        */
-      $dao = new BoardDao();
-      $msgs = $dao->getManyMsgs();
+
+      $msgs = $dao->getMsgs4Page($startRecord, NUM_LINES);
 
 
     ?>

@@ -53,7 +53,7 @@
         function deleteMsg($num) {
             try{
                 $pstmt = $this->db->prepare("delete from board where Num=:Num");
-                $pstmt->bindValue(":num", $Num, PDO::PARAM_INT);
+                $pstmt->bindValue(":Num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
                 exit($e->getMessage());

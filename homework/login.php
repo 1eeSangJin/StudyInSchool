@@ -19,30 +19,20 @@
     $user_pw = requestValue('userPw');
     $check = false;
 
-    if($user_id && $user_pw) {
-        $mdao = new memberDao();
-        $member = $mdao->getUser($user_id);
+    $mdao = new memberDao();
+    $member = $mdao->getUser($user_id);
 
-        if($mdao->getUser($user_id)) {
-            if($member['userPw'] == $user_pw) {
-                session_start();
-                $_SESSION['userId'] = $user_id;
-                $_SESSION['userNick'] = $member['userNick'];
-                $check = true;
-                okGo('로그인에 성공하셨습니다.', "board.php?check=$check");
-            }else{
-                echo "<script>alert('비밀번호가 틀리셨습니다.');</script>";
-                echo "<script>location.replace('login_form.php');</script>";
-            }
+    if($mdao->getUser($user_id)) {
+        if($member['userPw'] == $user_pw) {
+            session_start();
+            $_SESSION['userId'] = $user_id;
+            $_SESSION['userNick'] = $member['userNick'];
+            $check = true;
+            okGo('로그인에 성공하셨습니다.', "board.php?check=$check");
         }else{
-            echo "<script>alert('그런 회원은 없습니다.');</script>";
-            echo "<script>location.replace('login_form.php');</script>";
+            errorBack("비밀번호가 틀렸습니다.");
         }
-    }else if(!$user_id){
-        echo "<script>alert('아이디를 입력하세요.');</script>";
-        echo "<script>location.replace('login_form.php');</script>";
-    }else if(!$user_pw){
-        echo "<script>alert('비밀번호를 입력하세요.');</script>";
-        echo "<script>location.replace('login_form.php');</script>";
+    }else{
+        errorBack("그런 회원은 없습니다.");
     }
 ?>

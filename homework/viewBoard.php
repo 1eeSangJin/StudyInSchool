@@ -82,6 +82,6 @@
     -->
     <input type="button" class="btn btn-primary" value="목록" onclick="location.href='board.php'">
     <input type="button" class="btn btn-success"  value="수정" onclick="location.href='modify_form.php?num=<?= $msg['num'] ?>'">
-    <input type="button" class="btn btn-warning"  value="삭제" onclick="location.href='delete.php?num=<?= $msg['num'] ?>'" >
+    <a href="delete.php?num=<?= $msg['num'] ?>" onclick="return confirm('정말 삭제하시겠습니까?')" class="btn btn-warning">삭제</a>
 </body>
 </html>

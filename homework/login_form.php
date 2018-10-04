@@ -18,11 +18,11 @@
     <form action="login.php" method="POST">
         <div class="form-group">
             <label for="exampleInputEmail1">ID</label>
-            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID">
+            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID" required>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password">
+            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
         <button type="button" class="btn btn-danger" onclick="location.href='regist_form.php'">회원가입</button>

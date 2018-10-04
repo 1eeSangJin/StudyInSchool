@@ -19,15 +19,15 @@
     <form action="regist.php" method="POST">
         <div class="form-group">
             <label for="exampleInputEmail1">ID</label>
-            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID">
+            <input type="text" class="form-control" name="userId" id="userId" placeholder="Enter ID" required>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Enter Password">
+            <input type="password" class="form-control" name="userPw" id="userPw" placeholder="Enter Password" required>
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">NickName</label>
-            <input type="text" class="form-control" name="userNick" id="userNick" placeholder="Enter NickName">
+            <input type="text" class="form-control" name="userNick" id="userNick" placeholder="Enter NickName" required>
         </div>
         <button type="submit" class="btn btn-danger">회원가입</button>
         <button type="button" class="btn btn-primary" onclick="location.href='board.php'">돌아가기</button>

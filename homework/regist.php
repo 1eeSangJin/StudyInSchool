@@ -19,17 +19,16 @@
     $user_pwd = requestValue("userPw");
     $user_nick = requestValue("userNick");
 
-    if($user_id && $user_pwd && $user_nick) {
-        $mdao = new memberDao();
-        if($mdao->getUser($user_id)) {
-            errorBack("이미 사용중인 아이디입니다.");
-        }else{
-            $mdao->insertUser($user_id, $user_pwd, $user_nick);
-            okGo("가입이 완료되었습니다.", MAIN_PAGE);
-        }
+    $mdao = new memberDao();
+    if($mdao->getUser($user_id)) {
+        errorBack("이미 사용중인 아이디입니다.");
+    }else if($mdao->getNick($user_nick)){
+        errorBack("이미 사용중인 닉네임입니다.");
     }else{
-        errorBack("모든 칸을 다 채워 주십시오.");
+        $mdao->insertUser($user_id, $user_pwd, $user_nick);
+        okGo("가입이 완료되었습니다.", MAIN_PAGE);
     }
+
 
 
 ?>
