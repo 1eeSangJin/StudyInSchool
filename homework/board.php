@@ -35,7 +35,6 @@
                     }
                     else{
                         $user_nick = $_SESSION['userNick'];                 //로그인한 사람의 닉네임을 따와 저장한다
-                    
                         echo "<strong>$user_nick</strong> 님 환영합니다.";   //로그인한 사람의 닉네임을 띄운다
                         echo "<button onclick=location.href='logout.php' class='btn btn-danger'>로그아웃</a></button>";     //로그아웃창 띄움, 누를 시 로그아웃이 진행됨
                     }

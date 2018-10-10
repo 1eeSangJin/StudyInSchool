@@ -20,6 +20,7 @@
     $check = false;
 
     $mdao = new memberDao();
+    
     $member = $mdao->getUser($user_id);
 
     if($mdao->getUser($user_id)) {

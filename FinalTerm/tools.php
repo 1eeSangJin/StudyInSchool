@@ -1,5 +1,5 @@
 <?php
-    define ("MAIN_PAGE", "viewBoardPage.php");
+    define ("MAIN_PAGE", "login_page.html");
     
     function requestValue($name){
         return isset($_REQUEST[$name]) ? $_REQUEST[$name] : "" ;

@@ -10,26 +10,30 @@
              * db연결
              ***************************************/
             try{
-                $this->db = new PDO("mysql:host=localhost;dbname=php", "root", "ef5055");
+                $this->db = new PDO("mysql:host=localhost;dbname=board", "root", "ef5055");
                 $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // SQL에서도 오류가 뜨면 알려줘
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
         }
         
-        function insertUser($userId, $userPw, $userNick){
+        function insertUser($userId, $userPw, $userNick, $userName, $sex, $userPhone, $affNum){
             /**********************************************************
              * userId, userPw, userNick을 받아 
              * users라는 테이블에 넣어 
              * 회원가입을 하는 함수 insertUser
              *********************************************************/
             try{
-                $sql = "insert into users(userId, userPw, userNick) values(:userId, :userPw, :userNick)";
+                $sql = "insert into users(userId, userPw, userNick, userName, sex, userPhone,, affNum) values(:userId, :userPw, :userNick, :userName, :sex, :userPhone, :affNum)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
                 $pstmt->bindValue(":userPw", $userPw, PDO::PARAM_STR);
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":userName", $userName, PDO::PARAM_STR);
+                $pstmt->bindValue(":sex", $sex, PDO::PARAM_STR);
+                $pstmt->bindValue(":userPhone", $userPhone, PDO::PARAM_STR);
+                $pstmt->bindValue(":affNun", $affNum, PDO::PARAM_STR);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -41,7 +45,7 @@
             /*****************************************************************
              * userId를 받아 users라는 테이블에서 
              * userId값들을 받아와 결과를 리턴하여
-             * 회원가입을 할 때 중복되는 아이디의 유무를 검사하는 함수 getUser
+             * 회원가입, 로그인을 할 때 아이디의 유무를 검사하는 함수 getUser
              ****************************************************************/
             try{
                 $sql = "select * from users where userId=:userId";
@@ -73,6 +77,22 @@
                 $pstmt->execute();
 
                 $result = $pstmt->fetch(PDO::FETCH_ASSOC); // 배열을 만들어주고 첨자는 ASSOC로 해준다.
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $result;
+        }
+
+        function getAff($userId){
+            try{
+                $sql = "select u.userId, u.userNick, a.affName from users u, affiliation a where u.affNum = a.affNum and u.userId=:userId";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+                $result = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
