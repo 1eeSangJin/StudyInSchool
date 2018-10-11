@@ -18,10 +18,26 @@
 </head>
 <body>
 
+  <?php
+        session_start();
+
+        require_once("tools.php");
+        require_once("memberDao.php");
+
+        if(!isset($_SESSION['userId'])){
+            echo "<script>alert('로그인 되어있지 않습니다.');</script>";
+            echo "<script>location.replace('login_page.html');</script>";
+        }else{
+            $userId = $_SESSION['userId'];
+            $dao = new memberDao();
+            $userInfo = $dao->getUser($userId);
+        }
+  ?>
+
   <header>
     <div class = "ui inverted huge borderless fixed fluid menu">
       <div class = "header item">YEUNGJIN INSIDE</div>
-      <div class = "item" onclick = "location.href='main.php'"><span>메인</span></div>
+      <div class = "item" onclick = "location.href='main.php'"><a>메인</a></div>
       <div class = "ui simple dropdown item">
         <span>계열·학과 갤러리</span>
         <i class = "dropdown icon"></i>
@@ -143,8 +159,8 @@
             <span>유아교육과</span>
             <i class = "dropdown icon"></i>
             <div class = "menu">
-              <div class = "item">유아창의성교육심화반</div>
-              <div class = "item">유아다문화교육심화반</div>
+              <div class = " item">유아창의성교육심화반</div>
+              <div class = " item">유아다문화교육심화반</div>
             </div>
           </div>
 
@@ -155,13 +171,26 @@
         </div>
       </div>
 
-      <div class = "item"><span>공지사항</span></div>
+      <div class = "item"><span>공지사항</a></div>
 
       <div class = "right menu">
-        <a class = "item" onclick = "location.href='login_form.html'">로그인</a>
-        <a class = "item" onclick = "location.href='signup_page.html'">회원가입</a>
+        <?php
+          if(!isset($_SESSION['userId'])){       
+            echo "<a class = 'item' onclick = location.href='login_form.html'>로그인</a>";         
+            echo "<a class = 'item' onclick = location.href='signup_page.html'>회원가입</a>";     
+          }
+          else{
+            $user_nick = $_SESSION['userNick'];             
+            $user_aff = $_SESSION['affName'];
+            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>"; 
+            echo "<a class = 'item' onclick = location.href='modifyUser_form.php'>회원정보 수정</a>";
+            echo "<a class = 'item' onclick = location.href='logout.php'>로그아웃</a>";     
+          }
+        ?>
       </div>
     </div>
+    
     </header>
 
     <aside>
@@ -182,31 +211,31 @@
             </div>
         </div>
     </aside>
-    
+
     <div class = "column" id = "content">
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          「YEUNGJIN INSIDE」 회원가입
+          「YEUNGJIN INSIDE」 회원정보 수정
         </h1>
       </div>
 
       <br>
 
-        <form action = "signup.php" method = "post" class = "ui form">
-            <h2 class = "ui dividing header">회원 정보 기입</h2>
+        <form action = "modifyUser.php" method = "post" class = "ui form">
+            <h2 class = "ui dividing header">회원정보 수정</h2>
 
             <div class = "field">
-                <label>아이디</label>
+                <label>아이디(수정불가)</label>
                 <div class = "four wide field">
-                    <input type = "text" name = "userId" id = "userId" placeholder = "아이디" required>
+                    <input type = "text" name = "userId" id = "userId" value = "<?= $userInfo['userId'] ?>" readonly required>
                 </div>
             </div>
 
             <div class = "field">
                 <label>비밀번호</label>
                 <div class = "four wide field">
-                    <input type = "password" name = "userPw" id = "userPw" placeholder = "비밀번호" required>
+                    <input type = "password" name = "userPw" id = "userPw" value = "<?= $userInfo['userPw'] ?>" required>
                 </div>
             </div>
 
@@ -214,28 +243,15 @@
                 <div class = "two fields">
                     <div class = "field">
                         <label>닉네임</label>
-                        <input type = "text" name = "userNick" id = "userNick" placeholder = "닉네임" required>
-                        <label>이름</label>
-                        <input type = "text" name = "userName" id = "userName" placeholder = "이름" required>
+                        <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" required>
                     </div>
-                </div>
-            </div>
-
-            <div class = "field">
-                <label>성별</label>
-                <div class = "four wide field">
-                    <select class = "ui fluid dropdown" name = "sex" id = "sex" required>
-                        <option value selected>성별</option>
-                        <option value = "male">남자</option>
-                        <option value = "female">여자</option>
-                    </select>
                 </div>
             </div>
 
             <div class = "field">
                 <label>휴대전화</label>
                 <div class = "four wide field">
-                    <input type = "tel" name = "userPhone" id = "userPhone" placeholder = "전화번호 입력( - 를 함께 입력해주세요)" required>
+                    <input type = "tel" name = "userPhone" id = "userPhone" value = "<?= $userInfo['userPhone'] ?>" required>
                 </div>
             </div>
 
@@ -244,7 +260,7 @@
                 <div class = "two fields">
                     <div class = "field">
                         <select class = "ui fluid dropdown" name="affNum" id="affNum" required>
-                            <option value selected>계열/학과</option>
+                            <option value = "">계열/학과</option>
                             <option value = "101">컴정 - CP | 네트워크보안</option>
                             <option value = "102">컴정 - WD | 일본취업반</option>
                             <option value = "103">컴정 - GC | 특수영상반</option>
@@ -293,12 +309,11 @@
                     </div>
                 </div> 
             </div>
-            <button type = "submit" class = "ui secondary button">회원가입</button>
+            <button type = "submit" class = "ui secondary button">정보수정</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='main.php'">돌아가기</button>
+            <a href="deleteUser.php?userId=<?= $userInfo['userId'] ?>" onclick="return confirm('회원정보를 삭제하시겠습니까?')" class="ui negative button">회원정보 삭제</a>
         </form>
     </div>
-
-    
-
 
       <style type="text/css">
         html{

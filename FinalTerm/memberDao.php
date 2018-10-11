@@ -24,7 +24,7 @@
              * 회원가입을 하는 함수 insertUser
              *********************************************************/
             try{
-                $sql = "insert into users(userId, userPw, userNick, userName, sex, userPhone,, affNum) values(:userId, :userPw, :userNick, :userName, :sex, :userPhone, :affNum)";
+                $sql = "insert into users(userId, userPw, userNick, userName, sex, userPhone, affNum) values(:userId, :userPw, :userNick, :userName, :sex, :userPhone, :affNum)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
@@ -33,7 +33,37 @@
                 $pstmt->bindValue(":userName", $userName, PDO::PARAM_STR);
                 $pstmt->bindValue(":sex", $sex, PDO::PARAM_STR);
                 $pstmt->bindValue(":userPhone", $userPhone, PDO::PARAM_STR);
-                $pstmt->bindValue(":affNun", $affNum, PDO::PARAM_STR);
+                $pstmt->bindValue(":affNum", $affNum, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateUser($userPw, $userNick, $userPhone, $affNum, $userId){
+            try{
+                $sql = "update users set userPw=:userPw, userNick=:userNick, userPhone=:userPhone, affNum=:affNum where userId=:userId";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userPw", $userPw, PDO::PARAM_STR);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":userPhone", $userPhone, PDO::PARAM_STR);
+                $pstmt->bindValue(":affNum", $affNum, PDO::PARAM_STR);
+                $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteUser($userId){
+            try{
+                $sql = "delete from users where userId=:userId";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -45,7 +75,7 @@
             /*****************************************************************
              * userId를 받아 users라는 테이블에서 
              * userId값들을 받아와 결과를 리턴하여
-             * 회원가입, 로그인을 할 때 아이디의 유무를 검사하는 함수 getUser
+             * 회원가입, 로그인, 회원정보 수정을 할 때 아이디의 유무를 검사하는 함수 getUser
              ****************************************************************/
             try{
                 $sql = "select * from users where userId=:userId";
@@ -85,7 +115,7 @@
 
         function getAff($userId){
             try{
-                $sql = "select u.userId, u.userNick, a.affName from users u, affiliation a where u.affNum = a.affNum and u.userId=:userId";
+                $sql = "select u.userId, a.affName from users u, affiliation a where u.affNum = a.affNum and u.userId=:userId";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);

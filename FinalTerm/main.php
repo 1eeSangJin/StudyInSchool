@@ -169,15 +169,17 @@
 
       <div class = "right menu">
         <?php
-          if(!isset($_SESSION['userId'])){       //로그인이 되어있지 않을 때
-            echo "<a class = 'item' onclick = location.href='login_page.html'>로그인</a>";           //로그인 버튼 생성
-            echo "<a class = 'item'>회원가입</a>";     //회원가입 버튼 생성
+          if(!isset($_SESSION['userId'])){       
+            echo "<a class = 'item' onclick = location.href='login_form.html'>로그인</a>";         
+            echo "<a class = 'item' onclick = location.href='signup_page.html'>회원가입</a>";     
           }
           else{
-            $user_nick = $_SESSION['userNick'];                 //로그인한 사람의 닉네임을 따와 저장한다
+            $user_nick = $_SESSION['userNick'];             
             $user_aff = $_SESSION['affName'];
-            echo "<div class = 'item'><strong>「 $user_aff 」 $user_nick</strong> 님 환영합니다.</div>";   //로그인한 사람의 닉네임을 띄운다
-            echo "<a class = 'item' onclick = location.href='logout.php'>로그아웃</a>";     //로그아웃창 띄움, 누를 시 로그아웃이 진행됨
+            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='modifyUser_form.php'>회원정보 수정</a>";
+            echo "<a class = 'item' onclick = location.href='logout.php'>로그아웃</a>";     
           }
         ?>
       </div>

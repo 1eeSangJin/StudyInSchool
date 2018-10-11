@@ -25,7 +25,7 @@
             $qurrentPage = requestValue("page");
             // http://localhost/php/board/board.php?page=-3
             if($currentPage<1){
-                %currentPage = 1;
+                $currentPage = 1;
             }
             /*
             * currentPage는 주어지는 것이고 계산해야하는 것은 startPage, endPage, prevLink, newxtLink 
