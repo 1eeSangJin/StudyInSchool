@@ -10,20 +10,30 @@
     <title>Document</title>
 </head>
 <body>
-<div class="jumbotron">
-    <form action="login.php" method="POST">
-    <div class="form-group">
-        <label for="exampleInputEmail1">ID</label>
-        <input type="text" class="form-control" name="id" placeholder="ID">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" name="pw" placeholder="Password">
-    </div>
+
+    <?php
+        session_start();
+
+        if(isset($_SESSION['userId'])){
+        echo "<script>alert('부적절한 접근입니다.')</script>";
+        echo "<script>location.replace('main.php');</script>";
+        }
+    ?>
     
-    <button type="submit" class="btn btn-primary">로그인</button>
-    <button type="submit" class="btn btn-secondary">회원가입</button>
-    </form>
-</div>
+    <div class="jumbotron">
+        <form action="login.php" method="POST">
+        <div class="form-group">
+            <label for="exampleInputEmail1">ID</label>
+            <input type="text" class="form-control" name="id" placeholder="ID">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" name="pw" placeholder="Password">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">로그인</button>
+        <button type="submit" class="btn btn-secondary">회원가입</button>
+        </form>
+    </div>
 </body>
 </html>

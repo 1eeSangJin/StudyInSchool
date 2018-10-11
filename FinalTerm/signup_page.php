@@ -17,6 +17,15 @@
     <script src="../semantic/semantic.min.js"></script>
 </head>
 <body>
+  
+  <?php
+    session_start();
+
+    if(isset($_SESSION['userId'])){
+      echo "<script>alert('부적절한 접근입니다.')</script>";
+      echo "<script>location.replace('main.php');</script>";
+    }
+  ?>
 
   <header>
     <div class = "ui inverted huge borderless fixed fluid menu">

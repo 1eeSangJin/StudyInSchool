@@ -170,9 +170,9 @@
       <div class = "right menu">
         <?php
           if(!isset($_SESSION['userId'])){       
-            echo "<a class = 'item' onclick = location.href='login_form.html'>로그인</a>";         
-            echo "<a class = 'item' onclick = location.href='signup_page.html'>회원가입</a>";     
-          }else if($_SESSION['userId'] == "admin"){
+            echo "<a class = 'item' onclick = location.href='login_form.php'>로그인</a>";         
+            echo "<a class = 'item' onclick = location.href='signup_page.php'>회원가입</a>";     
+          }else if($_SESSION['userNick'] == "Administrator"){
             $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
