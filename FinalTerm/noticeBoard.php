@@ -25,7 +25,7 @@
         require_once("boardDao.php");
 
         $dao = new boardDao();
-        $msgs = $dao->getAllboard();
+        $msgs = $dao->getAllnotices();
   ?>
 
   <header>
@@ -40,122 +40,46 @@
 
           <div class = "item">
             <span>컴퓨터정보계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">CP | 네트워크보안</div>
-              <div class = "item">WDB | 일본취업반</div>
-              <div class = "item">GC | 특수영상반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>컴퓨터응용기계계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">CAD/기계설계</div>
-              <div class = "item">금형/공작기계</div>
-              <div class = "item">로봇자동화시스템</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>전자정보통신계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">전자정보</div>
-              <div class = "item">솔라반도체</div>
-              <div class = "item">IT소재전공</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>신재생에너지전기계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">에너지전기반</div>
-              <div class = "item">전기화학반</div>
-              <div class = "item">디지털전기반</div>
-              <div class = "item">전기설비반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>건축인테리어디자인계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">건축디자인</div>
-              <div class = "item">실내건축디자인</div>
-              <div class = "item">주문식교육반</div>
-            </div>
           </div>          
 
           <div class = "item">
             <span>스마트경영계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">서비스OA반</div>
-              <div class = "item">철도서비스반</div>
-              <div class = "item">유통관리반</div>
-              <div class = "item">전산세무회계반</div>
-              <div class = "item">금융실무반</div>
-              <div class = "item">PURDUE반</div>
-              <div class = "item">재팬비지니스반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>국제관광조리계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">호텔해외취업반</div>
-              <div class = "item">특급호텔반</div>
-              <div class = "item">항공서비스반</div>
-              <div class = "item">항공에어부산반</div>
-              <div class = "item">글로벌조리반</div>
-              <div class = "item">일본관광서비스반</div>
-              <div class = "item">중국관광서비스반</div>
-              <div class = "item">글로벌관광반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>부사관계열</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">국방전자통신</div>
-              <div class = "item">의무/전투부사관</div>
-              <div class = "item">항공정비</div>
-              <div class = "item">공군부사관학군단</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>콘텐츠디자인과</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">시각영상디자인반</div>
-              <div class = "item">인터넷광고마케팅반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>사회복지과</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = "item">장애인복지반</div>
-              <div class = "item">노인복지반</div>
-              <div class = "item">가톨릭사회복지반</div>
-              <div class = "item">보육교사 전문반</div>
-            </div>
           </div>
 
           <div class = "item">
             <span>유아교육과</span>
-            <i class = "dropdown icon"></i>
-            <div class = "menu">
-              <div class = " item">유아창의성교육심화반</div>
-              <div class = " item">유아다문화교육심화반</div>
-            </div>
           </div>
 
           <div class = "item">
@@ -191,13 +115,22 @@
     </div>
     
     </header>
-    
+
     <div class = "column" id = "content">
+
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
           공지사항
         </h1>
+
+        <p align = "right">
+          <?php
+            if($_SESSION['userNick'] == "Administrator"){
+              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
+            }
+          ?>
+        </p>
       </div>
 
       <div class = "ui divider"></div>

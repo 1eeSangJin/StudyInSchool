@@ -10,21 +10,16 @@
              * db연결
              ***************************************/
             try{
-                $this->db = new PDO("mysql:host=localhost;dbname=php", "root", "ef5055");
+                $this->db = new PDO("mysql:host=localhost;dbname=board", "root", "ef5055");
                 $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
         }
 
-        function insertBoard($userNick, $title, $content){
-            /***********************************************************************
-             * userNick, title, content라는 변수들을 받아
-             * boards라는 게시판 db에 저장하여
-             * 게시글을 등록하는 insertBoard 함수
-             **********************************************************************/
+        function insertNotices($userNick, $title, $content){
             try{
-                $sql = "insert into boards(userNick, title, content, date, hits) values(:userNick, :title, :content, now(), 0)";
+                $sql = "insert into notices(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
@@ -38,14 +33,9 @@
             }
         }
         
-        function increseHits($num){
-            /***********************************************************************
-             * num이라는 변수를 받아
-             * 이용자가 본 게시글의 조회수를 1 올려주는
-             * increaseHits 함수
-             **********************************************************************/
+        function increseNoticesHits($num){
             try{
-                $pstmt = $this->db->prepare("update boards set hits=hits+1 where num=:num");
+                $pstmt = $this->db->prepare("update notices set hits=hits+1 where num=:num");
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -53,34 +43,9 @@
             }
         }
 
-        function checkUser($num){
-            /***********************************************************************
-             * num이라는 변수를 받아
-             * 그 게시글을 쓴 유저의 닉네임을 받아온다.
-             * 닉네임을 받은 것을 리턴하여 modify_form과 delete.php에서 
-             * 현재 로그인 되어있는 유저의 닉네임과 글 작성자의 유저 닉네임을 비교하는
-             * 기능을 할 수 있게 지원하는 checkUser 함수
-             **********************************************************************/
+        function deleteNotices($num) {
             try{
-                $sql = "select userNick from boards where num=:num";
-                $pstmt=$this->db->prepare($sql);
-                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
-                $pstmt->execute();
-                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
-            }catch(PDOException $e){
-                exit($e->getMessage());
-            }
-            return $user;
-        }
-
-        function deleteBoard($num) {
-            /***********************************************************************
-             * num이라는 변수를 받아
-             * boards에 있는 게시글을 삭제할 수 있게 하는
-             * deleteBoard 함수
-             **********************************************************************/
-            try{
-                $pstmt = $this->db->prepare("delete from boards where num=:num");
+                $pstmt = $this->db->prepare("delete from notices where num=:num");
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -88,14 +53,9 @@
             }
         }
 
-        function updateBoard($title, $content, $num){
-            /***********************************************************************
-             * title, content, num이라는 변수를 받아
-             * boards에 있는 게시글 중 받아온 num에 맞는 게시글의 정보를
-             * 수정할 수 있게 하는 updateBoard 함수
-             **********************************************************************/
+        function updateNotices($title, $content, $num){
             try{
-                $pstmt = $this->db->prepare("update boards set title=:title, content=:content where num=:num");
+                $pstmt = $this->db->prepare("update notices set title=:title, content=:content where num=:num");
                 $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
                 $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
@@ -106,14 +66,9 @@
             }
         }
 
-        function getBoard($num){
-            /***********************************************************************
-             * num이라는 함수를 받아
-             * boards에 있는 게시글 중 num값에 맞는 게시글의 상세정보를 불러오는
-             * getBoard 함수
-             **********************************************************************/
+        function getNotices($num){
             try{
-                $sql = "select * from boards where num=:num";
+                $sql = "select * from notices where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -125,14 +80,933 @@
             return $msgs;
         }
 
-        function getAllboard(){
-            /***********************************************************************
-             * boards에 있는 모든 게시글 정보들을 불러와
-             * board.php에서 모든 게시글을 볼 수 있게 하는 기능을 제공하는
-             * getAllboard 함수 
-             **********************************************************************/
+        function getAllnotices(){
             try{
-                $sql = "select * from boards";
+                $sql = "select * from notices";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************공지사항 게시판 용************************************************************* */
+
+        function insertCominfo($userNick, $title, $content){
+            try{
+                $sql = "insert into cominfo(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+        
+        function increseCominfoHits($num){
+            try{
+                $pstmt = $this->db->prepare("update cominfo set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCominfo($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from cominfo where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateCominfo($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update cominfo set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getCominfo($num){
+            try{
+                $sql = "select * from cominfo where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllcominfo(){
+            try{
+                $sql = "select * from cominfo";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************컴정 게시판 용************************************************************* */
+
+        function insertCommachine($userNick, $title, $content){
+            try{
+                $sql = "insert into commachine(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+    
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+    
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseCommachineHits($num){
+            try{
+                $pstmt = $this->db->prepare("update commachine set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+    
+        function deleteCommachine($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from commachine where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+    
+        function updateCommachine($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update commachine set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+    
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+    
+        function getCommachine($num){
+            try{
+                $sql = "select * from commachine where num=:num";
+                $pstmt = $this->db->prepare($sql);
+    
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+    
+        function getAllcommachine(){
+            try{
+                $sql = "select * from commachine";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************컴응기 게시판 용************************************************************* */
+
+        function insertElectinfo($userNick, $title, $content){
+            try{
+                $sql = "insert into electinfo(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+    
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+    
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseElectinfoHits($num){
+            try{
+                $pstmt = $this->db->prepare("update electinfo set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+    
+        function deleteElectinfo($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from electinfo where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+    
+        function updateElectinfo($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update electinfo set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+    
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+    
+        function getElectinfo($num){
+            try{
+                $sql = "select * from electinfo where num=:num";
+                $pstmt = $this->db->prepare($sql);
+    
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+    
+        function getAllElectinfo(){
+            try{
+                $sql = "select * from electinfo";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************전자정보 게시판 용************************************************************* */
+
+        function insertEnergy($userNick, $title, $content){
+            try{
+                $sql = "insert into energy(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseEnergyHits($num){
+            try{
+                $pstmt = $this->db->prepare("update energy set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteEnergy($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from energy where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateEnergy($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update energy set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getEnergy($num){
+            try{
+                $sql = "select * from energy where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllenergy(){
+            try{
+                $sql = "select * from energy";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************신재생 게시판 용************************************************************* */
+
+        function insertBuild($userNick, $title, $content){
+            try{
+                $sql = "insert into build(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseBuildHits($num){
+            try{
+                $pstmt = $this->db->prepare("update build set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteBuild($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from build where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateBuild($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update build set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getBuild($num){
+            try{
+                $sql = "select * from build where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllbuild(){
+            try{
+                $sql = "select * from build";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /*********************************************************************************************건축 게시판 용************************************************************* */
+
+        function insertSmart($userNick, $title, $content){
+            try{
+                $sql = "insert into smart(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseSmartHits($num){
+            try{
+                $pstmt = $this->db->prepare("update smart set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteSmart($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from smart where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateSmart($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update smart set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getSmart($num){
+            try{
+                $sql = "select * from smart where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllsmart(){
+            try{
+                $sql = "select * from smart";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************스맛경영 게시판 용*********************************************************** */
+
+        function insertSeesighting($userNick, $title, $content){
+            try{
+                $sql = "insert into seesighting(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseSeesightingHits($num){
+            try{
+                $pstmt = $this->db->prepare("update seesighting set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteSeesighting($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from seesighting where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateSeesighting($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update seesighting set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getSeesighting($num){
+            try{
+                $sql = "select * from seesighting where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllseesighting(){
+            try{
+                $sql = "select * from seesighting";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************국제관광 게시판 용*********************************************************** */
+
+        function insertSoldier($userNick, $title, $content){
+            try{
+                $sql = "insert into soldier(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseSoldierHits($num){
+            try{
+                $pstmt = $this->db->prepare("update soldier set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteSoldier($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from soldier where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateSoldier($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update soldier set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getSoldier($num){
+            try{
+                $sql = "select * from soldier where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllsoldier(){
+            try{
+                $sql = "select * from soldier";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************부사관 게시판 용*********************************************************** */  
+
+        function insertContents($userNick, $title, $content){
+            try{
+                $sql = "insert into contents(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseContentsHits($num){
+            try{
+                $pstmt = $this->db->prepare("update contents set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteContents($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from contents where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateContents($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update contents set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getContents($num){
+            try{
+                $sql = "select * from contents where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllcontents(){
+            try{
+                $sql = "select * from contents";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************컨텐디자인 게시판 용*********************************************************** */ 
+    
+        function insertWelfare($userNick, $title, $content){
+            try{
+                $sql = "insert into welfare(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseWelfareHits($num){
+            try{
+                $pstmt = $this->db->prepare("update welfare set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteWelfare($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from welfare where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateWelfare($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update welfare set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getWelfare($num){
+            try{
+                $sql = "select * from welfare where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllwelfare(){
+            try{
+                $sql = "select * from welfare";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************사회복지 게시판 용*********************************************************** */
+
+        function insertEducate($userNick, $title, $content){
+            try{
+                $sql = "insert into educate(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseEducateHits($num){
+            try{
+                $pstmt = $this->db->prepare("update educate set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteEducate($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from educate where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateEducate($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update educate set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getEducate($num){
+            try{
+                $sql = "select * from educate where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAlleducate(){
+            try{
+                $sql = "select * from educate";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute();
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+    /******************************************************************************************유아교육 게시판 용*********************************************************** */
+    
+        function insertNurse($userNick, $title, $content){
+            try{
+                $sql = "insert into nurse(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+
+                $pstmt->execute();
+
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+            
+        function increseNurseHits($num){
+            try{
+                $pstmt = $this->db->prepare("update nurse set hits=hits+1 where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteNurse($num) {
+            try{
+                $pstmt = $this->db->prepare("delete from nurse where num=:num");
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function updateNurse($title, $content, $num){
+            try{
+                $pstmt = $this->db->prepare("update nurse set title=:title, content=:content where num=:num");
+                $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
+                $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
+                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOExcetion $e){
+                exit($e->getMessager());
+            }
+        }
+
+        function getNurse($num){
+            try{
+                $sql = "select * from nurse where num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $msgs = $pstmt->fetch(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+
+        function getAllnurse(){
+            try{
+                $sql = "select * from nurse";
                 $pstmt = $this->db->prepare($sql);
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
@@ -142,5 +1016,5 @@
             return $msgs;
         }
     }
-
+    /******************************************************************************************간호학과 게시판 용*********************************************************** */
 ?>
