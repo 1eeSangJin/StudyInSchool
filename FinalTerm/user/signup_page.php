@@ -88,11 +88,11 @@
         </div>
       </div>
 
-      <div class = "item"><span>공지사항</span></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
-        <a class = "item" onclick = "location.href='login_form.html'">로그인</a>
-        <a class = "item" onclick = "location.href='signup_page.html'">회원가입</a>
+        <a class = "item" onclick = "location.href='login_form.php'">로그인</a>
+        <a class = "item" onclick = "location.href='signup_page.php'">회원가입</a>
       </div>
     </div>
     </header>
@@ -103,13 +103,13 @@
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
                 <div class = "carousel-inner">
                 <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "img/yj1.jpg" alt = "첫번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
                 </div>
                 <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj3.PNG" alt = "두번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj2.PNG" alt = "세번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
                     </div>
                 </div>
             </div>

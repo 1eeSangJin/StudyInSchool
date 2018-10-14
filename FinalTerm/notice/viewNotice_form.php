@@ -11,30 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="../../semantic/semantic.min.js"></script>
-    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
 
-    <script type="text/javascript">
-        $(function(){
-            var oEditors = [];
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "contents",
-                sSkinURI: "/nse/nse_files/SmartEditor2Skin.html",
-                htParams:{
-                    bUseToolbar:true,
-                    bUseVerticalResizer : true,
-                    bUseModeChanger: true,
-                },
-                fCreator: "createSEditor2"
-            });        
-
-            $("#submit_button").click(function(){
-                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-
-                $("#write_notice").submit();
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -42,11 +19,12 @@
         session_start();
 
         require_once("../tools.php");
-        require_once("../dao/memberDao.php");
+        require_once("../dao/boardDao.php");
 
-        $admin = $_SESSION['userId'];
-        $dao = new memberDao();
-        $userInfo = $dao->getUser($admin);
+        $num = requestValue('num');
+        $dao = new boardDao();
+        $msgs = $dao->getNotices($num);
+        // $dao->increseNoticesHits($num);
   ?>
 
   <header>
@@ -160,37 +138,28 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항 작성
+          공지사항
         </h1>
       </div>
 
+      <div class = "ui divider"></div>
       <br>
 
-        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
-            <h2 class = "ui dividing header">내용</h2>
-
-            <div class = "field">
-                <label>작성자</label>
-                <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
-                </div>
-            </div>
-
-            <div class = "field">
-                <label>제목</label>
-                <div class = "twelve wide field">
-                    <input type = "text" name = "title" id = "title" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>내용</label>
-                <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
-            </div>
-            
-            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
-        </form>
+      <div>
+          <h3>
+            <span><?= $msgs['title'] ?></span>
+          </h3>
+          <div>
+            <em><?= $msgs['userNick'] ?><em>
+            <span>|</span>
+            <span><?= $msgs['date'] ?></span>
+            <span style="float:right;"><?= $msgs['recommend'] ?></span>
+            <span style="float:right; margin-right:1.5em">추천</span>
+            <span style="float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
+            <span style="float:right; margin-right:1.5em">조회수</span>
+          </div>
+      </div>
+      <div class = "ui divider"></div>
     </div>
 
       <style type="text/css">

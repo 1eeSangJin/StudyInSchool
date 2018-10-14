@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <div class = "item"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -123,14 +123,6 @@
         <h1 class = "ui huge header">
           공지사항
         </h1>
-
-        <p align = "right">
-          <?php
-            if($_SESSION['userNick'] == "Administrator"){
-              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
-            }
-          ?>
-        </p>
       </div>
 
       <div class = "ui divider"></div>
@@ -151,43 +143,53 @@
             </div>
           </div>
         </div>
-
-        <table class="ui single line striped selectable table">
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>글쓴이</th>
-              <th>날짜</th>
-              <th>조회</th>
-              <!-- <th>추천수</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
-              <tr>
-                  <td>
-                      <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <a href = "viewBoard.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                          <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
-                      </s>
-                  </td>
-                  <td>
-                      <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
-                  </td>
-              </tr>
-            <?php endforeach ?>                                         <!-- foreach문 종료 -->
-          </tbody>
-        </table>
       </div>
+
+      <table class="ui single line striped selectable table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>날짜</th>
+            <th>조회</th>
+            <!-- <th>추천수</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
+            <tr>
+              <td>
+                <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <a href = "viewNotice_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                  <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
+                </a>
+              </td>
+              <td>
+                <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+              </td>
+            </tr>
+          <?php endforeach ?>                                         <!-- foreach문 종료 -->
+        </tbody>
+      </table>
+      <div style="float:right;">
+        <?php
+          if($_SESSION['userNick'] == "Administrator"){
+            echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
+          }else{
+            error_reporting(0);
+          }
+        ?>
+      </div>
+    </div>
 
       <style type="text/css">
         html{

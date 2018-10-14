@@ -86,7 +86,7 @@
         </div>
       </div>
 
-      <div class = "item"><span>공지사항</span></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <a class = "item" onclick="location.href='login_page.html'">로그인</a>
