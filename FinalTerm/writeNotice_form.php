@@ -12,6 +12,29 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="../semantic/semantic.min.js"></script>
     <script src="smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "contents",
+                sSkinURI: "smarteditor/SmartEditor2Skin.html",
+                htParams:{
+                    bUseToolbar:true,
+                    bUseVerticalResizer : true,
+                    bUseModeChanger: true,
+                },
+                fCreator: "createSEditor2"
+            });        
+
+            $("#submit_button").click(function(){
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                $("#write_notice").submit();
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -143,7 +166,7 @@
 
       <br>
 
-        <form action = "writeNotice.php" method = "post" class = "ui form">
+        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
             <div class = "field">
@@ -163,23 +186,9 @@
             <div class="field">
                 <label>내용</label>
                 <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
-                <script type="text/javascript">
-                    var oEditors = [];
-                    nhn.husky.EZCreator.createInIFrame({
-                        oAppRef: oEditors,
-                        elPlaceHolder: "contents",
-                        sSkinURL: "smarteditor/SmartEditor2Skin.html",
-                        htParams:{
-                            bUseToolbar:true,
-                            bUseVerticalResizer : true,
-                            bUseModeChanger: true,
-                        },
-                        fCreator: "createSEditor2"
-                    });
-                </script>
             </div>
-
-            <button type = "submit" class = "ui secondary button">등록하기</button>
+            
+            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
             <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
         </form>
     </div>

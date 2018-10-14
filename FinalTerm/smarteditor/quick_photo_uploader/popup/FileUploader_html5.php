@@ -19,7 +19,7 @@
 	if(file_put_contents($newPath, $file->content)) {
 		$sFileInfo .= "&bNewLine=true";
 		$sFileInfo .= "&sFileName=".$file->name;
-		$sFileInfo .= "&sFileURL=/nse/myPhoto/".$file->name;
+		$sFileInfo .= "&sFileURL=/smarteditor/quick_photo_uploader/demo/upload".$file->name;
 	}
 	echo $sFileInfo;
  ?>
