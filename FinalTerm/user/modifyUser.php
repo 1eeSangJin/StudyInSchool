@@ -1,6 +1,6 @@
 <?php
-    require_once("tools.php");
-    require_once("memberDao.php");
+    require_once("../tools.php");
+    require_once("../dao/memberDao.php");
 
     session_start();
 

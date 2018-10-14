@@ -1,7 +1,7 @@
 <?php
 
-    require('tools.php');
-    require('memberDao.php');
+    require('../tools.php');
+    require('../dao/memberDao.php');
 
     $user_id = requestValue('userId');
     $user_pw = requestValue('userPw');
@@ -22,7 +22,7 @@
                 $_SESSION['affName'] = $row['affName'];
             }
             $check = true;
-            okGo('로그인에 성공하셨습니다.', "main.php?check=$check");
+            okGo('로그인에 성공하셨습니다.', "../main.php?check=$check");
         }else{
             errorBack("비밀번호가 틀렸습니다.");
         }

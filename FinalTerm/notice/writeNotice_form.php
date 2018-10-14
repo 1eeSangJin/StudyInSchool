@@ -3,32 +3,56 @@
     <meta charset="UTF-8">
     <title>YEUNGJIN INSIDE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="stylesheet/default.css">
-    <link rel="stylesheet" type="text/css" href="stylesheet/pandoc-code-highlight.css">
-    <link rel="stylesheet" type="text/css" href="stylesheet/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/default.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/pandoc-code-highlight.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/semantic.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
     <script src="../semantic/semantic.min.js"></script>
+    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "contents",
+                sSkinURI: "smarteditor/SmartEditor2Skin.html",
+                htParams:{
+                    bUseToolbar:true,
+                    bUseVerticalResizer : true,
+                    bUseModeChanger: true,
+                },
+                fCreator: "createSEditor2"
+            });        
+
+            $("#submit_button").click(function(){
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                $("#write_notice").submit();
+            });
+        });
+    </script>
 </head>
 <body>
-  <?php
-    session_start();
 
-    if(isset($_SESSION['userId'])){
-      echo "<script>alert('부적절한 접근입니다.')</script>";
-      echo "<script>location.replace('main.php');</script>";
-    }
+  <?php
+        session_start();
+
+        require_once("../tools.php");
+        require_once("../dao/memberDao.php");
+
+        $admin = $_SESSION['userId'];
+        $dao = new memberDao();
+        $userInfo = $dao->getUser($admin);
   ?>
+
   <header>
     <div class = "ui inverted huge borderless fixed fluid menu">
       <div class = "header item">YEUNGJIN INSIDE</div>
-      <div class = "item" onclick = "location.href='main.php'"><span>메인</span></div>
+      <div class = "item" onclick = "location.href='../main.php'"><a>메인</a></div>
       <div class = "ui simple dropdown item">
         <span>계열·학과 갤러리</span>
         <i class = "dropdown icon"></i>
@@ -86,13 +110,31 @@
         </div>
       </div>
 
-      <div class = "item"><span>공지사항</span></div>
+      <div class = "item"><span>공지사항</a></div>
 
       <div class = "right menu">
-        <a class = "item" onclick="location.href='login_page.html'">로그인</a>
-        <a class = "item" onclick="location.href='signup_page.html'">회원가입</a>
+        <?php
+          if(!isset($_SESSION['userId'])){       
+            echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
+            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
+          }else if($_SESSION['userNick'] == "Administrator"){
+            $user_nick = $_SESSION['userNick'];
+            $user_aff = $_SESSION['affName'];
+            echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
+          }else{
+            $user_nick = $_SESSION['userNick'];             
+            $user_aff = $_SESSION['affName'];
+            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
+          }
+        ?>
       </div>
     </div>
+    
     </header>
 
     <aside>
@@ -101,48 +143,55 @@
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
                 <div class = "carousel-inner">
                 <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "img/yj1.jpg" alt = "첫번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
                 </div>
                 <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj3.PNG" alt = "두번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj2.PNG" alt = "세번째 슬라이드">
+                        <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
                     </div>
                 </div>
             </div>
         </div>
     </aside>
-    
+
     <div class = "column" id = "content">
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          「YEUNGJIN INSIDE」에 오신것을 환영합니다.
+          공지사항 작성
         </h1>
       </div>
 
-      <div class = "ui divider"></div>
-      
-        <br>
-        <h3 class = "ui huge header">로그인</h3>
+      <br>
 
-        <form action = "login.php" method = "post">
-            <div class = "ui huge input">
-                <input type = "text" class = "form-control" name = "userId" id = "userId" placeholder = "아이디" required>
+        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+            <h2 class = "ui dividing header">내용</h2>
+
+            <div class = "field">
+                <label>작성자</label>
+                <div class = "four wide field">
+                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
+                </div>
             </div>
-            <button type = "button" class = "ui red button" onclick = "location.href='signup_page.html'">회원가입</button>
-            <br>
-            <br>
-            <div class = "ui huge input">
-                <input type = "password" class = "form-control" name = "userPw" id = "userPw" placeholder = "비밀번호" required>
+
+            <div class = "field">
+                <label>제목</label>
+                <div class = "twelve wide field">
+                    <input type = "text" name = "title" id = "title" required>
+                </div>
             </div>
-            <button type = "submit" class = "ui black button">로그인</button>
+
+            <div class="field">
+                <label>내용</label>
+                <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
+            </div>
+            
+            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
         </form>
     </div>
-
-    
-
 
       <style type="text/css">
         html{

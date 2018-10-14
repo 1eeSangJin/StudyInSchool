@@ -1,7 +1,7 @@
 <?php
     session_start();
-    require_once('tools.php');
-    require_once('memberDao.php');
+    require_once('../tools.php');
+    require_once('../dao/memberDao.php');
 
     $user_id = requestValue('userId');
     $dao = new memberDao();

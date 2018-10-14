@@ -3,56 +3,35 @@
     <meta charset="UTF-8">
     <title>YEUNGJIN INSIDE</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="stylesheet/default.css">
-    <link rel="stylesheet" type="text/css" href="stylesheet/pandoc-code-highlight.css">
-    <link rel="stylesheet" type="text/css" href="stylesheet/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/default.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/pandoc-code-highlight.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheet/semantic.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="../semantic/semantic.min.js"></script>
-    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-    <script type="text/javascript">
-        $(function(){
-            var oEditors = [];
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "contents",
-                sSkinURI: "smarteditor/SmartEditor2Skin.html",
-                htParams:{
-                    bUseToolbar:true,
-                    bUseVerticalResizer : true,
-                    bUseModeChanger: true,
-                },
-                fCreator: "createSEditor2"
-            });        
-
-            $("#submit_button").click(function(){
-                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-
-                $("#write_notice").submit();
-            });
-        });
-    </script>
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="../../semantic/semantic.min.js"></script>
 </head>
 <body>
 
   <?php
         session_start();
 
-        require_once("tools.php");
-        require_once("memberDao.php");
+        require_once("../tools.php");
+        require_once("../dao/boardDao.php");
 
-        $admin = $_SESSION['userId'];
-        $dao = new memberDao();
-        $userInfo = $dao->getUser($admin);
+        $dao = new boardDao();
+        $msgs = $dao->getAllnotices();
   ?>
 
   <header>
     <div class = "ui inverted huge borderless fixed fluid menu">
       <div class = "header item">YEUNGJIN INSIDE</div>
-      <div class = "item" onclick = "location.href='main.php'"><a>메인</a></div>
+      <div class = "item" onclick = "location.href='../main.php'"><a>메인</a></div>
       <div class = "ui simple dropdown item">
         <span>계열·학과 갤러리</span>
         <i class = "dropdown icon"></i>
@@ -115,21 +94,21 @@
       <div class = "right menu">
         <?php
           if(!isset($_SESSION['userId'])){       
-            echo "<a class = 'item' onclick = location.href='login_form.php'>로그인</a>";         
-            echo "<a class = 'item' onclick = location.href='signup_page.php'>회원가입</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
+            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
           }else if($_SESSION['userNick'] == "Administrator"){
             $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-            echo "<a class = 'item' onclick = location.href='logout.php'>로그아웃</a>";   
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
             $user_nick = $_SESSION['userNick'];             
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-            echo "<a class = 'item' onclick = location.href='modifyUser_form.php'>회원정보 수정</a>";
-            echo "<a class = 'item' onclick = location.href='logout.php'>로그아웃</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
           }
         ?>
       </div>
@@ -137,61 +116,78 @@
     
     </header>
 
-    <aside>
-        <div class = "row">
-            <div class = "column" id = "sidebar">
-            <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
-                <div class = "carousel-inner">
-                <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "img/yj1.jpg" alt = "첫번째 슬라이드">
-                </div>
-                <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj3.PNG" alt = "두번째 슬라이드">
-                    </div>
-                    <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "img/yj2.PNG" alt = "세번째 슬라이드">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
     <div class = "column" id = "content">
+
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항 작성
+          공지사항
         </h1>
+
+        <p align = "right">
+          <?php
+            if($_SESSION['userNick'] == "Administrator"){
+              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
+            }
+          ?>
+        </p>
       </div>
 
-      <br>
+      <div class = "ui divider"></div>
 
-        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
-            <h2 class = "ui dividing header">내용</h2>
-
-            <div class = "field">
-                <label>작성자</label>
-                <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
-                </div>
+      <div class = "row">
+        <div class = "column" id = "sidebar">
+          <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
+            <div class = "carousel-inner">
+              <div class = "carousel-item active">
+                <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
+              </div>
             </div>
+          </div>
+        </div>
 
-            <div class = "field">
-                <label>제목</label>
-                <div class = "twelve wide field">
-                    <input type = "text" name = "title" id = "title" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>내용</label>
-                <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
-            </div>
-            
-            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
-        </form>
-    </div>
+        <table class="ui single line striped selectable table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>글쓴이</th>
+              <th>날짜</th>
+              <th>조회</th>
+              <!-- <th>추천수</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
+              <tr>
+                  <td>
+                      <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+                  </td>
+                  <td>
+                      <a href = "viewBoard.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                          <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
+                      </s>
+                  </td>
+                  <td>
+                      <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
+                  </td>
+                  <td>
+                      <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+                  </td>
+                  <td>
+                      <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+                  </td>
+              </tr>
+            <?php endforeach ?>                                         <!-- foreach문 종료 -->
+          </tbody>
+        </table>
+      </div>
 
       <style type="text/css">
         html{

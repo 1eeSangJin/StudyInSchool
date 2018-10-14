@@ -1,6 +1,6 @@
 <?php
-    require('memberDao.php');
-    require('tools.php');
+    require('../dao/memberDao.php');
+    require('../tools.php');
     
     $user_id = requestValue("userId");
     $user_pwd = requestValue("userPw");
