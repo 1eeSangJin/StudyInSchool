@@ -60,7 +60,7 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span>컴퓨터정보계열</span>
+            <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php

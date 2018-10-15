@@ -10,33 +10,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
     <script src="../../semantic/semantic.min.js"></script>
-    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-    <script type="text/javascript">
-        $(function(){
-            var oEditors = [];
-            nhn.husky.EZCreator.createInIFrame({
-                oAppRef: oEditors,
-                elPlaceHolder: "contents",
-                sSkinURI: "/nse/nse_files/SmartEditor2Skin.html",
-                htParams:{
-                    bUseToolbar:true,
-                    bUseVerticalResizer : true,
-                    bUseModeChanger: true,
-                },
-                fCreator: "createSEditor2"
-            });        
-
-            $("#submit_button").click(function(){
-                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-
-                $("#write_notice").submit();
-            });
-
-            }
-        });
-    </script>
 </head>
 <body>
 
@@ -44,16 +22,31 @@
         session_start();
 
         require_once("../tools.php");
-        require_once("../dao/memberDao.php");
+        require_once("../dao/boardDao.php");
 
-        if(!($_SESSION['userNick'] == "Administrator" || !isset($_SESSION['userNick']))){
-          echo "<script>alert('부적절한 접근입니다.')</script>";
-          echo "<script>location.replace('../main.php');</script>";
+        $page = requestValue("page");
+
+        $dao = new boardDao();
+        
+
+        $NumOfNotices = $dao->getNumOfComInfo();
+
+        if($NumOfNotices > 0){
+          $numPages = ceil($NumOfNotices / NUM_LINES);
+
+          if($page < 1)
+            $page = 1;
+          if ($page > $numPages)
+            $page = $numPages;
+
+          $start = ($page - 1) * NUM_LINES;
+          $msgs = $dao->getAllnotices($start, NUM_LINES);
+
+          $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
+          $lastLink = $firstLink + 1;
+          if($lastLink > $numPages)
+            $lastLink = $numPages;
         }
-
-        $admin = $_SESSION['userId'];
-        $dao = new memberDao();
-        $userInfo = $dao->getUser($admin);
   ?>
 
   <header>
@@ -144,62 +137,102 @@
     
     </header>
 
-    <aside>
-        <div class = "row">
-            <div class = "column" id = "sidebar">
-            <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
-                <div class = "carousel-inner">
-                <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
-                </div>
-                <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
-                    </div>
-                    <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
     <div class = "column" id = "content">
+
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항 작성
+          컴퓨터정보계열 갤러리
         </h1>
       </div>
 
-      <br>
+      <div class = "ui divider"></div>
 
-        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
-            <h2 class = "ui dividing header">내용</h2>
-
-            <div class = "field">
-                <label>작성자</label>
-                <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
-                </div>
+      <div class = "row">
+        <div class = "column" id = "sidebar">
+          <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
+            <div class = "carousel-inner">
+              <div class = "carousel-item active">
+                <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div class = "field">
-                <label>제목</label>
-                <div class = "twelve wide field">
-                    <input type = "text" name = "title" id = "title" required>
-                </div>
-            </div>
+      <?php if($NumOfNotices > 0) : ?>
+        <table class="ui single line striped selectable table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>글쓴이</th>
+              <th>날짜</th>
+              <th>조회</th>
+              <!-- <th>추천수</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
+              <tr>
+                <td>
+                  <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <a href = "viewNotice_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                    <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
+                  </a>
+                </td>
+                <td>
+                  <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+                </td>
+              </tr>
+            <?php endforeach ?>                                         <!-- foreach문 종료 -->
+          </tbody>
+        </table>
+        
+        <br>
+        <?php if($firstLink > 1) : ?>
+          <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+        <?php endif ?>
 
+        <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
+          <?php if($i == $page) : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+          <?php else : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+          <?php endif ?>
+        <?php endfor ?>
+        
+        <?php if( $lastLink < $numPages) : ?>
+          <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+        <?php endif ?>
 
+      <?php endif ?>
 
-            <div class="field">
-                <label>내용</label>
-                <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
-            </div>
-            
-            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
-        </form>
+        <div style="float:right;">
+          <?php
+            if(!isset($_SESSION['userNick'])){
+              error_reporting(0);
+            }else if($_SESSION['userNick'] == 'Administrator'){
+              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
+            }else{
+              error_reporting(0);
+            }
+          ?>
+        </div>
     </div>
 
       <style type="text/css">

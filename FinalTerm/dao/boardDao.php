@@ -177,14 +177,32 @@
 
         function getAllcominfo(){
             try{
-                $sql = "select * from cominfo";
+                $sql = "select * from cominfo order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfComInfo(){
+            try{
+                $sql = "select count(*) from cominfo";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************컴정 게시판 용************************************************************* */
@@ -254,14 +272,32 @@
     
         function getAllcommachine(){
             try{
-                $sql = "select * from commachine";
+                $sql = "select * from commachine order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfComMachine(){
+            try{
+                $sql = "select count(*) from commachine";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************컴응기 게시판 용************************************************************* */
@@ -331,14 +367,32 @@
     
         function getAllElectinfo(){
             try{
-                $sql = "select * from electinfo";
+                $sql = "select * from electinfo order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfElectInfo(){
+            try{
+                $sql = "select count(*) from electinfo";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************전자정보 게시판 용************************************************************* */
@@ -408,14 +462,32 @@
 
         function getAllenergy(){
             try{
-                $sql = "select * from energy";
+                $sql = "select * from energy order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfEnergy(){
+            try{
+                $sql = "select count(*) from energy";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************신재생 게시판 용************************************************************* */
@@ -485,14 +557,31 @@
 
         function getAllbuild(){
             try{
-                $sql = "select * from build";
+                $sql = "select * from build order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfBuild(){
+            try{
+                $sql = "select count(*) from build";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************건축 게시판 용************************************************************* */
@@ -562,14 +651,31 @@
 
         function getAllsmart(){
             try{
-                $sql = "select * from smart";
+                $sql = "select * from smart order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfSmart(){
+            try{
+                $sql = "select count(*) from smart";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************스맛경영 게시판 용*********************************************************** */
@@ -639,14 +745,31 @@
 
         function getAllseesighting(){
             try{
-                $sql = "select * from seesighting";
+                $sql = "select * from seesighting order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfSeesighting(){
+            try{
+                $sql = "select count(*) from seesighting";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************국제관광 게시판 용*********************************************************** */
@@ -716,14 +839,31 @@
 
         function getAllsoldier(){
             try{
-                $sql = "select * from soldier";
+                $sql = "select * from soldier order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfSoldier(){
+            try{
+                $sql = "select count(*) from soldier";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************부사관 게시판 용*********************************************************** */  
@@ -793,14 +933,31 @@
 
         function getAllcontents(){
             try{
-                $sql = "select * from contents";
+                $sql = "select * from contents order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfContents(){
+            try{
+                $sql = "select count(*) from contents";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************컨텐디자인 게시판 용*********************************************************** */ 
@@ -870,14 +1027,31 @@
 
         function getAllwelfare(){
             try{
-                $sql = "select * from welfare";
+                $sql = "select * from welfare order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfWelfare(){
+            try{
+                $sql = "select count(*) from welfare";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************사회복지 게시판 용*********************************************************** */
@@ -947,14 +1121,31 @@
 
         function getAlleducate(){
             try{
-                $sql = "select * from educate";
+                $sql = "select * from educate order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfEducate(){
+            try{
+                $sql = "select count(*) from educate";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /******************************************************************************************유아교육 게시판 용*********************************************************** */
@@ -1024,14 +1215,31 @@
 
         function getAllnurse(){
             try{
-                $sql = "select * from nurse";
+                $sql = "select * from nurse order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
-                $pstmt->execute();
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+                
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfNurse(){
+            try{
+                $sql = "select count(*) from nurse";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
     }
     /******************************************************************************************간호학과 게시판 용*********************************************************** */

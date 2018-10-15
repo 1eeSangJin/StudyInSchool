@@ -39,7 +39,7 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span>컴퓨터정보계열</span>
+            <span onclick = "location.href='cominfo/CominfoBoard.php'">컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
@@ -219,7 +219,7 @@
         
         #content {
           margin-left: 19%;
-          width: 81%;
+          width: 75%;
           margin-top: 3em;
           padding-left: 3em;
           float: left;

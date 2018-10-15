@@ -183,7 +183,7 @@
         
         #content {
           margin-left: 19%;
-          width: 81%;
+          width: 75%;
           margin-top: 3em;
           padding-left: 3em;
           float: left;
