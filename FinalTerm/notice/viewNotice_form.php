@@ -150,7 +150,7 @@
             <span><?= $msgs['title'] ?></span>
           </h3>
           <div>
-            <em><?= $msgs['userNick'] ?><em>
+            <em><?= $msgs['userNick'] ?></em>
             <span>|</span>
             <span><?= $msgs['date'] ?></span>
             <span style="float:right;"><?= $msgs['recommend'] ?></span>
@@ -158,8 +158,13 @@
             <span style="float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
             <span style="float:right; margin-right:1.5em">조회수</span>
           </div>
+          <div class = "ui divider"></div>
+          <br>
+          <div>
+            <?= $msgs['content'] ?>
+          </div>
+          <div class = "ui divider"></div>
       </div>
-      <div class = "ui divider"></div>
     </div>
 
       <style type="text/css">
@@ -201,7 +206,7 @@
         
         #content {
           margin-left: 19%;
-          width: 81%;
+          width: 75%;
           margin-top: 3em;
           padding-left: 3em;
           float: left;

@@ -1,6 +1,6 @@
 <?php
-    require_once('tools.php');
-    require_once('boardDao.php');
+    require_once('../tools.php');
+    require_once('../dao/boardDao.php');
     
     $userNick = requestValue('userNick');
     $title = requestValue('title');

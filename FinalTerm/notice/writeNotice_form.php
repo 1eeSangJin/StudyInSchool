@@ -33,6 +33,8 @@
 
                 $("#write_notice").submit();
             });
+
+            }
         });
     </script>
 </head>
@@ -43,6 +45,11 @@
 
         require_once("../tools.php");
         require_once("../dao/memberDao.php");
+
+        if(!($_SESSION['userNick'] == "Administrator" || !isset($_SESSION['userNick']))){
+          echo "<script>alert('부적절한 접근입니다.')</script>";
+          echo "<script>location.replace('../main.php');</script>";
+        }
 
         $admin = $_SESSION['userId'];
         $dao = new memberDao();
@@ -183,8 +190,13 @@
                 </div>
             </div>
 
+
+
             <div class="field">
                 <label>내용</label>
+                <!-- <div class = "four wide field">
+                  <input type="file" name="upload_file" id="upload_file">
+                </div> -->
                 <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
             </div>
             

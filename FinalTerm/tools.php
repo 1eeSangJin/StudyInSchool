@@ -1,5 +1,21 @@
 <?php
     define ("MAIN_PAGE", "../main.php");
+    define ("NUM_LINES", 5);
+    define ("NUM_PAGE_LINKS", 2);
+
+    function bdUrl($file, $num, $page){
+        $join = "?";
+        
+        if($num){
+            $file .= $join . "num=$num";
+            $join = "&";
+        }
+        
+        if($page)
+            $file .= $join . "page=$page";
+
+        return $file;
+    }
     
     function requestValue($name){
         return isset($_REQUEST[$name]) ? $_REQUEST[$name] : "" ;

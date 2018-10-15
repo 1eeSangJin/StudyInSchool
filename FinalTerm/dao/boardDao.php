@@ -80,16 +80,34 @@
             return $msgs;
         }
 
-        function getAllnotices(){
+        function getAllnotices($start, $rows){
             try{
-                $sql = "select * from notices";
+                $sql = "select * from notices order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
+                $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
                 $pstmt->execute();
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $msgs;
+        }
+
+        function getNumOfNotices(){
+            try{
+                $sql = "select count(*) from notices";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $NumOfNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $NumOfNotices;
         }
 
     /*********************************************************************************************공지사항 게시판 용************************************************************* */
