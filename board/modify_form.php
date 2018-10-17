@@ -22,6 +22,7 @@
     require_once("tools.php");
 
     $num = requestValue('num');
+    $page = requestValue('page');
 
     $dao = new BoardDao();
     $getMsg = $dao->getMsg($num);
@@ -35,7 +36,7 @@
     <div class="container">
     <h2>글 수정 폼</h2>
     <p>아래의 모든 필드를 채워주세요</p>
-    <form action="modify.php?num=<?= $num ?>" method="POST">
+    <form action="modify.php?num=<?= $num ?>&page=<?= $page ?>" method="POST">
         <div class="form-group">
             <label for="title">제목:</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= $getMsg["Title"] ?>">

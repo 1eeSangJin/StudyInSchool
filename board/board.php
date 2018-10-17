@@ -22,7 +22,7 @@
             require_once("tools.php");
             require_once("BoardDao.php");
 
-            $qurrentPage = requestValue("page");
+            $currentPage = requestValue("page");
             // http://localhost/php/board/board.php?page=-3
             if($currentPage<1){
                 $currentPage = 1;
@@ -34,16 +34,17 @@
 
             //집단함수, aggregate function
             //select count(*) from board;
-            $totalCount = $dao->getNumMsgs();
+            $totalCount = $dao->getTotalCount();
 
             if($totalCount > 0){
                 $startPage = floor(($currentPage-1)/NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;   //floor는 내림 함수
                 $endPage = $startPage + NUM_PAGE_LINKS - 1;
-                $totalPages = ceil($totalCount/NUM_LINES);
-                // total page : ceil(전체 게시글 수 /NUM_LINES)
+
+                $totalMsgs = ceil($totalCount/NUM_LINES);
+                $totalPages = ceil($totalMsgs /NUM_LINES);
 
                 if($endPage > $totalPages){
-                    $endPage = $tatalPages;
+                    $endPage = $totalPages;
                 }
 
                 if($startPage > 1){
@@ -86,7 +87,7 @@
         * 
         * 4. 글쓰기 버튼 생성
         */
-
+            // $msgs = $dao->getManyMsgs();
         $msgs = $dao->getMsgs4Page($startRecord, NUM_LINES);
 
 
@@ -105,7 +106,7 @@
                         <?= $row["Num"]?>
                     </td>
                     <td>
-                        <a href="view.php?num=<?=$row["Num"] ?>"> <!-- 상세보기 코드 -->
+                        <a href="view.php?num=<?=$row["Num"] ?>&page=<?= $currentPage ?>"> <!-- 상세보기 코드 -->
                             <?= $row["Title"]?>
                         </a>
                     </td>
@@ -121,6 +122,39 @@
                 </tr>
             <?php endforeach ?>
         </table>
+        <input type="button" value="글쓰기" onclick="location.href='write_form.php'" class = "btn btn-danger">
     </div>
+    <ul class = "pagination">
+        <?php
+            if($startPage > 1)
+        ?>
+                <li class = "page-item">
+                    <a class = "page-link" href="?page=<?= $startPage=1 ?>">Previous</a>
+                </li>
+        <?php
+            for($i = $startPage; $i<=$endPage; $i++){
+                if($i == $currentPage){
+        ?>
+                <li class = "page-item active">
+                    <a class = "page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                </li>        
+        <?php
+                }else{
+        ?>
+                <li class = "page-item">
+                    <a class = "page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                </li>
+        <?php            
+                }
+            }
+            if($endPage < $totalPages){
+        ?>
+            <li class = "page-item">
+                <a class = "page-link" href="?page=<?= $endPage+1 ?>">Next</a>
+            </li>
+        <?php
+            }
+        ?>
+    </ul>
 </body>
 </html>

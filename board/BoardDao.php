@@ -86,6 +86,35 @@
             }
             return $msgs;
         }
+
+        function getTotalCount(){ //populate.php, rows.txt 활용
+            try{
+                $sql = "select count(*) from board";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->execute(); //결과집합이 생성된다
+                $count = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $count;
+        }
+
+        function getMsgs4Page($startRecord, $count){
+            try{
+                $sql = "select * from board order by num desc  limit :s, :c";
+                $pstmt = $this->db->prepare($sql);
+                $pstmt->bindValue(":s", $startRecord, PDO::PARAM_INT);
+                $pstmt->bindValue(":c", $count, PDO::PARAM_INT);
+                $pstmt->execute(); //결과집합이 생성된다
+                $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $msgs;
+        }
+        
     }
+
+    
 
 ?>
