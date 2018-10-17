@@ -34,7 +34,7 @@
                 $("#write_notice").submit();
             });
 
-            }
+            
         });
     </script>
 </head>

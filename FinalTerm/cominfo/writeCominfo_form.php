@@ -34,7 +34,6 @@
                 $("#write_notice").submit();
             });
 
-            }
         });
     </script>
 </head>
@@ -46,9 +45,9 @@
         require_once("../tools.php");
         require_once("../dao/memberDao.php");
 
-        if(!($_SESSION['userNick'] == "Administrator" || !isset($_SESSION['userNick']))){
-          echo "<script>alert('부적절한 접근입니다.')</script>";
-          echo "<script>location.replace('../main.php');</script>";
+        if(!isset($_SESSION['userNick'])){
+          echo "<script>alert('로그인 후 가능한 기능입니다.')</script>";
+          echo "<script>location.replace('cominfoBoard.php');</script>";
         }
 
         $admin = $_SESSION['userId'];
@@ -117,7 +116,7 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -167,14 +166,14 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항 작성
+          컴퓨터정보계열 갤러리
         </h1>
       </div>
 
       <br>
 
-        <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
-            <h2 class = "ui dividing header">내용</h2>
+        <form action = "writeCominfo.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+            <h2 class = "ui dividing header">작성내용</h2>
 
             <div class = "field">
                 <label>작성자</label>
@@ -198,7 +197,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
         </form>
     </div>
 

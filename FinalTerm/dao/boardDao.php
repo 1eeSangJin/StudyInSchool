@@ -175,7 +175,7 @@
             return $msgs;
         }
 
-        function getAllcominfo(){
+        function getAllcominfo($start, $rows){
             try{
                 $sql = "select * from cominfo order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -270,7 +270,7 @@
             return $msgs;
         }
     
-        function getAllcommachine(){
+        function getAllcommachine($start, $rows){
             try{
                 $sql = "select * from commachine order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -365,7 +365,7 @@
             return $msgs;
         }
     
-        function getAllElectinfo(){
+        function getAllElectinfo($start, $rows){
             try{
                 $sql = "select * from electinfo order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -460,7 +460,7 @@
             return $msgs;
         }
 
-        function getAllenergy(){
+        function getAllenergy($start, $rows){
             try{
                 $sql = "select * from energy order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -555,7 +555,7 @@
             return $msgs;
         }
 
-        function getAllbuild(){
+        function getAllbuild($start, $rows){
             try{
                 $sql = "select * from build order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -649,7 +649,7 @@
             return $msgs;
         }
 
-        function getAllsmart(){
+        function getAllsmart($start, $rows){
             try{
                 $sql = "select * from smart order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -743,7 +743,7 @@
             return $msgs;
         }
 
-        function getAllseesighting(){
+        function getAllseesighting($start, $rows){
             try{
                 $sql = "select * from seesighting order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -837,7 +837,7 @@
             return $msgs;
         }
 
-        function getAllsoldier(){
+        function getAllsoldier($start, $rows){
             try{
                 $sql = "select * from soldier order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -931,7 +931,7 @@
             return $msgs;
         }
 
-        function getAllcontents(){
+        function getAllcontents($start, $rows){
             try{
                 $sql = "select * from contents order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -1025,7 +1025,7 @@
             return $msgs;
         }
 
-        function getAllwelfare(){
+        function getAllwelfare($start, $rows){
             try{
                 $sql = "select * from welfare order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -1119,7 +1119,7 @@
             return $msgs;
         }
 
-        function getAlleducate(){
+        function getAlleducate($start, $rows){
             try{
                 $sql = "select * from educate order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);
@@ -1213,7 +1213,7 @@
             return $msgs;
         }
 
-        function getAllnurse(){
+        function getAllnurse($start, $rows){
             try{
                 $sql = "select * from nurse order by num desc limit :start, :rows";
                 $pstmt = $this->db->prepare($sql);

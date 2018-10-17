@@ -29,10 +29,10 @@
         $dao = new boardDao();
         
 
-        $NumOfNotices = $dao->getNumOfComInfo();
+        $NumOfCominfo = $dao->getNumOfComInfo();
 
-        if($NumOfNotices > 0){
-          $numPages = ceil($NumOfNotices / NUM_LINES);
+        if($NumOfCominfo > 0){
+          $numPages = ceil($NumOfCominfo / NUM_LINES);
 
           if($page < 1)
             $page = 1;
@@ -40,7 +40,7 @@
             $page = $numPages;
 
           $start = ($page - 1) * NUM_LINES;
-          $msgs = $dao->getAllnotices($start, NUM_LINES);
+          $msgs = $dao->getAllcominfo($start, NUM_LINES);
 
           $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
           $lastLink = $firstLink + 1;
@@ -60,7 +60,7 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span>컴퓨터정보계열</span>
+            <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -166,7 +166,7 @@
         </div>
       </div>
 
-      <?php if($NumOfNotices > 0) : ?>
+      <?php if($NumOfCominfo > 0) : ?>
         <table class="ui single line striped selectable table">
           <thead>
             <tr>
@@ -185,7 +185,7 @@
                   <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
                 </td>
                 <td>
-                  <a href = "viewNotice_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                  <a href = "viewCominfo_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
                     <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>
@@ -205,33 +205,25 @@
         
         <br>
         <?php if($firstLink > 1) : ?>
-          <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+          <a href="<?= bdUrl('cominfoBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
         <?php endif ?>
 
         <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
           <?php if($i == $page) : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+            <a href="<?= bdUrl('cominfoBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
           <?php else : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+            <a href="<?= bdUrl('cominfoBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
           <?php endif ?>
         <?php endfor ?>
         
         <?php if( $lastLink < $numPages) : ?>
-          <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+          <a href="<?= bdUrl('cominfoBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
         <?php endif ?>
 
       <?php endif ?>
 
         <div style="float:right;">
-          <?php
-            if(!isset($_SESSION['userNick'])){
-              error_reporting(0);
-            }else if($_SESSION['userNick'] == 'Administrator'){
-              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
-            }else{
-              error_reporting(0);
-            }
-          ?>
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCominfo_form.php'>글쓰기</button>
         </div>
     </div>
 

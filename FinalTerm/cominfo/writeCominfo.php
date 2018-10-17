@@ -7,7 +7,7 @@
     $content = requestValue('contents');
     
     $dao = new boardDao();
-    $dao->insertNotices($userNick, $title, $content);
+    $dao->insertCominfo($userNick, $title, $content);
     echo "<script>alert('등록이 완료되었습니다')</script>";
-    echo "<script>location.replace('noticeBoard.php')</script>";
+    echo "<script>location.replace('cominfoBoard.php')</script>";
 ?>
