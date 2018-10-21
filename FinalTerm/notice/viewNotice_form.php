@@ -21,6 +21,8 @@
         require_once("../tools.php");
         require_once("../dao/boardDao.php");
 
+        $page = requestValue('page');
+
         $num = requestValue('num');
         $dao = new boardDao();
         $msgs = $dao->getNotices($num);
@@ -153,14 +155,20 @@
             <em><?= $msgs['userNick'] ?></em>
             <span>|</span>
             <span><?= $msgs['date'] ?></span>
-            <span style="float:right;"><?= $msgs['recommend'] ?></span>
-            <span style="float:right; margin-right:1.5em">추천</span>
-            <span style="float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
-            <span style="float:right; margin-right:1.5em">조회수</span>
+            <span style = "float:right;"><?= $msgs['recommend'] ?></span>
+            <span style = "float:right; margin-right:1.5em">추천</span>
+            <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
+            <span style = "float:right; margin-right:1.5em">조회수</span>
           </div>
           <div class = "ui divider"></div>
-          <br>
-          <div>
+
+          <div id = "contents">
+            <span style = "float:right;">
+              <a href = "deleteNotice.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>;
+              <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>;
+              <button class = 'ui secondary button' onclick = "location.href='noticeBoard.php?page=<?= $page?>'">목록</button>;
+            </span>
+            <br><br>
             <?= $msgs['content'] ?>
           </div>
           <div class = "ui divider"></div>
@@ -175,8 +183,12 @@
           display: relative;
           height: 100%;
         }
-
         
+        #contents{
+          margin-top: 0.5%;
+          margin-bottom: 0.5%;
+        }
+
         #sidebar {
           position: fixed;
           top: 51.8px;

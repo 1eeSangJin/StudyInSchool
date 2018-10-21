@@ -8,6 +8,5 @@
     
     $dao = new boardDao();
     $dao->insertNotices($userNick, $title, $content);
-    echo "<script>alert('등록이 완료되었습니다')</script>";
-    echo "<script>location.replace('noticeBoard.php')</script>";
+    okGo('등록이 완료되었습니다', 'noticeBoard.php');
 ?>

@@ -58,7 +58,7 @@
                 $pstmt = $this->db->prepare("update notices set title=:title, content=:content where num=:num");
                 $pstmt->bindValue(":title",$title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content",$content, PDO::PARAM_STR);
-                $pstmt->bindValue(":num",$num, PDO::PARAM_INT);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOExcetion $e){
@@ -109,6 +109,7 @@
             }
             return $NumOfNotices;
         }
+
 
     /*********************************************************************************************공지사항 게시판 용************************************************************* */
 
@@ -204,7 +205,18 @@
             }
             return $NumOfNotices;
         }
-
+        function checkCominfoUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
     /*********************************************************************************************컴정 게시판 용************************************************************* */
 
         function insertCommachine($userNick, $title, $content){

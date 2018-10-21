@@ -23,13 +23,15 @@
 
         require_once("../tools.php");
         require_once("../dao/boardDao.php");
+        require_once("../dao/memberDao.php");
 
         $page = requestValue("page");
-
         $dao = new boardDao();
-        
+        $mdao = new memberDao();
 
         $NumOfNotices = $dao->getNumOfNotices();
+        $aff = $mdao->getAff($_SESSION['userId']);
+        
 
         if($NumOfNotices > 0){
           $numPages = ceil($NumOfNotices / NUM_LINES);
@@ -116,7 +118,7 @@
         <?php
           if(!isset($_SESSION['userId'])){       
             echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
-            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";
           }else if($_SESSION['userNick'] == "Administrator"){
             $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
@@ -166,61 +168,65 @@
         </div>
       </div>
 
-      <?php if($NumOfNotices > 0) : ?>
-        <table class="ui single line striped selectable table">
-          <thead>
+      <table class="ui single line striped selectable table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>날짜</th>
+            <th>조회</th>
+            <!-- <th>추천수</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
             <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>글쓴이</th>
-              <th>날짜</th>
-              <th>조회</th>
-              <!-- <th>추천수</th> -->
+              <td>
+                <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <a href = "viewNotice_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                <?php foreach($aff as $affName) : ?>
+                  <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
+                <?php endforeach ?>
+                </a>
+              </td>
+              <td>
+                <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
-              <tr>
-                <td>
-                  <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <a href = "viewNotice_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
-                  </a>
-                </td>
-                <td>
-                  <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
-                </td>
-              </tr>
-            <?php endforeach ?>                                         <!-- foreach문 종료 -->
-          </tbody>
-        </table>
-        
+          <?php endforeach ?>                                         <!-- foreach문 종료 -->
+        </tbody>
+      </table>
+
+      <div>
+        <?php if($NumOfNotices > 0) : ?>
         <br>
-        <?php if($firstLink > 1) : ?>
-          <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
-        <?php endif ?>
-
-        <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
-          <?php if($i == $page) : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
-          <?php else : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+          <?php if($firstLink > 1) : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
           <?php endif ?>
-        <?php endfor ?>
-        
-        <?php if( $lastLink < $numPages) : ?>
-          <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
-        <?php endif ?>
 
-      <?php endif ?>
+          <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
+            <?php if($i == $page) : ?>
+              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+            <?php else : ?>
+              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+            <?php endif ?>
+          <?php endfor ?>
+            
+          <?php if( $lastLink < $numPages) : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+          <?php endif ?>
+
+        <?php endif ?>
+      </div>
 
         <div style="float:right;">
           <?php
@@ -244,7 +250,6 @@
           height: 100%;
         }
 
-        
         #sidebar {
           position: fixed;
           top: 51.8px;

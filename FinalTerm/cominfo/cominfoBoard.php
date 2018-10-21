@@ -185,7 +185,7 @@
                   <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
                 </td>
                 <td>
-                  <a href = "viewCominfo_form.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                  <a href = "viewCominfo_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
                     <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>

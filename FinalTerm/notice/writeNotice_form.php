@@ -48,7 +48,7 @@
 
         if(!($_SESSION['userNick'] == "Administrator" || !isset($_SESSION['userNick']))){
           echo "<script>alert('부적절한 접근입니다.')</script>";
-          echo "<script>location.replace('../main.php');</script>";
+          echo "<script>location.replace('noticeBoard.php');</script>";
         }
 
         $admin = $_SESSION['userId'];

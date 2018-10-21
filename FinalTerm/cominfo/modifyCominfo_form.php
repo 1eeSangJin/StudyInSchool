@@ -11,7 +11,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="../../semantic/semantic.min.js"></script>
+    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
 
+    <script type="text/javascript">
+        $(function(){
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "contents",
+                sSkinURI: "/nse/nse_files/SmartEditor2Skin.html",
+                htParams:{
+                    bUseToolbar:true,
+                    bUseVerticalResizer : true,
+                    bUseModeChanger: true,
+                },
+                fCreator: "createSEditor2"
+            });        
+
+            $("#submit_button").click(function(){
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                $("#write_notice").submit();
+            });
+
+            
+        });
+    </script>
 </head>
 <body>
 
@@ -21,11 +46,16 @@
         require_once("../tools.php");
         require_once("../dao/boardDao.php");
 
-        $page = requestValue('page');
         $num = requestValue('num');
+        $page = requestValue('page');
+
+        if(!isset($_SESSION['userNick']) || !($_SESSION['userNick'] == "Administrator")){
+          echo "<script>alert('부적절한 접근입니다.')</script>";
+          echo "<script>location.replace('noticeBoard.php?page=$page');</script>";
+        }
+
         $dao = new boardDao();
-        $msgs = $dao->getCominfo($num);
-        // $dao->increseNoticesHits($num);
+        $msgs = $dao->getNotices($num);
   ?>
 
   <header>
@@ -39,7 +69,7 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
+            <span>컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
@@ -139,40 +169,39 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          공지사항 작성
         </h1>
       </div>
 
-      <div class = "ui divider"></div>
       <br>
 
-      <div>
-          <h3>
-            <span><?= $msgs['title'] ?></span>
-          </h3>
-          <div>
-            <em><?= $msgs['userNick'] ?></em>
-            <span>|</span>
-            <span><?= $msgs['date'] ?></span>
-            <span style = "float:right;"><?= $msgs['recommend'] ?></span>
-            <span style = "float:right; margin-right:1.5em">추천</span>
-            <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
-            <span style = "float:right; margin-right:1.5em">조회수</span>
-          </div>
-          <div class = "ui divider"></div>
+        <form action = "modifyNotice.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+            <h2 class = "ui dividing header">내용</h2>
 
-          <div id = "contents">
-            <span style = "float:right;">
-              <a href = "deleteCominfo.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>;
-              <button class = 'ui secondary button' onclick = "location.href='modifyCominfo_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>;
-              <button class = 'ui secondary button' onclick = "location.href='cominfoBoard.php?page=<?= $page?>'">목록</button>;
-            </span>
-            <br><br>
-          <div>
-            <?= $msgs['content'] ?>
-          </div>
-          <div class = "ui divider"></div>
-      </div>
+            <div class = "field">
+                <label>작성자</label>
+                <div class = "four wide field">
+                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $msgs['userNick'] ?>" readonly required>
+                </div>
+            </div>
+
+            <div class = "field">
+                <label>제목</label>
+                <div class = "twelve wide field">
+                    <input type = "text" name = "title" id = "title" value = "<?= $msgs['title'] ?>" required>
+                </div>
+            </div>
+
+
+
+            <div class="field">
+                <label>내용</label>
+                <input type = "text" name = "contents" id = "contents" rows="15" cols="10" value = "<?= $msgs['content'] ?>">
+            </div>
+            
+            <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
+        </form>
     </div>
 
       <style type="text/css">

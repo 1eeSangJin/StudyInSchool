@@ -46,7 +46,7 @@
         require_once("../dao/memberDao.php");
 
         if(!isset($_SESSION['userNick'])){
-          echo "<script>alert('로그인 후 가능한 기능입니다.')</script>";
+          echo "<script>alert('로그인이 필요합니다.')</script>";
           echo "<script>location.replace('cominfoBoard.php');</script>";
         }
 
@@ -66,7 +66,7 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span>컴퓨터정보계열</span>
+            <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
