@@ -54,6 +54,7 @@
         $admin = $_SESSION['userId'];
         $dao = new memberDao();
         $userInfo = $dao->getUser($admin);
+        $getAff = $dao->getAff($admin);
   ?>
 
   <header>
@@ -176,10 +177,16 @@
         <form action = "writeNotice.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
-            <div class = "field">
+            <div class = "two field">
                 <label>작성자</label>
-                <div class = "four wide field">
+                <div class = "two wide field">
                     <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
+                </div>
+                <label>소속</label>
+                <div class = "two wide field">
+                    <?php foreach($getAff as $affName) :?>
+                    <input type="text" name = "affName" id = "affName" value = "<?= $affName['affName'] ?>" readonly>
+                    <?php endforeach ?>
                 </div>
             </div>
 

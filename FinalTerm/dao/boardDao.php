@@ -17,14 +17,15 @@
             }
         }
 
-        function insertNotices($userNick, $title, $content){
+        function insertNotices($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into notices(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into notices(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 

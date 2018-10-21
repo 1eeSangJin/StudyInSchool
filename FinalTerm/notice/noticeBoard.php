@@ -30,7 +30,6 @@
         $mdao = new memberDao();
 
         $NumOfNotices = $dao->getNumOfNotices();
-        $aff = $mdao->getAff($_SESSION['userId']);
         
 
         if($NumOfNotices > 0){
@@ -180,6 +179,7 @@
           </tr>
         </thead>
         <tbody>
+        <?php error_reporting(0) ?>
           <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
             <tr>
               <td>
@@ -187,13 +187,11 @@
               </td>
               <td>
                 <a href = "viewNotice_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                <?php foreach($aff as $affName) : ?>
-                  <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
-                <?php endforeach ?>
+                  <?= $row['title'] ?>                   <!-- title에 있는 값을 출력한다. -->
                 </a>
               </td>
               <td>
-                <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
+                <?= $row['userNick'] ?>[<?= $row['affName'] ?>]                              <!-- userNick에 있는 값을 출력한다. -->
               </td>
               <td>
                 <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
