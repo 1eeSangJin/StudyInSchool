@@ -23,11 +23,9 @@
 
         require_once("../tools.php");
         require_once("../dao/boardDao.php");
-        require_once("../dao/memberDao.php");
 
         $page = requestValue("page");
         $dao = new boardDao();
-        $mdao = new memberDao();
 
         $NumOfNotices = $dao->getNumOfNotices();
         

@@ -114,14 +114,15 @@
 
     /*********************************************************************************************공지사항 게시판 용************************************************************* */
 
-        function insertCominfo($userNick, $title, $content){
+        function insertCominfo($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into cominfo(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into cominfo(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -206,7 +207,8 @@
             }
             return $NumOfNotices;
         }
-        function checkCominfoUser($num){
+
+        function checkComInfoUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
                 $pstmt=$this->db->prepare($sql);
@@ -220,14 +222,15 @@
         }
     /*********************************************************************************************컴정 게시판 용************************************************************* */
 
-        function insertCommachine($userNick, $title, $content){
+        function insertCommachine($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into commachine(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into commachine(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
     
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
     
                 $pstmt->execute();
 
@@ -313,16 +316,30 @@
             return $NumOfNotices;
         }
 
+        function checkComMachineUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /*********************************************************************************************컴응기 게시판 용************************************************************* */
 
-        function insertElectinfo($userNick, $title, $content){
+        function insertElectinfo($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into electinfo(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into electinfo(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
     
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
     
                 $pstmt->execute();
 
@@ -408,16 +425,30 @@
             return $NumOfNotices;
         }
 
+        function checkElectInfoUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /*********************************************************************************************전자정보 게시판 용************************************************************* */
 
-        function insertEnergy($userNick, $title, $content){
+        function insertEnergy($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into energy(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into energy(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -503,16 +534,30 @@
             return $NumOfNotices;
         }
 
+        function checkEnergyUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /*********************************************************************************************신재생 게시판 용************************************************************* */
 
-        function insertBuild($userNick, $title, $content){
+        function insertBuild($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into build(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into build(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -597,16 +642,30 @@
             return $NumOfNotices;
         }
 
+        function checkBuildUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /*********************************************************************************************건축 게시판 용************************************************************* */
 
-        function insertSmart($userNick, $title, $content){
+        function insertSmart($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into smart(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into smart(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -691,16 +750,30 @@
             return $NumOfNotices;
         }
 
+        function checkSmartUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /******************************************************************************************스맛경영 게시판 용*********************************************************** */
 
-        function insertSeesighting($userNick, $title, $content){
+        function insertSeesighting($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into seesighting(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into seesighting(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -785,16 +858,30 @@
             return $NumOfNotices;
         }
 
+        function checkSeesightingUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /******************************************************************************************국제관광 게시판 용*********************************************************** */
 
-        function insertSoldier($userNick, $title, $content){
+        function insertSoldier($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into soldier(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into soldier(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -879,16 +966,30 @@
             return $NumOfNotices;
         }
 
+        function checkSoldierUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /******************************************************************************************부사관 게시판 용*********************************************************** */  
 
-        function insertContents($userNick, $title, $content){
+        function insertContents($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into contents(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into contents(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -973,16 +1074,30 @@
             return $NumOfNotices;
         }
 
+        function checkContentsUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /******************************************************************************************컨텐디자인 게시판 용*********************************************************** */ 
     
-        function insertWelfare($userNick, $title, $content){
+        function insertWelfare($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into welfare(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into welfare(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -1067,16 +1182,30 @@
             return $NumOfNotices;
         }
 
+        function checkWelfareUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
+
     /******************************************************************************************사회복지 게시판 용*********************************************************** */
 
-        function insertEducate($userNick, $title, $content){
+        function insertEducate($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into educate(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into educate(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -1161,16 +1290,29 @@
             return $NumOfNotices;
         }
 
+        function checkEducateUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
     /******************************************************************************************유아교육 게시판 용*********************************************************** */
     
-        function insertNurse($userNick, $title, $content){
+        function insertNurse($userNick, $title, $content, $affName){
             try{
-                $sql = "insert into nurse(userNick, title, content, date, hits, recommend) values(:userNick, :title, :content, now(), 0, 0)";
+                $sql = "insert into nurse(userNick, title, content, date, hits, recommend, affName) values(:userNick, :title, :content, now(), 0, 0, :affName)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":title", $title, PDO::PARAM_STR);
                 $pstmt->bindValue(":content", $content, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
 
                 $pstmt->execute();
 
@@ -1254,6 +1396,19 @@
             }
             return $NumOfNotices;
         }
-    }
+
+        function checkNurseUser($num){
+            try{
+                $sql = "select userNick from cominfo where num=:num";
+                $pstmt=$this->db->prepare($sql);
+                $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+                $pstmt->execute();
+                $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $user;
+        }
     /******************************************************************************************간호학과 게시판 용*********************************************************** */
+    }
 ?>

@@ -49,9 +49,9 @@
         $num = requestValue('num');
         $page = requestValue('page');
 
-        if(!isset($_SESSION['userNick']) || !($_SESSION['userNick'] == "Administrator")){
+        if(!isset($_SESSION['userNick'])){
           echo "<script>alert('부적절한 접근입니다.')</script>";
-          echo "<script>location.replace('noticeBoard.php?page=$page');</script>";
+          echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
         }
 
         $dao = new boardDao();

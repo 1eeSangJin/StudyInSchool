@@ -5,8 +5,9 @@
     $userNick = requestValue('userNick');
     $title = requestValue('title');
     $content = requestValue('contents');
+    $affName = requestValue('affName');
     
     $dao = new boardDao();
-    $dao->insertCominfo($userNick, $title, $content);
+    $dao->insertCominfo($userNick, $title, $content, $affName);
     okGo('등록이 완료되었습니다', 'cominfoBoard.php');
 ?>

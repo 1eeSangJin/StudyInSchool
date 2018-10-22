@@ -50,9 +50,10 @@
           echo "<script>location.replace('cominfoBoard.php');</script>";
         }
 
-        $admin = $_SESSION['userId'];
+        $userId = $_SESSION['userId'];
         $dao = new memberDao();
-        $userInfo = $dao->getUser($admin);
+        $userInfo = $dao->getUser($userId);
+        $getAff = $dao->getAff($userId);
   ?>
 
   <header>
@@ -175,10 +176,16 @@
         <form action = "writeCominfo.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">작성내용</h2>
 
-            <div class = "field">
+            <div class = "two field">
                 <label>작성자</label>
                 <div class = "four wide field">
                     <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
+                </div>
+                <label>소속</label>
+                <div class = "four wide field">
+                    <?php foreach($getAff as $affName) :?>
+                    <input type="text" name = "affName" id = "affName" value = "<?= $affName['affName'] ?>" readonly>
+                    <?php endforeach ?>
                 </div>
             </div>
 
