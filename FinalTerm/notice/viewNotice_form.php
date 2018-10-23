@@ -164,9 +164,9 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteNotice.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>;
-              <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>;
-              <button class = 'ui secondary button' onclick = "location.href='noticeBoard.php?page=<?= $page?>'">목록</button>;
+              <a href = "deleteNotice.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='noticeBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
             <?= $msgs['content'] ?>

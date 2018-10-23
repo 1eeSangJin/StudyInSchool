@@ -49,13 +49,21 @@
         $num = requestValue('num');
         $page = requestValue('page');
 
-        if(!isset($_SESSION['userNick'])){
-          echo "<script>alert('부적절한 접근입니다.')</script>";
-          echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+        $dao = new boardDao();
+        $userNick = $dao->checkComInfoUser($num);
+
+        foreach($userNick as $check){
+          if(!isset($_SESSION['userNick'])){
+            echo "<script>alert('로그인 하십시오.')</script>";
+            echo "<script>location.replace('../user/login_form.php');</script>";
+          }else if($_SESSION['userNick'] == $check['userNick'] || $_SESSION['userNick'] == 'Administrator'){
+            $msgs = $dao->getCominfo($num);
+          }else{
+            echo "<script>alert('본인만 수정할 수 있습니다.')</script>";
+            echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+          }
         }
 
-        $dao = new boardDao();
-        $msgs = $dao->getNotices($num);
   ?>
 
   <header>

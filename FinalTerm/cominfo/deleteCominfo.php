@@ -8,11 +8,18 @@
     $page = requestValue('page');
     $dao = new boardDao();
 
-    if(!isset($_SESSION['userNick'])){
-        echo "<script>alert('부적절한 접근입니다.')</script>";
-        echo "<script>location.replace('noticeBoard.php');</script>";
-    }else{
-        $dao->deleteCominfo($num);
+    $userNick = $dao->checkComInfoUser($num);
+
+    foreach($userNick as $check){
+      if(!isset($_SESSION['userNick'])){
+        echo "<script>alert('로그인 하십시오.')</script>";
+        echo "<script>location.replace('../user/login_form.php');</script>";
+      }else if($_SESSION['userNick'] == $check['userNick'] || $_SESSION['userNick'] == 'Administrator'){
+        $msgs = $dao->deleteCominfo($num);
         okGo("삭제되었습니다", 'cominfoBoard.php?page=' . $page);
+      }else{
+        echo "<script>alert('삭제권한이 없습니다.')</script>";
+        echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+      }
     }
 ?>

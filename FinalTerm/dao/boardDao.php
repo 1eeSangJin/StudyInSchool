@@ -211,14 +211,46 @@
         function checkComInfoUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
             return $user;
+        } 
+
+        function inputCommentComInfo($board_num, $userNick, $comment){
+            try{
+                $sql = "insert into cominfo_comment(board_num, userNick, comment, date) values(:board_num, :userNick, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentComInfo(){
+            try{
+                $sql = "select * from cominfo_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
         }
     /*********************************************************************************************컴정 게시판 용************************************************************* */
 
@@ -319,9 +351,12 @@
         function checkComMachineUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -428,9 +463,12 @@
         function checkElectInfoUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -537,9 +575,12 @@
         function checkEnergyUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -645,9 +686,12 @@
         function checkBuildUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -753,9 +797,12 @@
         function checkSmartUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -861,9 +908,12 @@
         function checkSeesightingUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -969,9 +1019,12 @@
         function checkSoldierUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1077,9 +1130,12 @@
         function checkContentsUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1185,9 +1241,12 @@
         function checkWelfareUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1293,9 +1352,12 @@
         function checkEducateUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1400,9 +1462,12 @@
         function checkNurseUser($num){
             try{
                 $sql = "select userNick from cominfo where num=:num";
-                $pstmt=$this->db->prepare($sql);
+                $pstmt = $this->db->prepare($sql);
+
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+
                 $pstmt->execute();
+
                 $user = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());

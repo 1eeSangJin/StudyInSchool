@@ -25,6 +25,7 @@
         $num = requestValue('num');
         $dao = new boardDao();
         $msgs = $dao->getCominfo($num);
+        $comments = $dao->getAllCommentComInfo();
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -89,26 +90,26 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
           if(!isset($_SESSION['userId'])){       
-            echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
-            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";
+            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";
           }else if($_SESSION['userNick'] == "Administrator"){
             $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
-            echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>";
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";
           }else{
             $user_nick = $_SESSION['userNick'];             
             $user_aff = $_SESSION['affName'];
-            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>";
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
             echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
-            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";
           }
         ?>
       </div>
@@ -122,14 +123,14 @@
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
                 <div class = "carousel-inner">
                 <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
+                  <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
                 </div>
                 <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
-                    </div>
-                    <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
-                    </div>
+                  <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
+                </div>
+                <div class = "carousel-item">
+                  <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
+                </div>
                 </div>
             </div>
         </div>
@@ -163,18 +164,59 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteCominfo.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>;
-              <button class = 'ui secondary button' onclick = "location.href='modifyCominfo_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>;
-              <button class = 'ui secondary button' onclick = "location.href='cominfoBoard.php?page=<?= $page?>'">목록</button>;
+              <a href = "deleteCominfo.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifyCominfo_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='cominfoBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
           <div>
             <?= $msgs['content'] ?>
           </div>
           <div class = "ui divider"></div>
+          <br><br>
+          
+          <table>
+              <td>
+                <span>댓글 </span>
+                <span> |&nbsp</span>
+              </td>
+            
+              <td>
+                <span>조회수 </span>
+                <span><?= $msgs['hits'] ?> |&nbsp</span>
+              </td>
+
+              <td>
+                <span>추천수 </span>
+                <span><?= $msgs['recommend'] ?></span>
+              </td>
+            </table>
+
+            <div class = "jumbotron">
+              <table class = "ui celled table">
+              <?php foreach($comments as $comment) :?>
+                <tr>
+                  <td>
+                  <?= $user_nick ?> [<?= $user_aff ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
+                  <br>
+                  <?= $comment['comment'] ?>
+                    <?php
+                    if($user_nick == $comment['userNick']){
+                      echo "<span style = 'float: right;'><a href='#' onclick = 'return confirm(삭제하시겠습니까?)'>삭제</a></span>";
+                      echo "<span style = 'float: right;'><a href='#'>수정&nbsp;&nbsp;</a></span>";
+                    }
+                  ?>
+                  </td>
+                </tr>
+              <?php endforeach ?>
+              </table>
+              <form action="comment.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" method="post">
+                <textarea name="comment" id="comment" cols="130" rows="5"></textarea>
+                <button type="submit" style="width: 15%; height: 7.858em;">등록</button>
+              </form>
+            </div>
       </div>
     </div>
-
       <style type="text/css">
         html{
           height: 100%;
@@ -184,7 +226,7 @@
           height: 100%;
         }
 
-        
+
         #sidebar {
           position: fixed;
           top: 51.8px;
