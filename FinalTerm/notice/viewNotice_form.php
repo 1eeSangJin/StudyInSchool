@@ -26,6 +26,7 @@
         $num = requestValue('num');
         $dao = new boardDao();
         $msgs = $dao->getNotices($num);
+        $comments = $dao->getAllCommentNotices();
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -159,6 +160,8 @@
             <span style = "float:right; margin-right:1.5em">추천</span>
             <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
             <span style = "float:right; margin-right:1.5em">조회수</span>
+            <span style = "float:right; margin-right:1.5em"><?= $msgs['num'] ?></span>
+            <span style = "float:right; margin-right:1.5em">게시글 번호</span>
           </div>
           <div class = "ui divider"></div>
 
@@ -172,6 +175,49 @@
             <?= $msgs['content'] ?>
           </div>
           <div class = "ui divider"></div>
+          <br>
+
+          <table>
+            <td>
+              <span>댓글 </span>
+              <span> |&nbsp</span>
+            </td>
+            
+            <td>
+              <span>조회수 </span>
+              <span><?= $msgs['hits'] ?> |&nbsp</span>
+            </td>
+
+            <td>
+              <span>추천수 </span>
+              <span><?= $msgs['recommend'] ?></span>
+            </td>
+          </table>
+
+          <div class = "jumbotron">
+            <table class = "ui celled table">
+            <?php error_reporting(0); ?>
+            <?php foreach($comments as $comment) :?>
+              <tr>
+                <td>
+                <?= $comment['userNick'] ?> [<?= $comment['affName'] ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
+                <br>
+                <?= $comment['comment'] ?>
+                  <?php
+                  if($user_nick == $comment['userNick']){
+                    echo "<span style = 'float: right;'><a href='#' onclick = 'return confirm(삭제하시겠습니까?)'>삭제</a></span>";
+                    echo "<span style = 'float: right;'><a href='#'>수정&nbsp;&nbsp;</a></span>";
+                  }
+                  ?>
+                </td>
+              </tr>
+            <?php endforeach ?>
+            </table>
+            <form action="comment.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" method="post">
+              <textarea name="comment" id="comment" cols="130" rows="5"></textarea>
+              <button type="submit" style="width: 15%; height: 7.858em;">등록</button>
+            </form>
+          </div>
       </div>
     </div>
 

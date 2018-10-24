@@ -159,6 +159,8 @@
             <span style = "float:right; margin-right:1.5em">추천</span>
             <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
             <span style = "float:right; margin-right:1.5em">조회수</span>
+            <span style = "float:right; margin-right:1.5em"><?= $msgs['num'] ?></span>
+            <span style = "float:right; margin-right:1.5em">게시글 번호</span>
           </div>
           <div class = "ui divider"></div>
 
@@ -173,7 +175,7 @@
             <?= $msgs['content'] ?>
           </div>
           <div class = "ui divider"></div>
-          <br><br>
+          <br>
           
           <table>
               <td>
@@ -194,10 +196,11 @@
 
             <div class = "jumbotron">
               <table class = "ui celled table">
+              <?php error_reporting(0); ?>
               <?php foreach($comments as $comment) :?>
                 <tr>
                   <td>
-                  <?= $user_nick ?> [<?= $user_aff ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
+                  <?= $comment['userNick'] ?> [<?= $comment['affName'] ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
                   <br>
                   <?= $comment['comment'] ?>
                     <?php

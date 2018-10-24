@@ -111,6 +111,49 @@
             return $NumOfNotices;
         }
 
+        function inputCommentNotices($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into notices_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentNotices(){
+            try{
+                $sql = "select * from notices_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentNotices($board_num){
+            try{
+                $sql = "select count(*) from notices where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CommentNotices = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CommentNotices;
+        }
 
     /*********************************************************************************************공지사항 게시판 용************************************************************* */
 
@@ -224,13 +267,14 @@
             return $user;
         } 
 
-        function inputCommentComInfo($board_num, $userNick, $comment){
+        function inputCommentComInfo($board_num, $userNick, $affName, $comment){
             try{
-                $sql = "insert into cominfo_comment(board_num, userNick, comment, date) values(:board_num, :userNick, :comment, now())";
+                $sql = "insert into cominfo_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
 
                 $pstmt->execute();
@@ -252,6 +296,21 @@
             }
             return $comments;
         }
+
+        function countCommentComInfo($board_num){
+            try{
+                $sql = "select count(*) from cominfo_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CommentComInfo = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CommentComInfo;
+        }
+
     /*********************************************************************************************컴정 게시판 용************************************************************* */
 
         function insertCommachine($userNick, $title, $content, $affName){
@@ -362,6 +421,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentComMachine($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into commachine_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentComMachine(){
+            try{
+                $sql = "select * from commachine_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentComMachine($board_num){
+            try{
+                $sql = "select count(*) from commachine_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountComMachine = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountComMachine;
         }
 
     /*********************************************************************************************컴응기 게시판 용************************************************************* */
@@ -476,6 +579,50 @@
             return $user;
         }
 
+        function inputCommentElectInfo($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into electinfo_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentElectInfo(){
+            try{
+                $sql = "select * from electinfo_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentElectInfo($board_num){
+            try{
+                $sql = "select count(*) from electinfo_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountElectInfo = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountElectInfo;
+        }
+
     /*********************************************************************************************전자정보 게시판 용************************************************************* */
 
         function insertEnergy($userNick, $title, $content, $affName){
@@ -586,6 +733,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentEnergy($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into energy_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentEnergy(){
+            try{
+                $sql = "select * from energy_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentEnergy($board_num){
+            try{
+                $sql = "select count(*) from energy_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountEnergy = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountEnergy;
         }
 
     /*********************************************************************************************신재생 게시판 용************************************************************* */
@@ -699,6 +890,50 @@
             return $user;
         }
 
+        function inputCommentBuild($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into build_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentBuild(){
+            try{
+                $sql = "select * from build_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentBuild($board_num){
+            try{
+                $sql = "select count(*) from build_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountBuild = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountBuild;
+        }
+
     /*********************************************************************************************건축 게시판 용************************************************************* */
 
         function insertSmart($userNick, $title, $content, $affName){
@@ -808,6 +1043,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentSmart($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into smart_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentSmart(){
+            try{
+                $sql = "select * from smart_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentSmart($board_num){
+            try{
+                $sql = "select count(*) from smartcomment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountSmart = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountSmart;
         }
 
     /******************************************************************************************스맛경영 게시판 용*********************************************************** */
@@ -921,6 +1200,50 @@
             return $user;
         }
 
+        function inputCommentSeesighting($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into seesighting_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentSeesighting(){
+            try{
+                $sql = "select * from seesighting_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentSeesighting($board_num){
+            try{
+                $sql = "select count(*) from seesighting_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountSeesighting= $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountSeesighting;
+        }
+
     /******************************************************************************************국제관광 게시판 용*********************************************************** */
 
         function insertSoldier($userNick, $title, $content, $affName){
@@ -1030,6 +1353,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentSoldier($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into soldier_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentSoldier(){
+            try{
+                $sql = "select * from soldier_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentSoldier($board_num){
+            try{
+                $sql = "select count(*) from soldier_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountSoldier = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountSoldier;
         }
 
     /******************************************************************************************부사관 게시판 용*********************************************************** */  
@@ -1143,6 +1510,50 @@
             return $user;
         }
 
+        function inputCommentContents($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into contents_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentEContents(){
+            try{
+                $sql = "select * from contents_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentContents($board_num){
+            try{
+                $sql = "select count(*) from contents_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountContents = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountContents;
+        }
+
     /******************************************************************************************컨텐디자인 게시판 용*********************************************************** */ 
     
         function insertWelfare($userNick, $title, $content, $affName){
@@ -1252,6 +1663,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentWelfare($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into welfare_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentWelfare(){
+            try{
+                $sql = "select * from welfare_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentWelfare($board_num){
+            try{
+                $sql = "select count(*) from welfare_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountWelfare = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountWelfare;
         }
 
     /******************************************************************************************사회복지 게시판 용*********************************************************** */
@@ -1364,6 +1819,51 @@
             }
             return $user;
         }
+
+        function inputCommentEducate($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into educate_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentEducate(){
+            try{
+                $sql = "select * from educate_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentEducate($board_num){
+            try{
+                $sql = "select count(*) from educate_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountEducate = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountEducate;
+        }
+
     /******************************************************************************************유아교육 게시판 용*********************************************************** */
     
         function insertNurse($userNick, $title, $content, $affName){
@@ -1473,6 +1973,50 @@
                 exit($e->getMessage());
             }
             return $user;
+        }
+
+        function inputCommentNurse($board_num, $userNick, $affName, $comment){
+            try{
+                $sql = "insert into nurse_comment(board_num, userNick, affName,  comment, date) values(:board_num, :userNick, :affName, :comment, now())";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+                $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
+                $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
+                $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function getAllCommentNurse(){
+            try{
+                $sql = "select * from nurse_comment";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $comments = $pstmt->fetchAll(PDO::FETCH_ASSOC);
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $comments;
+        }
+
+        function countCommentNurse($board_num){
+            try{
+                $sql = "select count(*) from nurse_comment where board_num=:num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->execute();
+
+                $CountNurse = $pstmt->fetchColumn();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+            return $CountNurse;
         }
     /******************************************************************************************간호학과 게시판 용*********************************************************** */
     }

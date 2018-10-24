@@ -18,8 +18,7 @@
         $msgs = $dao->deleteCominfo($num);
         okGo("삭제되었습니다", 'cominfoBoard.php?page=' . $page);
       }else{
-        echo "<script>alert('삭제권한이 없습니다.')</script>";
-        echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+        errorBack('삭제 권한이 없습니다.');
       }
     }
 ?>

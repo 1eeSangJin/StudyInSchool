@@ -17,7 +17,6 @@
             session_start();
             $_SESSION['userId'] = $user_id;
             $_SESSION['userNick'] = $member['userNick'];
-            $_SESSION['affNum'] = $member['affNum'];
             foreach($aff as $row){
                 $_SESSION['affName'] = $row['affName'];
             }
