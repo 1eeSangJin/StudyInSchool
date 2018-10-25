@@ -71,7 +71,7 @@
           </div>
 
           <div class = "item">
-            <span>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">

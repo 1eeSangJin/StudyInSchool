@@ -77,11 +77,11 @@
           <div class = "header">계열·학과</div>
 
           <div class = "item">
-            <span>컴퓨터정보계열</span>
+            <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
           </div>
 
           <div class = "item">
-            <span>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">
@@ -177,7 +177,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항 작성
+          [컴정] 게시글 수정
         </h1>
       </div>
 

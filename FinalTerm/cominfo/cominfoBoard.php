@@ -64,7 +64,7 @@
           </div>
 
           <div class = "item">
-            <span>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">
@@ -124,12 +124,12 @@
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
-            $user_nick = $_SESSION['userNick'];             
+            $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
-            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
+            echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>";
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
             echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
-            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";
           }
         ?>
       </div>
@@ -187,7 +187,7 @@
                 </td>
                 <td>
                   <a href = "viewCominfo_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
+                    <?= $row['title'] ?>[<?= $count = $dao->countCommentComInfo($row['num']); ?>]                         <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>
                 <td>

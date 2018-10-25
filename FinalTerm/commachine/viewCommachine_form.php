@@ -24,8 +24,9 @@
         $page = requestValue('page');
         $num = requestValue('num');
         $dao = new boardDao();
-        $msgs = $dao->getCominfo($num);
-        $comments = $dao->getAllCommentComInfo($num);
+        $msgs = $dao->getCommachine($num);
+        $comments = $dao->getAllCommentComMachine($num);
+        $count = $dao->countCommentComMachine($num);
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -166,9 +167,9 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteCominfo.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyCominfo_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='cominfoBoard.php?page=<?= $page?>'">목록</button>
+              <a href = "deleteCommachine.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifyCommachine_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='commachineBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
           <div>
@@ -180,7 +181,7 @@
           <table>
               <td>
                 <span>댓글 </span>
-                <span> |&nbsp</span>
+                <span><?= $count ?> |&nbsp</span>
               </td>
             
               <td>
@@ -197,6 +198,7 @@
             <div class = "jumbotron">
               <table class = "ui celled table">
               <?php error_reporting(0); ?>
+              
               <?php foreach($comments as $comment) :?>
                 <tr>
                   <td>

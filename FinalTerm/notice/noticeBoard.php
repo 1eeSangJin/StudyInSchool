@@ -185,8 +185,8 @@
               </td>
               <td>
                 <a href = "viewNotice_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                  <?= $row['title'] ?>                   <!-- title에 있는 값을 출력한다. -->
-                </a>
+                  <?= $row['title'] ?>[<?= $count = $dao->countCommentNotices($row['num']); ?>]                   <!-- title에 있는 값을 출력한다. -->
+                </a>                  
               </td>
               <td>
                 <?= $row['userNick'] ?>[<?= $row['affName'] ?>]                              <!-- userNick에 있는 값을 출력한다. -->

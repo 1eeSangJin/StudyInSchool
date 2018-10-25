@@ -127,10 +127,12 @@
             }
         }
 
-        function getAllCommentNotices(){
+        function getAllCommentNotices($board_num){
             try{
-                $sql = "select * from notices_comment";
+                $sql = "select * from notices_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -143,8 +145,10 @@
 
         function countCommentNotices($board_num){
             try{
-                $sql = "select count(*) from notices where board_num=:num";
+                $sql = "select count(*) from notices_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -283,10 +287,12 @@
             }
         }
 
-        function getAllCommentComInfo(){
+        function getAllCommentComInfo($board_num){
             try{
-                $sql = "select * from cominfo_comment";
+                $sql = "select * from cominfo_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -299,8 +305,10 @@
 
         function countCommentComInfo($board_num){
             try{
-                $sql = "select count(*) from cominfo_comment where board_num=:num";
+                $sql = "select count(*) from cominfo_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -439,10 +447,12 @@
             }
         }
 
-        function getAllCommentComMachine(){
+        function getAllCommentComMachine($board_num){
             try{
-                $sql = "select * from commachine_comment";
+                $sql = "select * from commachine_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -455,8 +465,10 @@
 
         function countCommentComMachine($board_num){
             try{
-                $sql = "select count(*) from commachine_comment where board_num=:num";
+                $sql = "select count(*) from commachine_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -595,10 +607,12 @@
             }
         }
 
-        function getAllCommentElectInfo(){
+        function getAllCommentElectInfo($board_num){
             try{
-                $sql = "select * from electinfo_comment";
+                $sql = "select * from electinfo_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -611,8 +625,10 @@
 
         function countCommentElectInfo($board_num){
             try{
-                $sql = "select count(*) from electinfo_comment where board_num=:num";
+                $sql = "select count(*) from electinfo_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -751,10 +767,12 @@
             }
         }
 
-        function getAllCommentEnergy(){
+        function getAllCommentEnergy($board_num){
             try{
-                $sql = "select * from energy_comment";
+                $sql = "select * from energy_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -767,8 +785,10 @@
 
         function countCommentEnergy($board_num){
             try{
-                $sql = "select count(*) from energy_comment where board_num=:num";
+                $sql = "select count(*) from energy_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -906,10 +926,12 @@
             }
         }
 
-        function getAllCommentBuild(){
+        function getAllCommentBuild($board_num){
             try{
-                $sql = "select * from build_comment";
+                $sql = "select * from build_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -922,8 +944,10 @@
 
         function countCommentBuild($board_num){
             try{
-                $sql = "select count(*) from build_comment where board_num=:num";
+                $sql = "select count(*) from build_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1061,10 +1085,12 @@
             }
         }
 
-        function getAllCommentSmart(){
+        function getAllCommentSmart($board_num){
             try{
-                $sql = "select * from smart_comment";
+                $sql = "select * from smart_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1077,8 +1103,10 @@
 
         function countCommentSmart($board_num){
             try{
-                $sql = "select count(*) from smartcomment where board_num=:num";
+                $sql = "select count(*) from smartcomment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1216,10 +1244,12 @@
             }
         }
 
-        function getAllCommentSeesighting(){
+        function getAllCommentSeesighting($board_num){
             try{
-                $sql = "select * from seesighting_comment";
+                $sql = "select * from seesighting_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1232,8 +1262,10 @@
 
         function countCommentSeesighting($board_num){
             try{
-                $sql = "select count(*) from seesighting_comment where board_num=:num";
+                $sql = "select count(*) from seesighting_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1371,10 +1403,12 @@
             }
         }
 
-        function getAllCommentSoldier(){
+        function getAllCommentSoldier($board_num){
             try{
-                $sql = "select * from soldier_comment";
+                $sql = "select * from soldier_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1387,8 +1421,10 @@
 
         function countCommentSoldier($board_num){
             try{
-                $sql = "select count(*) from soldier_comment where board_num=:num";
+                $sql = "select count(*) from soldier_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1526,10 +1562,12 @@
             }
         }
 
-        function getAllCommentEContents(){
+        function getAllCommentEContents($board_num){
             try{
-                $sql = "select * from contents_comment";
+                $sql = "select * from contents_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1542,8 +1580,10 @@
 
         function countCommentContents($board_num){
             try{
-                $sql = "select count(*) from contents_comment where board_num=:num";
+                $sql = "select count(*) from contents_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1681,10 +1721,12 @@
             }
         }
 
-        function getAllCommentWelfare(){
+        function getAllCommentWelfare($board_num){
             try{
-                $sql = "select * from welfare_comment";
+                $sql = "select * from welfare_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1697,8 +1739,10 @@
 
         function countCommentWelfare($board_num){
             try{
-                $sql = "select count(*) from welfare_comment where board_num=:num";
+                $sql = "select count(*) from welfare_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1836,10 +1880,12 @@
             }
         }
 
-        function getAllCommentEducate(){
+        function getAllCommentEducate($board_num){
             try{
-                $sql = "select * from educate_comment";
+                $sql = "select * from educate_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1852,8 +1898,10 @@
 
         function countCommentEducate($board_num){
             try{
-                $sql = "select count(*) from educate_comment where board_num=:num";
+                $sql = "select count(*) from educate_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -1991,10 +2039,12 @@
             }
         }
 
-        function getAllCommentNurse(){
+        function getAllCommentNurse($board_num){
             try{
-                $sql = "select * from nurse_comment";
+                $sql = "select * from nurse_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
@@ -2007,8 +2057,10 @@
 
         function countCommentNurse($board_num){
             try{
-                $sql = "select count(*) from nurse_comment where board_num=:num";
+                $sql = "select count(*) from nurse_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
 
