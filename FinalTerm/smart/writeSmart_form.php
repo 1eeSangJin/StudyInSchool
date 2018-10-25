@@ -11,7 +11,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="../../semantic/semantic.min.js"></script>
+    <script src="/nse/nse_files/js/HuskyEZCreator.js" charset="utf-8"></script>
 
+    <script type="text/javascript">
+        $(function(){
+            var oEditors = [];
+            nhn.husky.EZCreator.createInIFrame({
+                oAppRef: oEditors,
+                elPlaceHolder: "contents",
+                sSkinURI: "/nse/nse_files/SmartEditor2Skin.html",
+                htParams:{
+                    bUseToolbar:true,
+                    bUseVerticalResizer : true,
+                    bUseModeChanger: true,
+                },
+                fCreator: "createSEditor2"
+            });        
+
+            $("#submit_button").click(function(){
+                oEditors.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+
+                $("#write_notice").submit();
+            });
+
+        });
+    </script>
 </head>
 <body>
 
@@ -19,15 +43,17 @@
         session_start();
 
         require_once("../tools.php");
-        require_once("../dao/boardDao.php");
+        require_once("../dao/memberDao.php");
 
-        $page = requestValue('page');
+        if(!isset($_SESSION['userNick'])){
+          echo "<script>alert('로그인이 필요합니다.')</script>";
+          echo "<script>location.replace('cominfoBoard.php');</script>";
+        }
 
-        $num = requestValue('num');
-        $dao = new boardDao();
-        $msgs = $dao->getNotices($num);
-        $comments = $dao->getAllCommentNotices($num);
-        // $dao->increseNoticesHits($num);
+        $userId = $_SESSION['userId'];
+        $dao = new memberDao();
+        $userInfo = $dao->getUser($userId);
+        $getAff = $dao->getAff($userId);
   ?>
 
   <header>
@@ -45,7 +71,7 @@
           </div>
 
           <div class = "item">
-            <span>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'"s>컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">
@@ -91,7 +117,7 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -141,84 +167,45 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항
+          컴퓨터정보계열 갤러리
         </h1>
       </div>
 
-      <div class = "ui divider"></div>
       <br>
 
-      <div>
-          <h3>
-            <span><?= $msgs['title'] ?></span>
-          </h3>
-          <div>
-            <em><?= $msgs['userNick'] ?></em>
-            <span>|</span>
-            <span><?= $msgs['date'] ?></span>
-            <span style = "float:right;"><?= $msgs['recommend'] ?></span>
-            <span style = "float:right; margin-right:1.5em">추천</span>
-            <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
-            <span style = "float:right; margin-right:1.5em">조회수</span>
-            <span style = "float:right; margin-right:1.5em"><?= $msgs['num'] ?></span>
-            <span style = "float:right; margin-right:1.5em">게시글 번호</span>
-          </div>
-          <div class = "ui divider"></div>
+        <form action = "writeCommachine.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+            <h2 class = "ui dividing header">작성내용</h2>
 
-          <div id = "contents">
-            <span style = "float:right;">
-              <a href = "deleteNotice.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='noticeBoard.php?page=<?= $page?>'">목록</button>
-            </span>
-            <br><br>
-            <?= $msgs['content'] ?>
-          </div>
-          <div class = "ui divider"></div>
-          <br>
+            <div class = "two field">
+                <label>작성자</label>
+                <div class = "four wide field">
+                    <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
+                </div>
+                <label>소속</label>
+                <div class = "four wide field">
+                    <?php foreach($getAff as $affName) :?>
+                    <input type="text" name = "affName" id = "affName" value = "<?= $affName['affName'] ?>" readonly>
+                    <?php endforeach ?>
+                </div>
+            </div>
 
-          <table>
-            <td>
-              <span>댓글 </span>
-              <span> |&nbsp</span>
-            </td>
+            <div class = "field">
+                <label>제목</label>
+                <div class = "twelve wide field">
+                    <input type = "text" name = "title" id = "title" required>
+                </div>
+            </div>
+
+
+
+            <div class="field">
+                <label>내용</label>
+                <textarea name = "contents" id = "contents" rows="15" cols="10"></textarea>
+            </div>
             
-            <td>
-              <span>조회수 </span>
-              <span><?= $msgs['hits'] ?> |&nbsp</span>
-            </td>
-
-            <td>
-              <span>추천수 </span>
-              <span><?= $msgs['recommend'] ?></span>
-            </td>
-          </table>
-
-          <div class = "jumbotron">
-            <table class = "ui celled table">
-            <?php error_reporting(0); ?>
-            <?php foreach($comments as $comment) :?>
-              <tr>
-                <td>
-                <?= $comment['userNick'] ?> [<?= $comment['affName'] ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
-                <br>
-                <?= $comment['comment'] ?>
-                  <?php
-                  if($user_nick == $comment['userNick']){
-                    echo "<span style = 'float: right;'><a href='#' onclick = 'return confirm(삭제하시겠습니까?)'>삭제</a></span>";
-                    echo "<span style = 'float: right;'><a href='#'>수정&nbsp;&nbsp;</a></span>";
-                  }
-                  ?>
-                </td>
-              </tr>
-            <?php endforeach ?>
-            </table>
-            <form action="comment.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" method="post">
-              <textarea name="comment" id="comment" cols="130" rows="5"></textarea>
-              <button type="submit" style="width: 15%; height: 7.858em;">등록</button>
-            </form>
-          </div>
-      </div>
+            <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
+        </form>
     </div>
 
       <style type="text/css">
@@ -229,12 +216,8 @@
           display: relative;
           height: 100%;
         }
-        
-        #contents{
-          margin-top: 0.5%;
-          margin-bottom: 0.5%;
-        }
 
+        
         #sidebar {
           position: fixed;
           top: 51.8px;

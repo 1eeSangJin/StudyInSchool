@@ -10,8 +10,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
     <script src="../../semantic/semantic.min.js"></script>
-
 </head>
 <body>
 
@@ -21,13 +24,29 @@
         require_once("../tools.php");
         require_once("../dao/boardDao.php");
 
-        $page = requestValue('page');
+        $page = requestValue("page");
 
-        $num = requestValue('num');
         $dao = new boardDao();
-        $msgs = $dao->getNotices($num);
-        $comments = $dao->getAllCommentNotices($num);
-        // $dao->increseNoticesHits($num);
+        
+
+        $NumOfComMachine = $dao->getNumOfComMachine();
+
+        if($NumOfComMachine > 0){
+          $numPages = ceil($NumOfComMachine / NUM_LINES);
+
+          if($page < 1)
+            $page = 1;
+          if ($page > $numPages)
+            $page = $numPages;
+
+          $start = ($page - 1) * NUM_LINES;
+          $msgs = $dao->getAllcommachine($start, NUM_LINES);
+
+          $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
+          $lastLink = $firstLink + 1;
+          if($lastLink > $numPages)
+            $lastLink = $numPages;
+        }
   ?>
 
   <header>
@@ -45,7 +64,7 @@
           </div>
 
           <div class = "item">
-            <span>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">
@@ -91,7 +110,7 @@
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -118,107 +137,95 @@
     
     </header>
 
-    <aside>
-        <div class = "row">
-            <div class = "column" id = "sidebar">
-            <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
-                <div class = "carousel-inner">
-                <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
-                </div>
-                <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
-                    </div>
-                    <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
     <div class = "column" id = "content">
+
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          공지사항
+          컴퓨터응용기계계열 갤러리
         </h1>
       </div>
 
       <div class = "ui divider"></div>
-      <br>
 
-      <div>
-          <h3>
-            <span><?= $msgs['title'] ?></span>
-          </h3>
-          <div>
-            <em><?= $msgs['userNick'] ?></em>
-            <span>|</span>
-            <span><?= $msgs['date'] ?></span>
-            <span style = "float:right;"><?= $msgs['recommend'] ?></span>
-            <span style = "float:right; margin-right:1.5em">추천</span>
-            <span style = "float:right; margin-right:1.5em"><?= $msgs['hits'] ?></span>
-            <span style = "float:right; margin-right:1.5em">조회수</span>
-            <span style = "float:right; margin-right:1.5em"><?= $msgs['num'] ?></span>
-            <span style = "float:right; margin-right:1.5em">게시글 번호</span>
+      <div class = "row">
+        <div class = "column" id = "sidebar">
+          <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
+            <div class = "carousel-inner">
+              <div class = "carousel-item active">
+                <img class = "d-block w-100" src = "../img/yj1.jpg" alt = "첫번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj3.PNG" alt = "두번째 슬라이드">
+              </div>
+              <div class = "carousel-item">
+                <img class = "d-block w-100" src = "../img/yj2.PNG" alt = "세번째 슬라이드">
+              </div>
+            </div>
           </div>
-          <div class = "ui divider"></div>
+        </div>
+      </div>
 
-          <div id = "contents">
-            <span style = "float:right;">
-              <a href = "deleteNotice.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='noticeBoard.php?page=<?= $page?>'">목록</button>
-            </span>
-            <br><br>
-            <?= $msgs['content'] ?>
-          </div>
-          <div class = "ui divider"></div>
-          <br>
-
-          <table>
-            <td>
-              <span>댓글 </span>
-              <span> |&nbsp</span>
-            </td>
-            
-            <td>
-              <span>조회수 </span>
-              <span><?= $msgs['hits'] ?> |&nbsp</span>
-            </td>
-
-            <td>
-              <span>추천수 </span>
-              <span><?= $msgs['recommend'] ?></span>
-            </td>
-          </table>
-
-          <div class = "jumbotron">
-            <table class = "ui celled table">
-            <?php error_reporting(0); ?>
-            <?php foreach($comments as $comment) :?>
+      <?php if($NumOfComMachine > 0) : ?>
+        <table class="ui single line striped selectable table">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>글쓴이</th>
+              <th>날짜</th>
+              <th>조회</th>
+              <!-- <th>추천수</th> -->
+            </tr>
+          </thead>
+          <tbody>
+          <?php error_reporting(0) ?>
+            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
               <tr>
                 <td>
-                <?= $comment['userNick'] ?> [<?= $comment['affName'] ?>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $comment['date'] ?>
-                <br>
-                <?= $comment['comment'] ?>
-                  <?php
-                  if($user_nick == $comment['userNick']){
-                    echo "<span style = 'float: right;'><a href='#' onclick = 'return confirm(삭제하시겠습니까?)'>삭제</a></span>";
-                    echo "<span style = 'float: right;'><a href='#'>수정&nbsp;&nbsp;</a></span>";
-                  }
-                  ?>
+                  <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <a href = "viewCommachine_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                    <?= $row['title'] ?>[<?= $count = $dao->countCommentComMachine($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
+                  </a>
+                </td>
+                <td>
+                  <?= $row['userNick'] ?> [<?= $row['affName'] ?>]                         <!-- userNick에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
                 </td>
               </tr>
-            <?php endforeach ?>
-            </table>
-            <form action="comment.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" method="post">
-              <textarea name="comment" id="comment" cols="130" rows="5"></textarea>
-              <button type="submit" style="width: 15%; height: 7.858em;">등록</button>
-            </form>
-          </div>
-      </div>
+            <?php endforeach ?>                                         <!-- foreach문 종료 -->
+          </tbody>
+        </table>
+        
+        <br>
+        <?php if($firstLink > 1) : ?>
+          <a href="<?= bdUrl('commachineBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+        <?php endif ?>
+
+        <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
+          <?php if($i == $page) : ?>
+            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+          <?php else : ?>
+            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+          <?php endif ?>
+        <?php endfor ?>
+        
+        <?php if( $lastLink < $numPages) : ?>
+          <a href="<?= bdUrl('commachineBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+        <?php endif ?>
+
+      <?php endif ?>
+
+        <div style="float:right;">
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCommachine_form.php'>글쓰기</button>
+        </div>
     </div>
 
       <style type="text/css">
@@ -229,12 +236,8 @@
           display: relative;
           height: 100%;
         }
-        
-        #contents{
-          margin-top: 0.5%;
-          margin-bottom: 0.5%;
-        }
 
+        
         #sidebar {
           position: fixed;
           top: 51.8px;
