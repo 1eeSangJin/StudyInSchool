@@ -25,14 +25,14 @@
         require_once("../dao/boardDao.php");
 
         $page = requestValue("page");
-
         $dao = new boardDao();
+
+        $NumOfWelfare = $dao->getNumOfWelfare();
+
         
 
-        $NumOfComMachine = $dao->getNumOfComMachine();
-
-        if($NumOfComMachine > 0){
-          $numPages = ceil($NumOfComMachine / NUM_LINES);
+        if($NumOfWelfare > 0){
+          $numPages = ceil($NumOfWelfare / NUM_LINES);
 
           if($page < 1)
             $page = 1;
@@ -40,7 +40,7 @@
             $page = $numPages;
 
           $start = ($page - 1) * NUM_LINES;
-          $msgs = $dao->getAllcommachine($start, NUM_LINES);
+          $msgs = $dao->getAllwelfare($start, NUM_LINES);
 
           $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
           $lastLink = $firstLink + 1;
@@ -68,43 +68,43 @@
           </div>
 
           <div class = "item">
-            <span>전자정보통신계열</span>
+            <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
           </div>
 
           <div class = "item">
-            <span>신재생에너지전기계열</span>
+            <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
           </div>
 
           <div class = "item">
-            <span>건축인테리어디자인계열</span>
+            <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
           </div>          
 
           <div class = "item">
-            <span>스마트경영계열</span>
+            <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
           </div>
 
           <div class = "item">
-            <span>국제관광조리계열</span>
+            <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
           </div>
 
           <div class = "item">
-            <span>부사관계열</span>
+            <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
-            <span>콘텐츠디자인과</span>
+            <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
           </div>
 
           <div class = "item">
-            <span>사회복지과</span>
+            <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
           </div>
 
           <div class = "item">
-            <span>유아교육과</span>
+            <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
           </div>
 
           <div class = "item">
-            <span>간호학과</span>
+            <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
           </div>
 
         </div>
@@ -116,7 +116,7 @@
         <?php
           if(!isset($_SESSION['userId'])){       
             echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
-            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
+            echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";
           }else if($_SESSION['userNick'] == "Administrator"){
             $user_nick = $_SESSION['userNick'];
             $user_aff = $_SESSION['affName'];
@@ -142,7 +142,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터응용기계계열 갤러리
+          사회복지과 갤러리
         </h1>
       </div>
 
@@ -166,65 +166,75 @@
         </div>
       </div>
 
-      <?php if($NumOfComMachine > 0) : ?>
-        <table class="ui single line striped selectable table">
-          <thead>
+      <table class="ui single line striped selectable table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>날짜</th>
+            <th>조회</th>
+            <!-- <th>추천수</th> -->
+          </tr>
+        </thead>
+        <tbody>
+        <?php error_reporting(0) ?>
+          <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
             <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>글쓴이</th>
-              <th>날짜</th>
-              <th>조회</th>
-              <!-- <th>추천수</th> -->
+              <td>
+                <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <a href = "viewWelfare_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                  <?= $row['title'] ?>[<?= $count = $dao->countCommentWelfare($row['num']); ?>]                   <!-- title에 있는 값을 출력한다. -->
+                </a>                  
+              </td>
+              <td>
+                <?= $row['userNick'] ?>[<?= $row['affName'] ?>]                              <!-- userNick에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
+              </td>
+              <td>
+                <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+              </td>
             </tr>
-          </thead>
-          <tbody>
-          <?php error_reporting(0) ?>
-            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
-              <tr>
-                <td>
-                  <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <a href = "viewCommachine_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>[<?= $count = $dao->countCommentComMachine($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
-                  </a>
-                </td>
-                <td>
-                  <?= $row['userNick'] ?> [<?= $row['affName'] ?>]                         <!-- userNick에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
-                </td>
-                <td>
-                  <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
-                </td>
-              </tr>
-            <?php endforeach ?>                                         <!-- foreach문 종료 -->
-          </tbody>
-        </table>
-        
+          <?php endforeach ?>                                         <!-- foreach문 종료 -->
+        </tbody>
+      </table>
+
+      <div>
+        <?php if($NumOfNotices > 0) : ?>
         <br>
-        <?php if($firstLink > 1) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
-        <?php endif ?>
-
-        <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
-          <?php if($i == $page) : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
-          <?php else : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+          <?php if($firstLink > 1) : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
           <?php endif ?>
-        <?php endfor ?>
-        
-        <?php if( $lastLink < $numPages) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
-        <?php endif ?>
 
-      <?php endif ?>
+          <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
+            <?php if($i == $page) : ?>
+              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+            <?php else : ?>
+              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+            <?php endif ?>
+          <?php endfor ?>
+            
+          <?php if( $lastLink < $numPages) : ?>
+            <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+          <?php endif ?>
+
+        <?php endif ?>
+      </div>
 
         <div style="float:right;">
-          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCommachine_form.php'>글쓰기</button>
+          <?php
+            if(!isset($_SESSION['userNick'])){
+              error_reporting(0);
+            }else if($_SESSION['userNick'] == 'Administrator'){
+              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
+            }else{
+              error_reporting(0);
+            }
+          ?>
         </div>
     </div>
 
@@ -237,7 +247,6 @@
           height: 100%;
         }
 
-        
         #sidebar {
           position: fixed;
           top: 51.8px;

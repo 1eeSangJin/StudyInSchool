@@ -50,17 +50,17 @@
         $page = requestValue('page');
 
         $dao = new boardDao();
-        $userNick = $dao->checkComMachineUser($num);
+        $userNick = $dao->checkContentsUser($num);
 
         foreach($userNick as $check){
           if(!isset($_SESSION['userNick'])){
             echo "<script>alert('로그인 하십시오.')</script>";
             echo "<script>location.replace('../user/login_form.php');</script>";
           }else if($_SESSION['userNick'] == $check['userNick'] || $_SESSION['userNick'] == 'Administrator'){
-            $msgs = $dao->getCommachine($num);
+            $msgs = $dao->getContents($num);
           }else{
             echo "<script>alert('본인만 수정할 수 있습니다.')</script>";
-            echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+            echo "<script>location.replace('contentsBoard.php?page=$page');</script>";
           }
         }
 
@@ -85,49 +85,49 @@
           </div>
 
           <div class = "item">
-            <span>전자정보통신계열</span>
+            <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
           </div>
 
           <div class = "item">
-            <span>신재생에너지전기계열</span>
+            <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
           </div>
 
           <div class = "item">
-            <span>건축인테리어디자인계열</span>
+            <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
           </div>          
 
           <div class = "item">
-            <span>스마트경영계열</span>
+            <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
           </div>
 
           <div class = "item">
-            <span>국제관광조리계열</span>
+            <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
           </div>
 
           <div class = "item">
-            <span>부사관계열</span>
+            <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
-            <span>콘텐츠디자인과</span>
+            <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
           </div>
 
           <div class = "item">
-            <span>사회복지과</span>
+            <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
           </div>
 
           <div class = "item">
-            <span>유아교육과</span>
+            <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
           </div>
 
           <div class = "item">
-            <span>간호학과</span>
+            <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
           </div>
 
         </div>
       </div>
 
-      <div class = "item" onclick = "location.href='noticeBoard.php'"><span>공지사항</a></div>
+      <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
         <?php
@@ -177,13 +177,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          [컴응기] 게시글 수정
+          [콘텐츠디자인] 게시글 수정
         </h1>
       </div>
 
       <br>
 
-        <form action = "modifyNotice.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "modifyContents.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
             <div class = "field">
@@ -208,7 +208,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='contentsBoard.php'">돌아가기</button>
         </form>
     </div>
 

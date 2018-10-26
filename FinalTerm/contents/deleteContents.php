@@ -8,7 +8,7 @@
     $page = requestValue('page');
     $dao = new boardDao();
 
-    $userNick = $dao->checkComMachineUser($num);
+    $userNick = $dao->checkContentsUser($num);
 
     foreach($userNick as $check){
       if(!isset($_SESSION['userNick'])){
@@ -16,7 +16,7 @@
         echo "<script>location.replace('../user/login_form.php');</script>";
       }else if($_SESSION['userNick'] == $check['userNick'] || $_SESSION['userNick'] == 'Administrator'){
         $msgs = $dao->deleteCominfo($num);
-        okGo("삭제되었습니다", 'commachineBoard.php?page=' . $page);
+        okGo("삭제되었습니다", 'contentsBoard.php?page=' . $page);
       }else{
         errorBack('삭제 권한이 없습니다.');
       }

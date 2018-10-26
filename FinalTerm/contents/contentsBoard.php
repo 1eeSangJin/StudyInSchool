@@ -29,10 +29,10 @@
         $dao = new boardDao();
         
 
-        $NumOfComMachine = $dao->getNumOfComMachine();
+        $NumOfContents = $dao->getNumOfContents();
 
-        if($NumOfComMachine > 0){
-          $numPages = ceil($NumOfComMachine / NUM_LINES);
+        if($NumOfContents > 0){
+          $numPages = ceil($NumOfContents / NUM_LINES);
 
           if($page < 1)
             $page = 1;
@@ -40,7 +40,7 @@
             $page = $numPages;
 
           $start = ($page - 1) * NUM_LINES;
-          $msgs = $dao->getAllcommachine($start, NUM_LINES);
+          $msgs = $dao->getAllcontents($start, NUM_LINES);
 
           $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
           $lastLink = $firstLink + 1;
@@ -68,43 +68,43 @@
           </div>
 
           <div class = "item">
-            <span>전자정보통신계열</span>
+            <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
           </div>
 
           <div class = "item">
-            <span>신재생에너지전기계열</span>
+            <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
           </div>
 
           <div class = "item">
-            <span>건축인테리어디자인계열</span>
+            <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
           </div>          
 
           <div class = "item">
-            <span>스마트경영계열</span>
+            <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
           </div>
 
           <div class = "item">
-            <span>국제관광조리계열</span>
+            <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
           </div>
 
           <div class = "item">
-            <span>부사관계열</span>
+            <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
-            <span>콘텐츠디자인과</span>
+            <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
           </div>
 
           <div class = "item">
-            <span>사회복지과</span>
+            <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
           </div>
 
           <div class = "item">
-            <span>유아교육과</span>
+            <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
           </div>
 
           <div class = "item">
-            <span>간호학과</span>
+            <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
           </div>
 
         </div>
@@ -142,7 +142,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터응용기계계열 갤러리
+          콘텐츠디자인 갤러리
         </h1>
       </div>
 
@@ -166,7 +166,7 @@
         </div>
       </div>
 
-      <?php if($NumOfComMachine > 0) : ?>
+      <?php if($NumOfContents > 0) : ?>
         <table class="ui single line striped selectable table">
           <thead>
             <tr>
@@ -186,8 +186,8 @@
                   <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
                 </td>
                 <td>
-                  <a href = "viewCommachine_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>[<?= $count = $dao->countCommentComMachine($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
+                  <a href = "viewContents_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                    <?= $row['title'] ?>[<?= $count = $dao->countCommentContents($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>
                 <td>
@@ -206,25 +206,25 @@
         
         <br>
         <?php if($firstLink > 1) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+          <a href="<?= bdUrl('contentsBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
         <?php endif ?>
 
         <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
           <?php if($i == $page) : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+            <a href="<?= bdUrl('contentsBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
           <?php else : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+            <a href="<?= bdUrl('contentsBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
           <?php endif ?>
         <?php endfor ?>
         
         <?php if( $lastLink < $numPages) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+          <a href="<?= bdUrl('contentsBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
         <?php endif ?>
 
       <?php endif ?>
 
         <div style="float:right;">
-          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCommachine_form.php'>글쓰기</button>
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeContents_form.php'>글쓰기</button>
         </div>
     </div>
 

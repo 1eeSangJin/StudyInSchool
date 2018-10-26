@@ -24,9 +24,9 @@
         $page = requestValue('page');
         $num = requestValue('num');
         $dao = new boardDao();
-        $msgs = $dao->getCommachine($num);
-        $comments = $dao->getAllCommentComMachine($num);
-        $count = $dao->countCommentComMachine($num);
+        $msgs = $dao->getWelfare($num);
+        $comments = $dao->getAllCommentWelfare($num);
+        $count = $dao->countCommentWelfare($num);
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -49,43 +49,43 @@
           </div>
 
           <div class = "item">
-            <span>전자정보통신계열</span>
+            <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
           </div>
 
           <div class = "item">
-            <span>신재생에너지전기계열</span>
+            <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
           </div>
 
           <div class = "item">
-            <span>건축인테리어디자인계열</span>
+            <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
           </div>          
 
           <div class = "item">
-            <span>스마트경영계열</span>
+            <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
           </div>
 
           <div class = "item">
-            <span>국제관광조리계열</span>
+            <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
           </div>
 
           <div class = "item">
-            <span>부사관계열</span>
+            <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
-            <span>콘텐츠디자인과</span>
+            <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
           </div>
 
           <div class = "item">
-            <span>사회복지과</span>
+            <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
           </div>
 
           <div class = "item">
-            <span>유아교육과</span>
+            <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
           </div>
 
           <div class = "item">
-            <span>간호학과</span>
+            <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
           </div>
 
         </div>
@@ -141,7 +141,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          사회복지과 갤러리
         </h1>
       </div>
 
@@ -167,9 +167,9 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteCommachine.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyCommachine_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='commachineBoard.php?page=<?= $page?>'">목록</button>
+              <a href = "deleteWelfare.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifyWelfare_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='welfareBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
           <div>

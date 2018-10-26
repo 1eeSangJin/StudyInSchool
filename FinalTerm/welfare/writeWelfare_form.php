@@ -71,47 +71,47 @@
           </div>
 
           <div class = "item">
-            <span onclick = "location.href='../commachine/commachineBoard.php'"s>컴퓨터응용기계계열</span>
+            <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
           </div>
 
           <div class = "item">
-            <span>전자정보통신계열</span>
+            <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
           </div>
 
           <div class = "item">
-            <span>신재생에너지전기계열</span>
+            <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
           </div>
 
           <div class = "item">
-            <span>건축인테리어디자인계열</span>
+            <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
           </div>          
 
           <div class = "item">
-            <span>스마트경영계열</span>
+            <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
           </div>
 
           <div class = "item">
-            <span>국제관광조리계열</span>
+            <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
           </div>
 
           <div class = "item">
-            <span>부사관계열</span>
+            <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
-            <span>콘텐츠디자인과</span>
+            <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
           </div>
 
           <div class = "item">
-            <span>사회복지과</span>
+            <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
           </div>
 
           <div class = "item">
-            <span>유아교육과</span>
+            <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
           </div>
 
           <div class = "item">
-            <span>간호학과</span>
+            <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
           </div>
 
         </div>
@@ -167,13 +167,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          사회복지과 갤러리
         </h1>
       </div>
 
       <br>
 
-        <form action = "writeCommachine.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "writeWelfare.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">작성내용</h2>
 
             <div class = "two field">
@@ -204,7 +204,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='welfareBoard.php'">돌아가기</button>
         </form>
     </div>
 

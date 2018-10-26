@@ -873,6 +873,8 @@
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
 
+                $pstmt->execute();
+
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1031,6 +1033,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
@@ -1190,6 +1194,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
@@ -1349,6 +1355,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
@@ -1508,6 +1516,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
@@ -1562,7 +1572,7 @@
             }
         }
 
-        function getAllCommentEContents($board_num){
+        function getAllCommentContents($board_num){
             try{
                 $sql = "select * from contents_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
@@ -1668,6 +1678,8 @@
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
                 
+                $pstmt->execute();
+
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
                 exit($e->getMessage());
@@ -1826,6 +1838,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
@@ -1985,6 +1999,8 @@
 
                 $pstmt->bindValue(":start", $start, PDO::PARAM_INT);
                 $pstmt->bindValue(":rows", $rows, PDO::PARAM_INT);
+
+                $pstmt->execute();
                 
                 $msgs = $pstmt->fetchAll(PDO::FETCH_ASSOC);
             }catch(PDOException $e){
