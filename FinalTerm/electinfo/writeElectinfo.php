@@ -8,6 +8,6 @@
     $affName = requestValue('affName');
     
     $dao = new boardDao();
-    $dao->insertCommachine($userNick, $title, $content, $affName);
-    okGo('등록이 완료되었습니다', 'commachineBoard.php');
+    $dao->insertElectinfo($userNick, $title, $content, $affName);
+    okGo('등록이 완료되었습니다', 'electinfoBoard.php');
 ?>

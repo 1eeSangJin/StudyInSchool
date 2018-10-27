@@ -24,9 +24,9 @@
         $page = requestValue('page');
         $num = requestValue('num');
         $dao = new boardDao();
-        $msgs = $dao->getCommachine($num);
-        $comments = $dao->getAllCommentComMachine($num);
-        $count = $dao->countCommentComMachine($num);
+        $msgs = $dao->getEducate($num);
+        $comments = $dao->getAllCommentEducate($num);
+        $count = $dao->countCommentEducate($num);
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -103,6 +103,7 @@
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>";
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";
           }else{
             $user_nick = $_SESSION['userNick'];             
@@ -141,7 +142,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          유아교육과 갤러리
         </h1>
       </div>
 
@@ -167,9 +168,9 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteCommachine.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyCommachine_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='commachineBoard.php?page=<?= $page?>'">목록</button>
+              <a href = "deleteEducate.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifyEducate_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='educateBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
           <div>

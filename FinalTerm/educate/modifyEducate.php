@@ -8,6 +8,6 @@
     $num = requestValue('num');
         
     $dao = new boardDao();
-    $dao->updateCominfo($title, $content, $num);
-    okGo('수정되었습니다', 'cominfoBoard.php?page=' . $page);
+    $dao->updateEducate($title, $content, $num);
+    okGo('수정되었습니다', 'educateBoard.php?page=' . $page);
 ?>  

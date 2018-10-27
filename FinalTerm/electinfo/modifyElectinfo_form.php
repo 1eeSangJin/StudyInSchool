@@ -50,17 +50,16 @@
         $page = requestValue('page');
 
         $dao = new boardDao();
-        $userNick = $dao->checkComMachineUser($num);
+        $userNick = $dao->checkElectInfoUser($num);
 
         foreach($userNick as $check){
           if(!isset($_SESSION['userNick'])){
             echo "<script>alert('로그인 하십시오.')</script>";
             echo "<script>location.replace('../user/login_form.php');</script>";
           }else if($_SESSION['userNick'] == $check['userNick'] || $_SESSION['userNick'] == 'Administrator'){
-            $msgs = $dao->getCommachine($num);
+            $msgs = $dao->getElectinfo($num);
           }else{
-            echo "<script>alert('본인만 수정할 수 있습니다.')</script>";
-            echo "<script>location.replace('cominfoBoard.php?page=$page');</script>";
+            errorBack('본인만 수정할 수 있습니다.');
           }
         }
 
@@ -139,6 +138,7 @@
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
             $user_nick = $_SESSION['userNick'];             
@@ -177,13 +177,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          [컴응기] 게시글 수정
+          [전자정보] 게시글 수정
         </h1>
       </div>
 
       <br>
 
-        <form action = "modifyNotice.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "modifyElectinfo.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
             <div class = "field">
@@ -208,7 +208,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='electinfoBoard.php'">돌아가기</button>
         </form>
     </div>
 

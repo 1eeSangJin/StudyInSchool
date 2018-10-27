@@ -129,6 +129,7 @@
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
             $user_nick = $_SESSION['userNick'];             
@@ -167,13 +168,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          유아교육과 갤러리
         </h1>
       </div>
 
       <br>
 
-        <form action = "writeCommachine.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "writeEducate.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
             <h2 class = "ui dividing header">작성내용</h2>
 
             <div class = "two field">
@@ -204,7 +205,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='educateBoard.php'">돌아가기</button>
         </form>
     </div>
 

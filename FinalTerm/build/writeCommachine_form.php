@@ -129,6 +129,7 @@
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
             $user_nick = $_SESSION['userNick'];             

@@ -29,10 +29,10 @@
         $dao = new boardDao();
         
 
-        $NumOfComMachine = $dao->getNumOfComMachine();
+        $NumOfElectInfo = $dao->getNumOfElectInfo();
 
-        if($NumOfComMachine > 0){
-          $numPages = ceil($NumOfComMachine / NUM_LINES);
+        if($NumOfElectInfo > 0){
+          $numPages = ceil($NumOfElectInfo / NUM_LINES);
 
           if($page < 1)
             $page = 1;
@@ -40,7 +40,7 @@
             $page = $numPages;
 
           $start = ($page - 1) * NUM_LINES;
-          $msgs = $dao->getAllcommachine($start, NUM_LINES);
+          $msgs = $dao->getAllelectinfo($start, NUM_LINES);
 
           $firstLink = floor(($page - 1) / NUM_PAGE_LINKS) * NUM_PAGE_LINKS + 1;
           $lastLink = $firstLink + 1;
@@ -122,6 +122,7 @@
             $user_aff = $_SESSION['affName'];
             echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
             echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
+            echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
             echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
           }else{
             $user_nick = $_SESSION['userNick'];             
@@ -142,7 +143,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터응용기계계열 갤러리
+          전자정보통신계열 갤러리
         </h1>
       </div>
 
@@ -166,7 +167,7 @@
         </div>
       </div>
 
-      <?php if($NumOfComMachine > 0) : ?>
+      <?php if($NumOfElectInfo > 0) : ?>
         <table class="ui single line striped selectable table">
           <thead>
             <tr>
@@ -186,8 +187,8 @@
                   <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
                 </td>
                 <td>
-                  <a href = "viewCommachine_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>[<?= $count = $dao->countCommentComMachine($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
+                  <a href = "viewElectinfo_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
+                    <?= $row['title'] ?>[<?= $count = $dao->countCommentElectInfo($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>
                 <td>
@@ -206,25 +207,25 @@
         
         <br>
         <?php if($firstLink > 1) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+          <a href="<?= bdUrl('electinfoBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
         <?php endif ?>
 
         <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
           <?php if($i == $page) : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+            <a href="<?= bdUrl('electinfoBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
           <?php else : ?>
-            <a href="<?= bdUrl('commachineBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+            <a href="<?= bdUrl('electinfoBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
           <?php endif ?>
         <?php endfor ?>
         
         <?php if( $lastLink < $numPages) : ?>
-          <a href="<?= bdUrl('commachineBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+          <a href="<?= bdUrl('electinfoBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
         <?php endif ?>
 
       <?php endif ?>
 
         <div style="float:right;">
-          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCommachine_form.php'>글쓰기</button>
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeElectinfo_form.php'>글쓰기</button>
         </div>
     </div>
 
