@@ -9,5 +9,5 @@
         
     $dao = new boardDao();
     $dao->updateCominfo($title, $content, $num);
-    okGo('수정되었습니다', 'cominfoBoard.php?page=' . $page);
+    okGo('수정되었습니다', 'commachineBoard.php?page=' . $page);
 ?>  

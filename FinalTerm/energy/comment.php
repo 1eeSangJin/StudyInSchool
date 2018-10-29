@@ -17,7 +17,7 @@
         $userNick = $_SESSION['userNick'];
         $affName = $_SESSION['affName'];
         $dao = new boardDao();
-        $dao->InputCommentComMachine($board_num, $userNick, $affName, $comment);
-        echo "<script>location.replace('viewCommachine_form.php?num=$board_num&page=$page');</script>";
+        $dao->InputCommentEnergy($board_num, $userNick, $affName, $comment);
+        echo "<script>location.replace('viewEnergy_form.php?num=$board_num&page=$page');</script>";
     }
 ?>

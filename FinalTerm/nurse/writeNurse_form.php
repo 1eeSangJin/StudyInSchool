@@ -168,13 +168,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          [간호] 게시글 작성
         </h1>
       </div>
 
       <br>
 
-        <form action = "writeCommachine.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "writeNurse.php" method = "post" class = "ui form">
             <h2 class = "ui dividing header">작성내용</h2>
 
             <div class = "two field">
@@ -205,7 +205,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='nurseBoard.php'">돌아가기</button>
         </form>
     </div>
 

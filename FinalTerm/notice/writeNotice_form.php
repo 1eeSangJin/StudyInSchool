@@ -183,7 +183,7 @@
                 <div class = "two wide field">
                     <input type = "text" name = "userNick" id = "userNick" value = "<?= $userInfo['userNick'] ?>" readonly required>
                 </div>
-                <label>소속</label>
+                <label>직책</label>
                 <div class = "two wide field">
                     <?php foreach($getAff as $affName) :?>
                     <input type="text" name = "affName" id = "affName" value = "<?= $affName['affName'] ?>" readonly>

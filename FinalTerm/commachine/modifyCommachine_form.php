@@ -183,7 +183,7 @@
 
       <br>
 
-        <form action = "modifyNotice.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "modifyCommachine.php?num=<?= $num ?>&page=<?= $page ?>" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
             <div class = "field">
@@ -208,7 +208,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='noticeBoard.php'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='commachineBoard.php'">돌아가기</button>
         </form>
     </div>
 

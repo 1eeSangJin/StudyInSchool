@@ -168,13 +168,13 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          유아교육과 갤러리
+          [유아교육] 게시글 작성
         </h1>
       </div>
 
       <br>
 
-        <form action = "writeEducate.php" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "writeEducate.php" method = "post" class = "ui form">
             <h2 class = "ui dividing header">작성내용</h2>
 
             <div class = "two field">

@@ -127,6 +127,19 @@
             }
         }
 
+        function deleteCommentNotices($board_num){
+            try{
+                $sql = "delete from notices_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
         function getAllCommentNotices($board_num){
             try{
                 $sql = "select * from notices_comment where board_num=:board_num";
@@ -287,6 +300,19 @@
             }
         }
 
+        function deleteCommentComInfo($board_num){
+            try{
+                $sql = "delete from cominfo_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
         function getAllCommentComInfo($board_num){
             try{
                 $sql = "select * from cominfo_comment where board_num=:board_num";
@@ -417,7 +443,7 @@
 
         function checkComMachineUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from commachine where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -440,6 +466,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentComMachine($board_num){
+            try{
+                $sql = "delete from commachine_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -577,7 +616,7 @@
 
         function checkElectInfoUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from electinfo where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -600,6 +639,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentElectInfo($board_num){
+            try{
+                $sql = "delete from electinfo_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -737,7 +789,7 @@
 
         function checkEnergyUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from energy where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -760,6 +812,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentEnergy($board_num){
+            try{
+                $sql = "delete from energy_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -898,7 +963,7 @@
 
         function checkBuildUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from build where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -921,6 +986,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentBuild($board_num){
+            try{
+                $sql = "delete from build_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1059,7 +1137,7 @@
 
         function checkSmartUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from smart where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1082,6 +1160,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentSmart($board_num){
+            try{
+                $sql = "delete from smart_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1220,7 +1311,7 @@
 
         function checkSeesightingUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from seesighting where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1243,6 +1334,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentSeesighting($board_num){
+            try{
+                $sql = "delete from seesighting_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1381,7 +1485,7 @@
 
         function checkSoldierUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from soldier where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1404,6 +1508,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentSoldier($board_num){
+            try{
+                $sql = "delete from soldier_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1542,7 +1659,7 @@
 
         function checkContentsUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from contents where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1565,6 +1682,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentContents($board_num){
+            try{
+                $sql = "delete from contents_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1703,7 +1833,7 @@
 
         function checkWelfareUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from welfare where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1726,6 +1856,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentWelfare($board_num){
+            try{
+                $sql = "delete from welfare_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -1864,7 +2007,7 @@
 
         function checkEducateUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from educate where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -1887,6 +2030,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentEducate($board_num){
+            try{
+                $sql = "delete from educate_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){
@@ -2025,7 +2181,7 @@
 
         function checkNurseUser($num){
             try{
-                $sql = "select userNick from cominfo where num=:num";
+                $sql = "select userNick from nurse where num=:num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":num", $num, PDO::PARAM_INT);
@@ -2048,6 +2204,19 @@
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
                 $pstmt->bindValue(":affName", $affName, PDO::PARAM_STR);
                 $pstmt->bindValue(":comment", $comment, PDO::PARAM_STR);
+
+                $pstmt->execute();
+            }catch(PDOException $e){
+                exit($e->getMessage());
+            }
+        }
+
+        function deleteCommentNurse($board_num){
+            try{
+                $sql = "delete from nurse_comment where board_num=:board_num";
+                $pstmt = $this->db->prepare($sql);
+
+                $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);
 
                 $pstmt->execute();
             }catch(PDOException $e){

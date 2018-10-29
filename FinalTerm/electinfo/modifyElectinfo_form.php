@@ -183,7 +183,7 @@
 
       <br>
 
-        <form action = "modifyElectinfo.php?num=<?= $num ?>&page=<?= $page ?>" id = "wirteNotice" name = "writeNotice" method = "post" class = "ui form">
+        <form action = "modifyElectinfo.php?num=<?= $num ?>&page=<?= $page ?>" method = "post" class = "ui form">
             <h2 class = "ui dividing header">내용</h2>
 
             <div class = "field">

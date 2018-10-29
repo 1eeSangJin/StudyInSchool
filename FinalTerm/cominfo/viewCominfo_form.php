@@ -26,7 +26,7 @@
         $dao = new boardDao();
         $msgs = $dao->getCominfo($num);
         $comments = $dao->getAllCommentComInfo($num);
-        // $dao->increseNoticesHits($num);
+        // $dao->increseCominfoHits($num);
   ?>
 
   <header>

@@ -89,8 +89,8 @@
       <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
 
       <div class = "right menu">
-        <a class = "item" onclick="location.href='login_page.html'">로그인</a>
-        <a class = "item" onclick="location.href='signup_page.html'">회원가입</a>
+        <a class = "item" onclick="location.href='login_page.php'">로그인</a>
+        <a class = "item" onclick="location.href='signup_page.php'">회원가입</a>
       </div>
     </div>
     </header>

@@ -142,7 +142,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          컴퓨터응용기계계열 갤러리
         </h1>
       </div>
 

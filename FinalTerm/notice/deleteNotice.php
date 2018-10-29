@@ -13,6 +13,7 @@
         echo "<script>location.replace('noticeBoard.php');</script>";
     }else{
         $dao->deleteNotices($num);
+        $dao->deleteCommentNotices($num);
         okGo("삭제되었습니다", 'noticeBoard.php?page=' . $page);
     }
 ?>
