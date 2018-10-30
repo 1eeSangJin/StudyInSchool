@@ -37,7 +37,7 @@
   <header>
     <div class = "ui inverted huge borderless fixed fluid menu">
       <div class = "header item">YEUNGJIN INSIDE</div>
-      <div class = "item" onclick = "location.href='main.php'"><a>메인</a></div>
+      <div class = "item" onclick = "location.href='../main.php'"><a>메인</a></div>
       <div class = "ui simple dropdown item">
         <span>계열·학과 갤러리</span>
         <i class = "dropdown icon"></i>

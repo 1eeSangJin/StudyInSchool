@@ -1198,7 +1198,7 @@
 
         function countCommentSmart($board_num){
             try{
-                $sql = "select count(*) from smartcomment where board_num=:board_num";
+                $sql = "select count(*) from smart_comment where board_num=:board_num";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":board_num", $board_num, PDO::PARAM_INT);

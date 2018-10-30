@@ -43,8 +43,13 @@
 
         function updateUser($userPw, $userNick, $userPhone, $affNum, $userId){
             try{
-                $sql = "update users set userPw=:userPw, userNick=:userNick, userPhone=:userPhone, affNum=:affNum where userId=:userId";
-                $pstmt = $this->db->prepare($sql);
+                $sql1 = "set foreign_key_checks = 0";
+                $sql2 = "update users set userPw=:userPw, userNick=:userNick, userPhone=:userPhone, affNum=:affNum where userId=:userId";
+                $sql3 = "set foreign_key_checks = 1";
+
+                $this->db->query($sql1);
+                $pstmt = $this->db->prepare($sql2);
+
 
                 $pstmt->bindValue(":userPw", $userPw, PDO::PARAM_STR);
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
@@ -53,6 +58,8 @@
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
 
                 $pstmt->execute();
+                $this->db->query($sql3);
+
             }catch(PDOException $e){
                 exit($e->getMessage());
             }
@@ -60,12 +67,17 @@
 
         function deleteUser($userId){
             try{
-                $sql = "delete from users where userId=:userId";
-                $pstmt = $this->db->prepare($sql);
+                $sql1 = "set foreign_key_checks = 0";
+                $sql2 = "delete from users where userId=:userId";
+                $sql3 = "set foreign_key_checks = 1";
+
+                $this->db->query($sql1);
+                $pstmt = $this->db->prepare($sql2);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
 
                 $pstmt->execute();
+                $this->db->query($sql3);
             }catch(PDOException $e){
                 exit($e->getMessage());
             }

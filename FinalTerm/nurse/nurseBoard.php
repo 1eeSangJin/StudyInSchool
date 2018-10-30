@@ -188,7 +188,7 @@
                 </td>
                 <td>
                   <a href = "viewNurse_form.php?num=<?= $row['num'] ?>&page=<?= $page ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                    <?= $row['title'] ?>[<?= $count = $dao->countCommentNurse($row['num']); ?>]                        <!-- title에 있는 값을 출력한다. -->
+                    <?= $row['title'] ?>[<?= $count = $dao->countCommentNurse($row['num']) ?>]                        <!-- title에 있는 값을 출력한다. -->
                   </a>
                 </td>
                 <td>
