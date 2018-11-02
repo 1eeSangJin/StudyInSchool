@@ -208,34 +208,26 @@
         <?php if($NumOfNotices > 0) : ?>
         <br>
           <?php if($firstLink > 1) : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
+            <a href="<?= bdUrl('welfareBoard.php', 0, $page - NUM_PAGE_LINKS) ?>"><</a>&nbsp;
           <?php endif ?>
 
           <?php for($i = $firstLink; $i <= $lastLink; $i++) : ?>
             <?php if($i == $page) : ?>
-              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
+              <a href="<?= bdUrl('welfareBoard.php', 0 , $i) ?>"><b><?= $i ?></b></a>&nbsp;
             <?php else : ?>
-              <a href="<?= bdUrl('noticeBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
+              <a href="<?= bdUrl('welfareBoard.php', 0 , $i) ?>"><?= $i ?></a>&nbsp;
             <?php endif ?>
           <?php endfor ?>
             
           <?php if( $lastLink < $numPages) : ?>
-            <a href="<?= bdUrl('noticeBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
+            <a href="<?= bdUrl('welfareBoard.php', 0 , $page + NUM_PAGE_LINKS) ?>">></a>
           <?php endif ?>
 
         <?php endif ?>
       </div>
 
         <div style="float:right;">
-          <?php
-            if(!isset($_SESSION['userNick'])){
-              error_reporting(0);
-            }else if($_SESSION['userNick'] == 'Administrator'){
-              echo "<button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form.php'>글쓰기</button>";
-            }else{
-              error_reporting(0);
-            }
-          ?>
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeWelfare_form.php'>글쓰기</button>
         </div>
     </div>
 

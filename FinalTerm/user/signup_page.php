@@ -214,7 +214,7 @@
                             <option value = "803">부사관 - 항공정비</option>
                             <option value = "804">부사관 - 공군부사관학군단</option>
                             <option value = "901">콘텐츠 - 시각영상디자인</option>
-                            <option value = "902">콘텐츠 - 인터넷솽고마케팅</option>
+                            <option value = "902">콘텐츠 - 인터넷광고마케팅</option>
                             <option value = "1001">사회복지 - 장애인복지</option>
                             <option value = "1002">사회복지 - 노인복지</option>
                             <option value = "1003">사회복지 - 가톨릭사회복지</option>

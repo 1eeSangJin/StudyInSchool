@@ -9,8 +9,7 @@
     $dao = new boardDao();
 
     if(!isset($_SESSION['userNick']) || !($_SESSION['userNick'] == 'Administrator')){
-        echo "<script>alert('부적절한 접근입니다.')</script>";
-        echo "<script>location.replace('noticeBoard.php');</script>";
+        errorBack('부적절한 접근입니다');
     }else{
         $dao->deleteNotices($num);
         $dao->deleteCommentNotices($num);

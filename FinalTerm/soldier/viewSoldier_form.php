@@ -24,9 +24,9 @@
         $page = requestValue('page');
         $num = requestValue('num');
         $dao = new boardDao();
-        $msgs = $dao->getCommachine($num);
-        $comments = $dao->getAllCommentComMachine($num);
-        $count = $dao->countCommentComMachine($num);
+        $msgs = $dao->getSoldier($num);
+        $comments = $dao->getAllCommentSoldier($num);
+        $count = $dao->countCommentSoldier($num);
         // $dao->increseNoticesHits($num);
   ?>
 
@@ -142,7 +142,7 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          컴퓨터정보계열 갤러리
+          부사관계열 갤러리
         </h1>
       </div>
 
@@ -168,9 +168,9 @@
 
           <div id = "contents">
             <span style = "float:right;">
-              <a href = "deleteCommachine.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
-              <button class = 'ui secondary button' onclick = "location.href='modifyCommachine_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
-              <button class = 'ui secondary button' onclick = "location.href='commachineBoard.php?page=<?= $page?>'">목록</button>
+              <a href = "deleteSoldier.php?num=<?= $msgs['num'] ?>&page=<?= $page ?>" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+              <button class = 'ui secondary button' onclick = "location.href='modifySoldier_form.php?num=<?=$msgs['num'] ?>&page=<?= $page ?>'">수정</button>
+              <button class = 'ui secondary button' onclick = "location.href='soldierBoard.php?page=<?= $page?>'">목록</button>
             </span>
             <br><br>
           <div>

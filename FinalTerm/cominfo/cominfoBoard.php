@@ -176,7 +176,7 @@
               <th>글쓴이</th>
               <th>날짜</th>
               <th>조회</th>
-              <!-- <th>추천수</th> -->
+              <th>추천수</th>
             </tr>
           </thead>
           <tbody>
@@ -199,6 +199,9 @@
                 </td>
                 <td>
                   <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
+                </td>
+                <td>
+                  <?= $row['recommend'] ?>
                 </td>
               </tr>
             <?php endforeach ?>                                         <!-- foreach문 종료 -->

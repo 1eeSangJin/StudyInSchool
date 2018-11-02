@@ -67,7 +67,7 @@
           </div>
 
           <div class = "item">
-            <span onclick = "location.href='solider/soldierBoard.php'">부사관계열</span>
+            <span onclick = "location.href='soldier/soldierBoard.php'">부사관계열</span>
           </div>
 
           <div class = "item">
@@ -121,65 +121,60 @@
       <div class = "ui hidden section divider"></div>
       <div class = "row">
         <h1 class = "ui huge header">
-          Section title
+          YEUNGJIN INSIDE
         </h1>
       </div>
 
       <div class = "ui divider"></div>
+      <br>
 
       <div class = "row">
-        <div class = "column" id = "sidebar">
-          <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
-            <div class = "carousel-inner">
-              <div class = "carousel-item active">
-                <img class = "d-block w-100" src = "img/yj1.jpg" alt = "첫번째 슬라이드">
-              </div>
-              <div class = "carousel-item">
-                <img class = "d-block w-100" src = "img/yj3.PNG" alt = "두번째 슬라이드">
-              </div>
-              <div class = "carousel-item">
-                <img class = "d-block w-100" src = "img/yj2.PNG" alt = "세번째 슬라이드">
-              </div>
+        <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
+          <div class = "carousel-inner">
+            <div class = "carousel-item active">
+              <img class = "d-block w-100" src = "img/yg1.jpg" width="720px" height="400px" alt = "첫번째 슬라이드">
+            </div>
+            <div class = "carousel-item">
+              <img class = "d-block w-100" src = "img/yg3.png" height="400px" alt = "두번째 슬라이드">
+            </div>
+            <div class = "carousel-item">
+              <img class = "d-block w-100" src = "img/yg2.jpg" height="400px" alt = "세번째 슬라이드">
             </div>
           </div>
-        </div>
-
-        <table class="ui single line striped selectable table">
-          <thead>
-            <tr>
-              <th>번호</th>
-              <th>제목</th>
-              <th>글쓴이</th>
-              <th>날짜</th>
-              <th>조회</th>
-              <!-- <th>추천수</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach($msgs as $row) : ?>                         <!-- 리턴받은 $msgs를 $row라는 변수에 연관배열로 받는다. 끝까지 받으면 종료됨 -->
-              <tr>
-                  <td>
-                      <?= $row['num'] ?>                              <!-- num에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <a href = "viewBoard.php?num=<?= $row['num'] ?>"> <!-- 게시글 상세보기 링크를 단다. -->
-                          <?= $row['title'] ?>                        <!-- title에 있는 값을 출력한다. -->
-                      </s>
-                  </td>
-                  <td>
-                      <?= $row['userNick'] ?>                         <!-- userNick에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <?= $row['date'] ?>                             <!-- date에 있는 값을 출력한다. -->
-                  </td>
-                  <td>
-                      <?= $row['hits'] ?>                             <!-- hits에 있는 값을 출력한다. -->
-                  </td>
-              </tr>
-            <?php endforeach ?>                                         <!-- foreach문 종료 -->
-          </tbody>
-        </table>
       </div>
+
+      <br>
+
+      <h3 class = "ui huge header">인기글</h3>
+        
+      <table class="ui single line striped selectable table">
+        <thead>
+
+        </thead>
+        <tbody>
+            
+        </tbody>
+      </table>
+
+      <div class = "ui divider"></div>
+
+      <h3 class = "ui huge header">최신글</h3>
+        
+      <table class="ui single line striped selectable table">
+        <thead>
+            
+        </thead>
+        <tbody>
+            
+        </tbody>
+      </table>
+
+      <footer class = "footer">
+          <div>
+          
+          </div>
+      </footer>
+    </div>
 
       <style type="text/css">
         html{
@@ -219,7 +214,8 @@
         }
         
         #content {
-          margin-left: 19%;
+          margin-left: 10%;
+          margin-right: 10%;
           width: 75%;
           margin-top: 3em;
           padding-left: 3em;
@@ -241,6 +237,8 @@
         #content table.ui.table thead th {
           border-bottom: 2px solid #eee !important;
         }
+
+
 
       </style>
     </body>
