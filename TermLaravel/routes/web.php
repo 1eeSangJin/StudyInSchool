@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('test', function(){
+    return ('test death');
+});
+
+Route::any('foo', function(){
+    return 'hello';
+});
+
+Route::get('buildBoard', function(){
+    return View::make('build.buildBoard');
+});
