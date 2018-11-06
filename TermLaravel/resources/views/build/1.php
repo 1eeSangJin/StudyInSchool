@@ -21,7 +21,7 @@
     <header>
         <div class = "ui inverted huge borderless fixed fluid menu">
             <div class = "header item">YEUNGJIN INSIDE</div>
-            <div class = "item" onclick = "location.href='../main.php'"><a>메인</a></div>
+            <div class = "item" onclick = "location.href='main'"><a>메인</a></div>
             <div class = "ui simple dropdown item">
                 <span>계열·학과 갤러리</span>
                 <i class = "dropdown icon"></i>
@@ -29,60 +29,60 @@
                 <div class = "header">계열·학과</div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../cominfo/cominfoBoard.php'">컴퓨터정보계열</span>
+                    <span onclick = "location.href='cominfoBoard'">컴퓨터정보계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../commachine/commachineBoard.php'">컴퓨터응용기계계열</span>
+                    <span onclick = "location.href='commachineBoard'">컴퓨터응용기계계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../electinfo/electinfoBoard.php'">전자정보통신계열</span>
+                    <span onclick = "location.href='electinfoBoard'">전자정보통신계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../energy/energyBoard.php'">신재생에너지전기계열</span>
+                    <span onclick = "location.href='energyBoard'">신재생에너지전기계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../build/buildBoard.php'">건축인테리어디자인계열</span>
+                    <span onclick = "location.href='buildBoard'">건축인테리어디자인계열</span>
                 </div>          
 
                 <div class = "item">
-                    <span onclick = "location.href='../smart/smartBoard.php'">스마트경영계열</span>
+                    <span onclick = "location.href='smartBoard'">스마트경영계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../seesighting/seesightingBoard.php'">국제관광조리계열</span>
+                    <span onclick = "location.href='seesightingBoard'">국제관광조리계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../soldier/soldierBoard.php'">부사관계열</span>
+                    <span onclick = "location.href='soldierBoard'">부사관계열</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../contents/contentsBoard.php'">콘텐츠디자인과</span>
+                    <span onclick = "location.href='contentsBoard'">콘텐츠디자인과</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../welfare/welfareBoard.php'">사회복지과</span>
+                    <span onclick = "location.href='welfareBoard'">사회복지과</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../educate/educateBoard.php'">유아교육과</span>
+                    <span onclick = "location.href='educateBoard'">유아교육과</span>
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../nurse/nurseBoard.php'">간호학과</span>
+                    <span onclick = "location.href='nurseBoard'">간호학과</span>
                 </div>
 
                 </div>
             </div>
-            <div class = "item" onclick = "location.href='../notice/noticeBoard.php'"><span>공지사항</a></div>
+            <div class = "item" onclick = "location.href='noticeBoard'"><span>공지사항</a></div>
 
             <div class = "right menu">
-                <?php
-                    if(!isset($_SESSION['userId'])){       
+                
+                    <!-- if(!isset($_SESSION['userId'])){       
                     echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
                     echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
                     }else if($_SESSION['userNick'] == "Administrator"){
@@ -99,8 +99,10 @@
                     echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
                     echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
                     echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
-                    }
-                ?>
+                    } -->
+                
+                <a class = 'item' onclick = "location.href='login_form'">로그인</a>
+                <a class = 'item' onclick = "location.href='signup_page'">회원가입</a>
             </div>
         </div>
     </header>
@@ -130,6 +132,38 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <table class="ui single line striped selectable table">
+            <thead>
+                <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>날짜</th>
+                <th>조회</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="float:right;">
+          <button type = 'button' class = 'ui secondary button' onclick = location.href='writeBuild_form'>글쓰기</button>
         </div>
     </section>
 

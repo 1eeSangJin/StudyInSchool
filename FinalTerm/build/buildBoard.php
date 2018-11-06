@@ -114,7 +114,7 @@
 
       <div class = "right menu">
         <?php
-          if(!isset($_SESSION['userId'])){       
+          if(!isset($_SESSION['userId'])){
             echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
             echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
           }else if($_SESSION['userNick'] == "Administrator"){

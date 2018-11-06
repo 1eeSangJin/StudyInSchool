@@ -10,4 +10,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function showCominfo($num){
+        echo $num;
+        return view('cominfo.'. $num, ['num' => $num]);
+    }
 }
+?>

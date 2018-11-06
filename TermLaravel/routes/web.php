@@ -11,18 +11,22 @@
 |
 */
 
+Route::get('main',function(){
+    return view('main');
+});
+
+Route::get('cast', function(){
+    return view('cast.html_cast');
+});
+
+Route::get('cominfo/{num}', 'Controller@showCominfo');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function(){
-    return ('test death');
-});
-
-Route::any('foo', function(){
-    return 'hello';
-});
-
-Route::get('buildBoard', function(){
-    return View::make('build.buildBoard');
-});
+?>
