@@ -24,7 +24,7 @@
              * 회원가입을 하는 함수 insertUser
              *********************************************************/
             try{
-                $sql = "insert into users(userId, userPw, userNick, userName, sex, userPhone, affNum) values(:userId, :userPw, :userNick, :userName, :sex, :userPhone, :affNum)";
+                $sql = "insert into usersss(userId, userPw, userNick, userName, sex, userPhone, affNum) values(:userId, :userPw, :userNick, :userName, :sex, :userPhone, :affNum)";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
@@ -44,7 +44,7 @@
         function updateUser($userPw, $userNick, $userPhone, $affNum, $userId){
             try{
                 $sql1 = "set foreign_key_checks = 0";
-                $sql2 = "update users set userPw=:userPw, userNick=:userNick, userPhone=:userPhone, affNum=:affNum where userId=:userId";
+                $sql2 = "update usersss set userPw=:userPw, userNick=:userNick, userPhone=:userPhone, affNum=:affNum where userId=:userId";
                 $sql3 = "set foreign_key_checks = 1";
 
                 $this->db->query($sql1);
@@ -68,7 +68,7 @@
         function deleteUser($userId){
             try{
                 $sql1 = "set foreign_key_checks = 0";
-                $sql2 = "delete from users where userId=:userId";
+                $sql2 = "delete from usersss where userId=:userId";
                 $sql3 = "set foreign_key_checks = 1";
 
                 $this->db->query($sql1);
@@ -90,7 +90,7 @@
              * 회원가입, 로그인, 회원정보 수정을 할 때 아이디의 유무를 검사하는 함수 getUser
              ****************************************************************/
             try{
-                $sql = "select * from users where userId=:userId";
+                $sql = "select * from usersss where userId=:userId";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);
@@ -111,7 +111,7 @@
              * 회원가입을 할 때 중복되는 닉네임의 유무를 검사하는 함수 getNick
              ****************************************************************/
             try{
-                $sql = "select * from users where userNick=:userNick";
+                $sql = "select * from usersss where userNick=:userNick";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userNick", $userNick, PDO::PARAM_STR);
@@ -127,7 +127,7 @@
 
         function getAff($userId){
             try{
-                $sql = "select u.userId, a.affName from users u, affiliation a where u.affNum = a.affNum and u.userId=:userId";
+                $sql = "select u.userId, a.affName from usersss u, affiliation a where u.affNum = a.affNum and u.userId=:userId";
                 $pstmt = $this->db->prepare($sql);
 
                 $pstmt->bindValue(":userId", $userId, PDO::PARAM_STR);

@@ -1,7 +1,7 @@
 <div class = "column" id = "content">
     <div class = "ui inverted huge borderless fixed fluid menu">
         <div class = "header item">YEUNGJIN INSIDE</div>
-        <div class = "item" onclick = "location.href='main'"><a>메인</a></div>
+        <div class = "item" onclick = "location.href='../main'"><a>메인</a></div>
         <div class = "ui simple dropdown item">
             <span>계열·학과 갤러리</span>
             <i class = "dropdown icon"></i>
@@ -9,81 +9,81 @@
             <div class = "header">계열·학과</div>
 
             <div class = "item">
-                <span onclick = "location.href='cominfo/1'">컴퓨터정보계열</span>
+                <span onclick = "location.href='../cominfo/cominfoBoard'">컴퓨터정보계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='commachine/1'">컴퓨터응용기계계열</span>
+                <span onclick = "location.href='../commachine/commachineBoard'">컴퓨터응용기계계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='electinfo/1'">전자정보통신계열</span>
+                <span onclick = "location.href='../electinfo/electinfoBoard'">전자정보통신계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='energy/1'">신재생에너지전기계열</span>
+                <span onclick = "location.href='../energy/electBoard'">신재생에너지전기계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='build/1'">건축인테리어디자인계열</span>
+                <span onclick = "location.href='../build/buildBoard'">건축인테리어디자인계열</span>
             </div>          
 
             <div class = "item">
-                <span onclick = "location.href='smart/1'">스마트경영계열</span>
+                <span onclick = "location.href='../smart/smartBoard'">스마트경영계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='seesighting/1'">국제관광조리계열</span>
+                <span onclick = "location.href='../seesighting/seesightingBoard'">국제관광조리계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='soldier/1'">부사관계열</span>
+                <span onclick = "location.href='../soldier/soldierBoard'">부사관계열</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='contents/1'">콘텐츠디자인과</span>
+                <span onclick = "location.href='../contents/contentsBoard'">콘텐츠디자인과</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='welfare/1'">사회복지과</span>
+                <span onclick = "location.href='../welfare/welfareBoard'">사회복지과</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='educate/1'">유아교육과</span>
+                <span onclick = "location.href='../educate/educateBoard'">유아교육과</span>
             </div>
 
             <div class = "item">
-                <span onclick = "location.href='nurse/1'">간호학과</span>
+                <span onclick = "location.href='../nurse/nurseBoard'">간호학과</span>
             </div>
 
         </div>
     </div>
 
-    <div class = "item" onclick = "location.href='notice/1'"><span>공지사항</a></div>
+    <div class = "item" onclick = "location.href='../notice/noticeBoard'"><span>공지사항</a></div>
 
         <div class = "right menu">
-                    
-        <!-- if(!isset($_SESSION['userId'])){       
-        echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
-        echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
+        
+        <?php
+        if(!isset($_SESSION['userId'])){       
+        echo "<a class = 'item' onclick = location.href='/user/loginForm'>로그인</a>";         
+        echo "<a class = 'item' onclick = location.href='/user/signupForm'>회원가입</a>";     
         }else if($_SESSION['userNick'] == "Administrator"){
         $user_nick = $_SESSION['userNick'];
         $user_aff = $_SESSION['affName'];
         echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
         echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-        echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
-        echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
+        echo "<a class = 'item' onclick = location.href='/user/userInfo'>유저항목</a>";
+        echo "<a class = 'item' onclick = location.href='/user/logout'>로그아웃</a>";   
         }else{
         $user_nick = $_SESSION['userNick'];             
         $user_aff = $_SESSION['affName'];
         echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
         echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-        echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
-        echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
-        } -->
-                    
-        <a class = 'item' onclick = "location.href='login_form'">로그인</a>
-        <a class = 'item' onclick = "location.href='signup_page'">회원가입</a>
+        echo "<a class = 'item' onclick = location.href='/user/modifyUserform'>회원정보 수정</a>";
+        echo "<a class = 'item' onclick = location.href='/user/logout'>로그아웃</a>";     
+        }
+        ?>
+                
         </div>
     </div>
 </div> 

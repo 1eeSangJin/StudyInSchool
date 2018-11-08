@@ -14,16 +14,18 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email',100)->unique();
-            $table->string('password',60);
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('id',50)->primary('id');
+            $table->string('userPw', 255);
+            $table->char('userNick', 50)->unique()->default('Guest');
+            $table->char('userName', 50);
+            $table->char('sex', 50);
+            $table->char('userPhone', 50);
+            $table->integer('affNum');
+            $table->foreign('affNum')->references('affNum')->on('affiliation');
         });
     }
 
-    /**
+    /**p
      * Reverse the migrations.
      *
      * @return void

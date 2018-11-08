@@ -145,16 +145,18 @@
 
       <br>
 
-      <h3 class = "ui huge header">인기글</h3>
-        
-      <table class="ui single line striped selectable table">
-        <thead>
+      <legend>
+        <h3 class = "ui huge header">인기글</h3>
+          
+        <table class="ui single line striped selectable table">
+          <thead>
 
-        </thead>
-        <tbody>
-            
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+              
+          </tbody>
+        </table>
+      </legend>
 
       <div class = "ui divider"></div>
 
