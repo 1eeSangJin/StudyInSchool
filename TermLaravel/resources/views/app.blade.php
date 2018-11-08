@@ -26,7 +26,7 @@
         @yield('content')
     </section>
 
-    <script src="{{ asset('/vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+    <script src="{{ asset('/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
     @yield('js')
 </body>
 </html>

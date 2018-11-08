@@ -33,15 +33,17 @@ Route::get('cominfo/cominfoBoard', 'cominfoController@showCominfo');
 
 Route::get('cominfo/viewCominfo', 'cominfoController@showViewCominfo');
 
-Route::get('cominfo/writeCominfo'. 'cominfoController@showWriteCominfo');
+Route::get('cominfo/writeCominfo_form'. 'cominfoController@showWriteCominfo');
+
+Route::get('cominfo/writeCominfo', 'cominfoController@saveWriteCominfo');
+
+Route::get('cominfo/modifyCominfo_form', 'cominfoController@showModifyCominfo');
+
+Route::get('cominfo/modifyCominfo', 'cominfoController@saveModifyCominfo');
 
 Route::get('cominfo/comment', 'cominfoController@writeComment');
 
 Route::get('cominfo/deleteCominfo', 'cominfoController@deleteCominfo');
-
-Route::get('cominfo/writeCominfo_form', 'cominfoController@showWriteCominfo');
-
-Route::get('cominfo/modifyCominfo_form', 'cominfoController@showModifyCominfo');
 //cominfo//
 
 Auth::routes();

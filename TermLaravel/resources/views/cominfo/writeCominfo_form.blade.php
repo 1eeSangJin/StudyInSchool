@@ -12,7 +12,7 @@
   
         <br>
   
-        <form action = "writeCominfo.php" method = "post" class = "ui form">
+        <form action = "writeCominfo" method = "post" class = "ui form">
             @csrf
             <h2 class = "ui dividing header">작성내용</h2>
             <?php error_reporting(0); ?>
@@ -51,6 +51,17 @@
 
 @section('js')
 <script type="text/javascript">
-    CKEDITOR.replace('contents');
+    CKEDITOR.replace('contents',{
+        extraPlugins: 'codesnippet',
+        codeSnippet_theme: 'arta'
+    });
+
+    var options = {
+        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+    };
 </script>
+
 @endsection
