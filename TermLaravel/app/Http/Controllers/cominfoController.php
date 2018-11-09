@@ -64,6 +64,10 @@ class cominfoController extends Controller
         return view('cominfo.writeCominfo_form');
     }
 
+    public function saveWriteCominfo(){
+        return redirection();
+    }
+
     public function showModifyCominfo(){
         return view('cominfo.modifyCominfo_form');
     }

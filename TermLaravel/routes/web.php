@@ -33,7 +33,7 @@ Route::get('cominfo/cominfoBoard', 'cominfoController@showCominfo');
 
 Route::get('cominfo/viewCominfo', 'cominfoController@showViewCominfo');
 
-Route::get('cominfo/writeCominfo_form'. 'cominfoController@showWriteCominfo');
+Route::get('cominfo/writeCominfo_form', 'cominfoController@showWriteCominfo');
 
 Route::get('cominfo/writeCominfo', 'cominfoController@saveWriteCominfo');
 
