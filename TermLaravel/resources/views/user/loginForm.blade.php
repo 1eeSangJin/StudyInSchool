@@ -14,7 +14,7 @@
         <br>
         <h3 class = "ui huge header">로그인</h3>
   
-        <form action = "login" method = "post">
+    <form action = "{{URL::to('/user/login')}}" method = "post">
             @csrf
             <div class = "ui huge input">
                 <input type = "text" class = "form-control" name = "userId" id = "userId" placeholder = "아이디" required>
