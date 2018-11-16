@@ -13,8 +13,14 @@
         
         <br>
         <h3 class = "ui huge header">로그인</h3>
+
+        @if (count($errors) > 0)
+        @foreach($errors->all() as $error)
+            <p class = "alert alert-danger">{{$error}}</p>
+        @endforeach
+        @endif
   
-    <form action = "{{URL::to('/user/login')}}" method = "post">
+        <form action = "{{ route('login') }}" method = "post">
             @csrf
             <div class = "ui huge input">
                 <input type = "text" class = "form-control" name = "userId" id = "userId" placeholder = "아이디" required>
@@ -23,7 +29,7 @@
             <br>
             <br>
             <div class = "ui huge input">
-                <input type = "password" class = "form-control" name = "userPw" id = "userPw" placeholder = "비밀번호" required>
+                <input type = "password" class = "form-control" name = "password" id = "password" placeholder = "비밀번호" required>
             </div>
             <button type = "submit" class = "ui black button">로그인</button>
         </form>

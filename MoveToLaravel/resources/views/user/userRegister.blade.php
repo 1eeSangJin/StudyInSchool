@@ -1,54 +1,86 @@
 @extends('app')
 
 @section('content')
-<div class = "column" id = "content">
+    <div class = "column" id = "content">
     <div class = "ui hidden section divider"></div>
     <div class = "row">
       <h1 class = "ui huge header">
-            <img src="/img/yeungjin1.jpg">「YEUNGJIN INSIDE」에 오신것을 환영합니다.
+        <img src="/img/yeungjin1.jpg" alt="">「YEUNGJIN INSIDE」 회원가입
       </h1>
     </div>
 
     <br>
-
-    <form action = "{{URL::to('/user/signup')}}" method = "post" class = "ui form">
+    @if (count($errors) > 0)
+        @foreach($errors->all() as $error)
+            <p class = "alert alert-danger">{{$error}}</p>
+        @endforeach
+    @endif
+    <form action = "{{ route('register') }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">회원 정보 기입</h2>
 
         <div class = "field">
-            <label>아이디</label>
+            <label>{{ __('아이디') }}</label>
             <div class = "four wide field">
-                <input type = "text" name = "userId" id = "userId" placeholder = "아이디" required>
+                <input type = "text" name = "userId" id = "userId" placeholder = "아이디" value = "{{old('userId')}}" required>
+                @if ($errors->has('userId'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+                @endif
             </div>
         </div>
 
         <div class = "field">
-            <label>비밀번호</label>
+            <label>{{ __('비밀번호') }}</label>
             <div class = "four wide field">
-                <input type = "password" name = "userPw" id = "userPw" placeholder = "비밀번호" required>
+                <input type = "password" name = "password" id = "password" placeholder = "비밀번호" required>
+                @if ($errors->has('password'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+                @endif
             </div>
         </div>
 
         <div class = "field">
-            <label>이메일</label>
+            <label>{{ __('이메일 주소') }}</label>
             <div class = "four wide field">
-                <input type = "text" name = "email" id = "email" placeholder = "이메일주소" required>
+                <input type="email" name="email" id="email" placeholder class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"  value = "{{old('email')}}">
+                @if ($errors->has('email'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('email') }}</strong>
+                </span>
+            @endif
             </div>
         </div>
 
         <div class = "field">
-            <div class = "two fields">
-                <div class = "field">
-                    <label>닉네임</label>
-                    <input type = "text" name = "userNick" id = "userNick" placeholder = "닉네임" required>
-                    <label>이름</label>
-                    <input type = "text" name = "userName" id = "userName" placeholder = "이름" required>
-                </div>
+            <label>{{ __('닉네임') }}</label>
+            <div class = "four wide field">
+                <input type = "text" name = "userNick" id = "userNick" placeholder = "닉네임" value = "{{old('userNick')}}" required>
+                @if ($errors->has('userNick'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('userNick') }}</strong>
+                </span>
+            @endif
             </div>
         </div>
 
         <div class = "field">
-            <label>성별</label>
+                <label>{{ __('이름') }}</label>
+            <div class = "four wide field">
+                <input type = "text" name = "name" id = "name" placeholder = "이름" class = "form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value = "{{old('name')}}" required>
+                @if ($errors->has('name'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </span>
+            @endif
+            </div>
+        </div>
+
+        <div class = "field">
+            <label>{{ __('성별') }}</label>
             <div class = "four wide field">
                 <select class = "ui fluid dropdown" name = "sex" id = "sex" required>
                     <option value selected>성별</option>
@@ -56,20 +88,30 @@
                     <option value = "female">여자</option>
                 </select>
             </div>
+            @if ($errors->has('sex'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('sex') }}</strong>
+            </span>
+        @endif
         </div>
 
         <div class = "field">
-            <label>휴대전화</label>
+            <label>{{ __('휴대전화') }}</label>
             <div class = "four wide field">
-                <input type = "tel" name = "userPhone" id = "userPhone" placeholder = "전화번호 입력( - 를 함께 입력해주세요)" required>
+                <input type = "tel" name = "userPhone" id = "userPhone" placeholder = "전화번호 입력( - 를 함께 입력해주세요)" value = "{{old('userPhone')}}" required>
             </div>
+            @if ($errors->has('userPhone'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('userPhone') }}</strong>
+            </span>
+        @endif
         </div>
 
         <div class = "field">
-            <label>계열/학과</label>
+            <label>{{ __('계열/학과') }}</label>
             <div class = "two fields">
                 <div class = "field">
-                    <select class = "ui fluid dropdown" name="affNum" id="affNum" required>
+                    <select class = "ui fluid dropdown" name="affNum" id="affNum">
                         <option value selected>계열/학과</option>
                         <option value = "101">컴정 - CP | 네트워크보안</option>
                         <option value = "102">컴정 - WD | 일본취업반</option>
@@ -118,8 +160,12 @@
                     </select>
                 </div>
             </div> 
+            @if ($errors->has('affNum'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('affNum') }}</strong>
+            </span>
+            @endif
         </div>
         <button type = "submit" class = "ui secondary button">회원가입</button>
     </form>
-</div>
 @endsection
