@@ -14,10 +14,10 @@ class CreateDeptBoardsTable extends Migration
     public function up()
     {
         Schema::create('dept_boards', function (Blueprint $table) {
-            $table->integer('affNum');
-            $table->foreign('affNum')->references('affNum')->on('affiliation');
+            $table->integer('dept_num');
+            $table->foreign('dept_num')->references('dept_num')->on('departments');
             $table->increments('id');
-            $table->char('userNick');
+            $table->string('userNick');
             $table->string('title');
             $table->string('content');
             $table->timestamps();

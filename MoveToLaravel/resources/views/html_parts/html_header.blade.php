@@ -70,7 +70,7 @@
                     @endif
                 @else
                     <div class = 'item'>전공</div>
-                    <div class = 'item'><strong>{{ Auth::user()->name }}</strong>님 환영합니다.</div>
+                    <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
                     <a class = 'item' href="">{{ __('회원정보 수정') }}</a>
                     <a class = 'item' href="{{ route('logout') }}"                                        onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>

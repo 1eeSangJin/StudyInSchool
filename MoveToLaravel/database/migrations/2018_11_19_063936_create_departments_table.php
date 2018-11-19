@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnUsersTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class AddColumnUsersTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('users', function(Blueprint $table){
-            $table->string('userId',255)->unique();
-            $table->string('userNick',255)->unique();
-            $table->char('sex',60);
-            $table->char('userPhone', 50);
-            $table->integer('affNum');
+        Schema::create('departments', function (Blueprint $table) {
+            $table->integer('dept_num')->primary();
+            $table->string('dept_name');
         });
     }
 
@@ -30,6 +26,6 @@ class AddColumnUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('departments');
     }
 }
