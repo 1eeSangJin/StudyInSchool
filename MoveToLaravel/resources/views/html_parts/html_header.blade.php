@@ -62,27 +62,7 @@
 
         <div class = "item" onclick = "location.href='../notice/noticeBoard'"><span>공지사항</a></div>
 
-            <div class = "right menu">
-                    
-                    {{-- if(!isset($_SESSION['userId'])){       
-                      echo "<a class = 'item' onclick = location.href='../user/login_form.php'>로그인</a>";         
-                      echo "<a class = 'item' onclick = location.href='../user/signup_page.php'>회원가입</a>";     
-                    }else if($_SESSION['userNick'] == "Administrator"){
-                      $user_nick = $_SESSION['userNick'];
-                      $user_aff = $_SESSION['affName'];
-                      echo "<div class = 'item'>직책 : <strong>「 $user_aff 」</strong></div>"; 
-                      echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-                      echo "<a class = 'item' onclick = location.href='../user/userInfo.php'>유저항목</a>";
-                      echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";   
-                    }else{
-                      $user_nick = $_SESSION['userNick'];             
-                      $user_aff = $_SESSION['affName'];
-                      echo "<div class = 'item'>전공 : <strong>「 $user_aff 」</strong></div>"; 
-                      echo "<div class = 'item'><strong>$user_nick</strong> 님 환영합니다.</div>";
-                      echo "<a class = 'item' onclick = location.href='../user/modifyUser_form.php'>회원정보 수정</a>";
-                      echo "<a class = 'item' onclick = location.href='../user/logout.php'>로그아웃</a>";     
-                    } --}}
-                  
+            <div class = "right menu">               
                 @guest
                 <a class = "item" href="../user/loginForm">{{ __('로그인') }}</a>
                     @if (Route::has('register'))
@@ -92,7 +72,11 @@
                     <div class = 'item'>전공</div>
                     <div class = 'item'><strong>{{ Auth::user()->name }}</strong>님 환영합니다.</div>
                     <a class = 'item' href="">{{ __('회원정보 수정') }}</a>
-                    <a class = 'item' href="{{ route('logout') }}">{{ __('로그아웃') }}</a>
+                    <a class = 'item' href="{{ route('logout') }}"                                        onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
+                    <form action="{{ route('logout') }}" method="post" id = "logout-form">
+                        @csrf
+                    </form>
                 @endguest
             </div>
         </div>

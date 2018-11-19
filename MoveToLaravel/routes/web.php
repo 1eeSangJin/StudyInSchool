@@ -13,7 +13,7 @@
 
 Route::get('main',function(){
     return view('main');
-});
+})->name('main');
 
 //user//
 
@@ -58,8 +58,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function () {
     return view('welcome');
 });
-
-$this->get('/verify-user/{code}','Auth\RegisterController@activateUser')->name('activate.user');
 
 ?>
 
