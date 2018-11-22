@@ -15,21 +15,24 @@ Route::get('main',function(){
     return view('main');
 })->name('main');
 
+
 //user//
-
-Route::get('user/loginForm', 'userController@showLoginForm');
-
-Route::post('user/login', 'userController@login');
+Route::get('user/loginForm', 'userController@showLoginForm')->name('loginForm');
 
 Route::get('user/signupForm', 'userController@showSignUpForm');
 
-Route::post('user/signup', 'userController@signup');
-
 Route::get('user/userRegister', 'userController@showRegisterForm');
 
-Route::post('user/userRegister', 'userController@register');
+Route::get('user/userUpdate', 'userController@showUpdateUserForm');
 
+Route::post('user/userUpdate', 'userController@update');
+
+Route::post('user/deleteUser', 'userController@destroy');
 //user//
+
+//notice//
+Route::get('notice/noticeBoard', 'noticeController@index');
+//notice//
 
 //cominfo//
 Route::get('cominfo/cominfoBoard', 'cominfoController@index');
@@ -42,12 +45,28 @@ Route::post('cominfo/writeCominfo', 'cominfoController@store');
 
 Route::get('cominfo/modifyCominfo_form', 'cominfoController@edit');
 
-Route::get('cominfo/modifyCominfo', 'cominfoController@update');
+Route::post('cominfo/modifyCominfo', 'cominfoController@update');
+
+Route::post('cominfo/deleteCominfo', 'cominfoController@destroy');
 
 Route::get('cominfo/comment', 'cominfoController@writeComment');
-
-Route::get('cominfo/deleteCominfo', 'cominfoController@deleteCominfo');
 //cominfo//
+
+//commachine//
+Route::get('commachine/commachineBoard', 'commachineController@index');
+
+Route::get('commachine/viewCommachine', 'commachineController@show');
+
+Route::get('commachine/writeCommachine_form', 'commachineController@create');
+
+Route::post('commachine/writeCommachine', 'commachineController@store');
+
+Route::get('commachine/modifyCommachine_form', 'commachineController@edit');
+
+Route::post('commachine/modifyCommachine', 'commachineController@update');
+
+Route::post('commachine/deleteCommachine', 'commachineController@destroy');
+//commachine//
 
 Auth::routes();
 

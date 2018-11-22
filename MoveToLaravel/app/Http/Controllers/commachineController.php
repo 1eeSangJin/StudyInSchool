@@ -3,28 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\dept_board;
 
-class cominfoController extends Controller
+class commachineController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function __construct(){
         return $this->middleware('auth', ['except'=>'index']);
     }
     
-    public function index(Request $request)
+    public function index()
     {
         //
-
-        $msgs = dept_board::find('101');
-        $msgs = dept_board::orderBy('id', 'desc')->paginate(5);
-
-        return view('cominfo.cominfoBoard')->with('msgs',$msgs);
-
+        return view('commachine.commachineBoard');
     }
 
     /**
@@ -35,7 +30,7 @@ class cominfoController extends Controller
     public function create()
     {
         //
-        return view('cominfo.writeCominfo_form');
+        return view('commachine.writeCommachine_form');
     }
 
     /**
@@ -47,9 +42,6 @@ class cominfoController extends Controller
     public function store(Request $request)
     {
         //
-        $userNick = Auth::user()->userNick;
-        $title = $request->title;
-        
     }
 
     /**

@@ -15,6 +15,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    protected $table = 'users';
+
     protected $fillable = [
         'userId', 'password', 'email', 'userNick', 'name', 'sex', 'userPhone', 'affNum',
     ];
@@ -27,4 +30,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function affiliation(){
+        return $this->hasOne(affiliatuion::class);
+    }
 }

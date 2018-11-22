@@ -4,10 +4,10 @@
     <div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
         <div class = "row">
-        <h1 class = "ui huge header">
-            [컴정] 게시글 수정
-        </h1>
-    </div>
+            <h1 class = "ui huge header">
+                [컴정] 게시글 수정
+            </h1>
+        </div>
 
     <br>
 

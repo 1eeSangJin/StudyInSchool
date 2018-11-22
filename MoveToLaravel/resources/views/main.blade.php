@@ -19,7 +19,6 @@
 
         <fieldset>
             <h3 class = "ui huge header">인기글</h3>
-        
             <table class="ui single line striped selectable table">
                 <thead>
           
@@ -33,16 +32,16 @@
         <div class = "ui divider"></div>
         <br>
         <fieldset>
-            <h3 class = "ui huge header">최신글</h3>
+        <h3 class = "ui huge header">최신글</h3>
           
-            <table class="ui single line striped selectable table">
-                <thead>
+        <table class="ui single line striped selectable table">
+            <thead>
                       
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                       
-                </tbody>
-            </table>
+            </tbody>
+        </table>
 
         </fieldset>
     </div>

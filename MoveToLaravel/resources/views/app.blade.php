@@ -17,14 +17,24 @@
         crossorigin="anonymous">
     </script>
     <script src="/css/semantic/semantic.min.js"></script>
+</head>
 <body>
     <header>
         @include('html_parts.html_header')
     </header>
 
     <section>
+        @if(Session::has('message'))
+            <div class = "alert alert-info">
+                {{Session::get('message')}}
+            </div>
+        @endif
         @yield('content')
     </section>
+
+    <footer>
+        @include('html_parts.html_footer')
+    </footer>
 
     <script src="{{ asset('/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
     @yield('js')
