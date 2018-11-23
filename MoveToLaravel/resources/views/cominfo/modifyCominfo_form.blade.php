@@ -12,7 +12,7 @@
     <br>
 
     <?php error_reporting(0) ?>
-    <form action = "modifyCominfo?num={{ $num }}&page={{ $page }}" method = "post" class = "ui form">
+    <form action = "modifyCominfo?id={{ $id }}&page={{ $page }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">내용</h2>
 

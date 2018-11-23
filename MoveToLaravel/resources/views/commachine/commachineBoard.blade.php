@@ -1,6 +1,12 @@
 @extends('app')
 
 @section('content')
+    @if(Session::has('message'))
+    <div class = "alert alert-info">
+        {{Session::get('message')}}
+    </div>
+    @endif
+
     <div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
         <div class = "row">
@@ -38,21 +44,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-            </tr>
+            @foreach($msgs as $row)
+                <tr>
+                    <td>
+                        {{$row['id']}}                             
+                    </td>
+                    <td>
+                        <a href = "viewCominfo?id={{ $row['id'] }}&page={{ $page }}"> 
+                        {{$row['title']}}
+                        {{-- [{{ $count = $dao->countCommentComInfo($row['num']) }}]                     --}}
+                        </a>
+                    </td>
+                    <td>
+                        {{ $row['userNick'] }} [{{$row['affName']}}]                   
+                    </td>
+                    <td>
+                        {{ $row['date'] }}                       
+                    </td>
+                    <td>
+                        {{ $row['hits'] }}                             
+                    </td>
+                    <td>
+                        {{ $row['recommend'] }}
+                    </td>
+                </tr>
+                @endforeach
         </tbody>
     </table>
 

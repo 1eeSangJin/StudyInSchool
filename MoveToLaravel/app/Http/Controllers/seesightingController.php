@@ -11,6 +11,11 @@ class seesightingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        return $this->middleware('auth', ['except'=>'index']);
+    }
+
     public function index()
     {
         //

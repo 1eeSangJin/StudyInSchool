@@ -1,6 +1,12 @@
 @extends('app')
 
 @section('content')
+    @if(Session::has('message'))
+    <div class = "alert alert-info">
+        {{Session::get('message')}}
+    </div>
+    @endif
+
     <div class = "column" id = "content">
         <div class = "row">
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
