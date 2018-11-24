@@ -11,7 +11,6 @@
 
     <br>
 
-    <?php error_reporting(0) ?>
     <form action = "modifyCominfo?id={{ $id }}&page={{ $page }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">내용</h2>
@@ -41,4 +40,21 @@
         <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
     </form>
   </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    CKEDITOR.replace('contents',{
+        extraPlugins: 'codesnippet',
+        codeSnippet_theme: 'arta'
+    });
+
+    var options = {
+        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+    };
+</script>
+
 @endsection

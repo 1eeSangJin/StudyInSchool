@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('content')
-    <img src="/img/cominfo/programming.jpg" height="400px" alt="헤더사진">
+    <img src="/img/" height="400px" alt="헤더사진">
     <div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
         <div class = "row">
@@ -12,10 +12,9 @@
 
         <br>
 
-        <form action = "writeCominfo" method = "post" class = "ui form">
+        <form action = "writeCommachine" method = "post" class = "ui form">
             @csrf
             <h2 class = "ui dividing header">작성내용</h2>
-            <?php error_reporting(0); ?>
             <div class = "two field">
                 <label>작성자</label>
                 <div class = "four wide field">
@@ -44,7 +43,7 @@
             </div>
             
             <button type = "submit" class = "ui secondary button" id = "submit_button">등록하기</button>
-            <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard'">돌아가기</button>
+            <button type = "button" class = "ui secondary button" onclick = "location.href='commachineBoard'">돌아가기</button>
         </form>
     </div>
 @endsection

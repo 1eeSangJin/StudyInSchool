@@ -18,7 +18,6 @@
         <form action = "writeCominfo" method = "post" class = "ui form">
             @csrf
             <h2 class = "ui dividing header">작성내용</h2>
-            <?php error_reporting(0); ?>
             <div class = "two field">
                 <label>작성자</label>
                 <div class = "four wide field">

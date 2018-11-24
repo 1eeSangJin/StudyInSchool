@@ -28,8 +28,6 @@
                 </div>
             </div>
 
-
-
             <div class="field">
                 <label>내용</label>
                 <input type = "text" name = "contents" id = "contents" rows="15" cols="10" value = "<?= $msgs['content'] ?>">
