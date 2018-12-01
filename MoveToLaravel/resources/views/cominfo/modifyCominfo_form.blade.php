@@ -11,6 +11,12 @@
 
     <br>
 
+    @if (count($errors) > 0)
+        @foreach($errors->all() as $error)
+            <p class = "alert alert-danger">{{$error}}</p>
+        @endforeach
+    @endif
+
     <form action = "modifyCominfo?id={{ $id }}&page={{ $page }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">내용</h2>
@@ -25,16 +31,30 @@
         <div class = "field">
             <label>제목</label>
             <div class = "twelve wide field">
-                <input type = "text" name = "title" id = "title" value = "<?= $msgs['title'] ?>" required>
+                <input type = "text" name = "title" id = "title" value = "{{ $msgs['title'] }}" required>
             </div>
         </div>
 
-
-
         <div class="field">
             <label>내용</label>
-            <input type = "text" name = "contents" id = "contents" rows="15" cols="10" value = "<?= $msgs['content'] ?>">
+            <textarea name="contents" id="contents" cols="30" rows="10">{{ $msgs['content'] }}</textarea>
         </div>
+
+        <script src="{{ asset('/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+        <script type="text/javascript">
+            CKEDITOR.replace('contents',{
+                extraPlugins: 'codesnippet',
+                codeSnippet_theme: 'arta'
+            });
+    
+            var options = {
+                filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+            };
+
+        </script>
         
         <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
         <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
@@ -42,19 +62,3 @@
   </div>
 @endsection
 
-@section('js')
-<script type="text/javascript">
-    CKEDITOR.replace('contents',{
-        extraPlugins: 'codesnippet',
-        codeSnippet_theme: 'arta'
-    });
-
-    var options = {
-        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
-        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
-    };
-</script>
-
-@endsection

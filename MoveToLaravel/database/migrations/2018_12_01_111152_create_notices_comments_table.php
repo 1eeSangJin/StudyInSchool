@@ -14,7 +14,7 @@ class CreateNoticesCommentsTable extends Migration
     public function up()
     {
         Schema::create('notices_comments', function (Blueprint $table) {
-            $table->integer('id');
+            $table->integer('board_num');
             $table->string('userNick');
             $table->string('affName');
             $table->string('comment');

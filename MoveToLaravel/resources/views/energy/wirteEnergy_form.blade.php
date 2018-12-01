@@ -1,8 +1,6 @@
 @extends('app')
 
-
 @section('content')
-
     <div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
         <img src="/img/" height="400px" alt="헤더사진">

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use DB;
+use App\dept_board;
 
 class commachineController extends Controller
 {
@@ -16,11 +19,38 @@ class commachineController extends Controller
         return $this->middleware('auth', ['except'=>'index']);
     }
     
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('commachine.commachineBoard');
+        $currentPage = $request->get("page");
+        $msgs = dept_board::where("dept_num", "=", "201")->orderBy('id', 'desc')->paginate(3);
+
+        if($currentPage<1){
+            $currentPage = 1;
+        }
+
+        if(Auth::check()){
+            $userId = Auth::user()['userId'];
+    
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+    
+            $results = json_decode($datas, true);
+    
+            return view('commachine.commachineBoard')
+                ->with('results', $results)
+                ->with('currentPage', $currentPage)
+                ->with('msgs', $msgs);
+        }else{
+            return view('commachine.commachineBoard')
+                ->with('currentPage', $currentPage)
+                ->with('msgs',$msgs);
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use DB;
+use App\Notice;
+use App\Notices_Comment;
 
 class noticeController extends Controller
 {
@@ -15,10 +19,36 @@ class noticeController extends Controller
         return $this->middleware('auth', ['except'=>'index']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
         //
-        return view('notice.noticeBoard');
+        $currentPage = $request->get("page");
+        $msgs = Notice::orderBy('id', 'desc')->paginate(3);
+
+        if($currentPage<1){
+            $currentPage = 1;
+        }
+
+        if(Auth::check()){
+            $userId = Auth::user()['userId'];
+    
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+
+            $results = json_decode($datas, true);
+    
+            return view('notice.noticeBoard')
+                ->with('results', $results)
+                ->with('currentPage', $currentPage)
+                ->with('msgs', $msgs);
+        }else{
+            return view('notice.noticeBoard')
+            ->with('currentPage', $currentPage)
+            ->with('msgs', $msgs);
+        }
     }
 
     /**
@@ -29,6 +59,22 @@ class noticeController extends Controller
     public function create()
     {
         //
+        if(Auth::check()){
+            $userId = Auth::user()['userId'];
+    
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+    
+            $results = json_decode($datas, true);
+    
+            return view('notice.writeNotice_form')
+                    ->with('results', $results);
+        }else{
+            return view('notice.writeNotice_form');
+        }
     }
 
     /**
@@ -40,6 +86,18 @@ class noticeController extends Controller
     public function store(Request $request)
     {
         //
+        $userNick = $request->userNick;
+        $title = $request->title;
+        $contents = $request->contents;
+
+        Notice::create([
+            'userNick' => $userNick,
+            'title' => $title,
+            'content' => $contents,
+            'hits' => 0,
+            'recommend' => 0,
+        ]);
+        return redirect('notice/noticeBoard')->with('message', '글이 등록되었습니다');
     }
 
     /**
@@ -48,9 +106,37 @@ class noticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = Notice::find($id);
+
+        $comments = Notices_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Notices_Comment::where("board_num", "=", $id)->count();
+
+        $msgs -> update(['hits'=>$msgs->hits+1]);
+
+        return view('notice.viewNotice')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs)
+            ->with('count', $count)
+            ->with('comments', $comments);
     }
 
     /**
@@ -59,7 +145,7 @@ class noticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
     }
@@ -71,7 +157,7 @@ class noticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }
@@ -82,7 +168,7 @@ class noticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
     }

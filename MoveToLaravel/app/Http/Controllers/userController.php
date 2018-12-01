@@ -8,10 +8,17 @@ use Hash;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\UpdateUsersRequest;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class userController extends Controller
 {
     //
+
+    public function __construct(){
+        return $this->middleware('guest', ['except'=>'showUpdateUserForm']);
+    }
+
     public function showLoginForm(){
         return view('user.loginForm');
     }
@@ -31,8 +38,6 @@ class userController extends Controller
         $email = $request->email;
         $userNick = $request->userNick;
         $userPhone = $request->userPhone;
-
-        // return $request;
 
         $u = User::where('userId',$userId) -> first();
 

@@ -19,7 +19,7 @@ class CreateDeptBoardsTable extends Migration
             $table->increments('id');
             $table->string('userNick');
             $table->string('title');
-            $table->string('content');
+            $table->mediumText('content');
             $table->timestamps();
             $table->integer('hits');
             $table->integer('recommend');

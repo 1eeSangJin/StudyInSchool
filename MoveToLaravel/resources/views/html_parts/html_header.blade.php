@@ -56,41 +56,40 @@
                 <div class = "item">
                     <span onclick = "location.href='../nurse/nurseBoard'">간호학과</span>
                 </div>
-
             </div>
         </div>
 
         <div class = "item" onclick = "location.href='../notice/noticeBoard'"><span>공지사항</a></div>
 
-            <div class = "right menu">
-
-                @guest
+        <div class = "right menu">
+            @guest
                 <a class = "item" href="../user/loginForm">{{ __('로그인') }}</a>
-                    @if (Route::has('register'))
-                        <a class = "item" href="../user/userRegister">{{ __('회원가입') }}</a>
-                    @endif
+                @if (Route::has('register'))
+                    <a class = "item" href="../user/userRegister">{{ __('회원가입') }}</a>
+                @endif
+            @else
+                @if(Auth::user()->userNick == 'Administrator')
+                    <div class = 'item'>직책 : 관리자</div>
+                    <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
+                    <a class = 'item' href="viewUsers">{{ __('회원목록') }}</a>
+                    <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
+                    <form action="{{ route('logout') }}" method="post" id = "logout-form">
+                        @csrf
+                    </form>
                 @else
-                    @if(Auth::user()->userNick == 'Administrator')
-                        <div class = 'item'>직책 : 관리자</div>
-                        <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
-                        <a class = 'item' href="viewUsers">{{ __('회원목록') }}</a>
-                        <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
-                        <form action="{{ route('logout') }}" method="post" id = "logout-form">
-                            @csrf
-                        </form>
-                    @else
-                        <div class = 'item'>전공 : </div>
-                        <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
-                        <a class = 'item' href="../user/userUpdate">{{ __('회원정보 수정') }}</a>
-                        <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
-                        <form action="{{ route('logout') }}" method="post" id = "logout-form">
-                            @csrf
-                        </form>
-                    @endif
-                @endguest
-            </div>
+                    @foreach($results as $affName)
+                        <div class = 'item'>전공 : {{ $affName['affName'] }}</div>
+                    @endforeach
+                    <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
+                    <a class = 'item' href="../user/userUpdate">{{ __('회원정보 수정') }}</a>
+                    <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
+                    <form action="{{ route('logout') }}" method="post" id = "logout-form">
+                        @csrf
+                    </form>
+                @endif
+            @endguest
         </div>
     </div>
 </div> 

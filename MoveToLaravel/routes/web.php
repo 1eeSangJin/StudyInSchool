@@ -11,8 +11,25 @@
 |
 */
 
+Route::get('test', 'testController@test_query');
+
 Route::get('main',function(){
-    return view('main');
+    if(Auth::check()){
+        $id = Auth::user()['userId'];
+
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $id)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        return view('main')->with('results', $results);
+
+    }else{
+        return view('main');
+    }
 })->name('main');
 
 
@@ -32,6 +49,16 @@ Route::post('user/deleteUser', 'userController@destroy');
 
 //notice//
 Route::get('notice/noticeBoard', 'noticeController@index');
+
+Route::get('notice/writeNotice_form', 'noticeController@create');
+
+Route::post('notice/writeNotice', 'noticeController@store');
+
+Route::get('notice/viewNotice', 'noticeController@show');
+
+Route::post('notice/comment', 'noticecommentController@store');
+
+
 //notice//
 
 //cominfo//
@@ -47,7 +74,7 @@ Route::get('cominfo/modifyCominfo_form', 'cominfoController@edit');
 
 Route::post('cominfo/modifyCominfo', 'cominfoController@update');
 
-Route::post('cominfo/deleteCominfo', 'cominfoController@destroy');
+Route::get('cominfo/deleteCominfo', 'cominfoController@destroy');
 
 Route::get('cominfo/comment', 'cominfoController@writeComment');
 //cominfo//

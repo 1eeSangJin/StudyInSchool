@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\dept_board;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateBoardRequest;
+use DB;
 
 class cominfoController extends Controller
 {
@@ -20,11 +23,33 @@ class cominfoController extends Controller
     {
         //
 
-        $msgs = dept_board::find('101');
-        $msgs = dept_board::orderBy('id', 'desc')->paginate(5);
+        $currentPage = $request->get("page");
+        $msgs = dept_board::where("dept_num", "=", "101")->orderBy('id', 'desc')->paginate(3);
 
-        return view('cominfo.cominfoBoard')->with('msgs',$msgs);
+        if($currentPage<1){
+            $currentPage = 1;
+        }
 
+        if(Auth::check()){
+            $userId = Auth::user()['userId'];
+    
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+    
+            $results = json_decode($datas, true);
+    
+            return view('cominfo.cominfoBoard')
+                ->with('results', $results)
+                ->with('currentPage', $currentPage)
+                ->with('msgs', $msgs);
+        }else{
+            return view('cominfo.cominfoBoard')
+                ->with('currentPage', $currentPage)
+                ->with('msgs',$msgs);
+        }
     }
 
     /**
@@ -35,7 +60,19 @@ class cominfoController extends Controller
     public function create()
     {
         //
-        return view('cominfo.writeCominfo_form');
+            $userId = Auth::user()['userId'];
+    
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+    
+            $results = json_decode($datas, true);
+    
+    
+            return view('cominfo.writeCominfo_form')
+                ->with('results', $results);
     }
 
     /**
@@ -47,9 +84,21 @@ class cominfoController extends Controller
     public function store(Request $request)
     {
         //
-        $userNick = Auth::user()->userNick;
+        $userNick = $request->userNick;
+        $affName = $request->affName;
         $title = $request->title;
-        
+        $contents = $request->contents;
+
+        $b = dept_board::create([
+            'dept_num' => 101,
+            'userNick' => $userNick,
+            'title' => $title,
+            'content' => $contents,
+            'hits' => 0,
+            'recommend' => 0,
+            'affName' => $affName,
+        ]);      
+        return redirect('cominfo/cominfoBoard');
     }
 
     /**
@@ -58,9 +107,31 @@ class cominfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        $msgs -> update(['hits'=>$msgs->hits+1]);
+
+        return view('cominfo.viewCominfo')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs);
     }
 
     /**
@@ -69,9 +140,34 @@ class cominfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        if(Auth::user()['userNick'] == $msgs->userNick){
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        return view('cominfo.modifyCominfo_form')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs);
+        }else{
+            return redirect()->back()->with('message', '본인만 수정할 수 있습니다.');
+        }
     }
 
     /**
@@ -81,19 +177,46 @@ class cominfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBoardRequest $request)
     {
         //
-    }
+        $id = $request->id;
+        $page = $request->page;
+        $title = $request->title;
+        $contents = $request->contents;
 
+        $b = dept_board::find($id);
+
+        $b->update([
+            'title'=>$title,
+            'contents'=>$contents,
+        ]);
+
+        return redirect('cominfo/cominfoBoard')
+            ->with('message', $id . '번 글이 수정되었습니다.');
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        if(Auth::user()['userNick'] == $msgs->userNick){
+            $msgs->delete();
+
+            return redirect('cominfo/cominfoBoard')->with('message', $id . '번 글이 삭제되었습니다.');
+        }else{
+            return redirect()->back()->with('message', $msgs->userId . '정보');
+        }
     }
 }

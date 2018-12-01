@@ -1,13 +1,18 @@
 @extends('app')
 
-@section('content')
-    @if(Session::has('message'))
-    <div class = "alert alert-info">
-        {{Session::get('message')}}
-    </div>
-    @endif
+@section('state')
+    
+@endsection
 
+@section('content')
     <div class = "column" id = "content">
+        <div class = "ui hidden section divider"></div>
+        @if(Session::has('message'))
+            <div class = "alert alert-info">
+                {{Session::get('message')}}
+            </div>
+        @endif
+
         <div class = "row">
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
             <div class = "carousel-inner">
@@ -27,10 +32,14 @@
             <h3 class = "ui huge header">인기글</h3>
             <table class="ui single line striped selectable table">
                 <thead>
-          
+                    <th>
+                        살려줘
+                    </th>
                 </thead>
                 <tbody>
-                      
+                        <tr>
+                            <td></td>
+                        </tr>
                 </tbody>
             </table>
         </fieldset>
