@@ -28,36 +28,43 @@
             </div>
         </div>
 
-        <fieldset>
-            <h3 class = "ui huge header">인기글</h3>
+
+            <h3 class = "ui huge header">최신글</h3>
             <table class="ui single line striped selectable table">
                 <thead>
-                    <th>
-                        살려줘
-                    </th>
+                    <tr>
+                        <th>제목</th>
+                        <th>글쓴이</th>
+                        <th>날짜</th>
+                    </tr>
                 </thead>
                 <tbody>
-                        <tr>
-                            <td></td>
-                        </tr>
+                    @foreach($latest as $row)
+                            <tr>
+                                <td>[{{ $dept_name}}]{{ $row['title'] }}</td>
+                                <td>{{ $row['userNick'] }}</td>
+                                <td>{{ $row['created_at'] }}</td>
+                            </td>
+                    @endforeach
                 </tbody>
             </table>
-        </fieldset>
+
         <br>
         <div class = "ui divider"></div>
         <br>
-        <fieldset>
-        <h3 class = "ui huge header">최신글</h3>
-          
-        <table class="ui single line striped selectable table">
-            <thead>
-                      
-            </thead>
-            <tbody>
-                      
-            </tbody>
-        </table>
 
-        </fieldset>
+            <h3 class = "ui huge header">인기글</h3>
+            <table class="ui single line striped selectable table">
+                <thead>
+                    <tr>
+                        <th>제목</th>
+                        <th>글쓴이</th>
+                        <th>날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        
+                </tbody>
+            </table>
     </div>
 @endsection

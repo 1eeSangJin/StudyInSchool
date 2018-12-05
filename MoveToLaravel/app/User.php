@@ -31,7 +31,4 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function affiliation(){
-        return $this->hasOne(affiliatuion::class);
-    }
 }

@@ -45,6 +45,9 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 0;
+                @endphp
                 @foreach($msgs as $row)
                     <tr>
                         <td>
@@ -53,7 +56,7 @@
                         <td>
                             <a href = "viewNotice?id={{ $row['id'] }}&page={{ $currentPage }}"> 
                             {{$row['title']}}
-                            {{-- [{{ $count = $dao->countCommentComInfo($row['num']) }}]                     --}}
+                            [{{ $count[$i] }}]                    
                             </a>
                         </td>
                         <td>
@@ -69,6 +72,9 @@
                             {{ $row['recommend'] }}
                         </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                 @endforeach  
             </tbody>
         </table>
@@ -79,4 +85,8 @@
             </div>
         @endif
     </div>
+    
+    <ul class = "pagination">
+        {{$msgs->links()}}
+    </ul>
 @endsection

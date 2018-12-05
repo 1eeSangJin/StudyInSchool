@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateNoticesRequest;
 use DB;
 use App\Notice;
 use App\Notices_Comment;
@@ -16,7 +17,7 @@ class noticeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-        return $this->middleware('auth', ['except'=>'index']);
+        return $this->middleware('auth', ['except'=>['index', 'show']]);
     }
 
     public function index(Request $request)
@@ -24,6 +25,13 @@ class noticeController extends Controller
         //
         $currentPage = $request->get("page");
         $msgs = Notice::orderBy('id', 'desc')->paginate(3);
+
+        $arr = array();
+        $i = 0;
+        foreach($msgs as $row){  
+            $arr[$i] =  Notices_Comment::where("board_num", "=", $row['id'])->count();
+            $i++;
+        }
 
         if($currentPage<1){
             $currentPage = 1;
@@ -42,11 +50,13 @@ class noticeController extends Controller
     
             return view('notice.noticeBoard')
                 ->with('results', $results)
+                ->with('count', $arr)
                 ->with('currentPage', $currentPage)
                 ->with('msgs', $msgs);
         }else{
             return view('notice.noticeBoard')
             ->with('currentPage', $currentPage)
+            ->with('count', $arr)
             ->with('msgs', $msgs);
         }
     }
@@ -128,7 +138,9 @@ class noticeController extends Controller
 
         $count =  Notices_Comment::where("board_num", "=", $id)->count();
 
-        $msgs -> update(['hits'=>$msgs->hits+1]);
+        if(Auth::check()){
+            $msgs -> update(['hits'=>$msgs->hits+1]);
+        }
 
         return view('notice.viewNotice')
             ->with('results', $results)
@@ -148,6 +160,31 @@ class noticeController extends Controller
     public function edit(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = Notice::find($id);
+
+        if(Auth::user()['userNick'] == $msgs->userNick){
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        return view('notice.modifyNotice_form')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs);
+        }else{
+            return redirect('notice/noticeBoard?page='.$page)->with('message', '본인만 수정할 수 있습니다.');
+        }
     }
 
     /**
@@ -157,9 +194,30 @@ class noticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateNoticesRequest $request)
     {
         //
+        $msgs = Notice::orderBy('id', 'desc')->paginate(3);
+
+        foreach($msgs as $row){
+            $count =  Notices_Comment::where("board_num", "=", $row['id'])->count();
+        }
+
+        $id = $request->id;
+        $page = $request->page;
+        $title = $request->title;
+        $contents = $request->contents;
+
+        $n = Notice::find($id);
+
+        $n->update([
+            'title'=>$title,
+            'content'=>$contents
+        ]);
+
+        return redirect('notice/noticeBoard')
+            ->with('count', $count)
+            ->with('message', $id . '번 글이 수정되었습니다.');
     }
 
     /**

@@ -16,7 +16,7 @@ class userController extends Controller
     //
 
     public function __construct(){
-        return $this->middleware('guest', ['except'=>'showUpdateUserForm']);
+        return $this->middleware('guest', ['except'=>['showUpdateUserForm, update']]);
     }
 
     public function showLoginForm(){
@@ -28,7 +28,18 @@ class userController extends Controller
     }
 
     public function showUpdateUserForm(){
-        return view('user.userUpdate');
+        $userId = Auth::user()['userId'];
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        return view('user.userUpdate')
+            ->with('$results', $results);
     }
 
     public function update(UpdateUsersRequest $request){

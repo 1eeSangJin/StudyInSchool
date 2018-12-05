@@ -60,7 +60,18 @@ class commachineController extends Controller
     public function create()
     {
         //
-        return view('commachine.writeCommachine_form');
+        $userId = Auth::user()['userId'];
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        return view('commachine.writeCommachine_form')
+            ->with('results', $results);;
     }
 
     /**
@@ -72,6 +83,22 @@ class commachineController extends Controller
     public function store(Request $request)
     {
         //
+        $userNick = $request->userNick;
+        $affName = $request->affName;
+        $title = $request->title;
+        $contents = $request->contents;
+
+        $b = dept_board::create([
+            'dept_num' => 201,
+            'userNick' => $userNick,
+            'title' => $title,
+            'content' => $contents,
+            'hits' => 0,
+            'recommend' => 0,
+            'affName' => $affName,
+        ]);      
+
+        return redirect('commachine/writeCommachine_form');
     }
 
     /**
@@ -83,6 +110,28 @@ class commachineController extends Controller
     public function show($id)
     {
         //
+        $userId = Auth::user()['userId'];
+    
+        $datas = DB::table('users')
+        ->join('affiliations','affiliations.affNum','=','users.affNum')
+        ->where('users.userId', '=' , $userId)
+        ->select('affiliations.affName')
+        ->get();
+
+        $results = json_decode($datas, true);
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        $msgs -> update(['hits'=>$msgs->hits+1]);
+
+        return view('commachine.writeCommachine_form')
+        ->with('results', $results)
+        ->with('id', $id)
+        ->with('page', $page)
+        ->with('msgs', $msgs);
     }
 
     /**
@@ -94,6 +143,30 @@ class commachineController extends Controller
     public function edit($id)
     {
         //
+        $userId = Auth::user()['userId'];
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        if(Auth::user()['userNick'] == $msgs->userNick){
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+
+            $results = json_decode($datas, true);
+
+            return view('commachine.writeCommachine_form')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs);
+        }else{
+            return redirect('commachine/writeCommachine_form')->with('message', '본인만 수정할 수 있습니다.');
+        }
     }
 
     /**

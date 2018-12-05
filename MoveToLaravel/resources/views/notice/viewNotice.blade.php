@@ -52,24 +52,62 @@
         </table>
 
         <div class = "jumbotron">
-            <table class = "ui celled table">
-                @foreach($comments as $comment) 
+            <table class = "ui celled table" id = "commentTable" name = "commentTable">
+                @php
+                    $i = 1;   
+                @endphp
+                @foreach($comments as $comment)
                 <tr>
-                    <td>
-                    {{ $comment['userNick'] }} [{{ $comment['affName'] }}]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$comment['date'] }}
+                    <td id = {{ $i }}>
+                    {{ $comment['userNick'] }} [{{ $comment['affName'] }}] <span style = "float:right;">{{$comment['created_at'] }}</span>
+                    <br>
+                    @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
+                        <span style = "float:right;">
+                            <a href = "#">수정 &nbsp;|&nbsp; </a>
+                            <a href = "delComment?id={{ $i }}writer={{ $comment['userNick'] }}&date={{ $comment['created_at'] }}">삭제</a>
+                        </span>
+                    @endif
                     <br>
                     {{ $comment['comment'] }}
                     </td>
                 </tr>
+                @php
+                    $i++;
+                @endphp
                 @endforeach
             </table>
-            <form action="comment?id={{ $msgs['id'] }}&page={{ $page }}" method="post">
-                @csrf
-                <textarea name="comment" id="comment" cols="130" rows="5"></textarea>
-                <button type="submit" style="width: 15%; height: 7.858em;">등록</button>
-            </form>
+
+            <textarea name="comment" id="comment" cols="140" rows="5"></textarea>
+            <button id="submit" type="submit" style="width: 15%; height: 7.858em;">등록</button>
         </div>
-        
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    $('#submit').click(function(){
+        var token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url:'comment', //request 보낼 서버의 경로
+            type:'post', // 메소드(get, post, put 등)
+            data:{'comment': $("#comment").val(),
+                  'id': "{{$id}}",
+                  _token : token}, //보낼 데이터
+            success: function(data) {
+                if(data){
+                    alert('댓글이 달렸습니다');
+
+                   // $("#commentTable tbody").append("<tr>");
+                    $("#commentTable tbody").append("<tr><td>" + data.userNick + "[" + data.affName + "]" + "<span style = 'float:right;'>"+ data.created_at +"</span><br><br>" + data.comment + "</td></tr>");
+                    //$("#commentTable").append("</tr>");
+                }
+            },
+            error: function(err) {
+                //서버로부터 응답이 정상적으로 처리되지 못햇을 때 실행
+                alert('error');
+            }
+        });
+    })
+</script>
 @endsection

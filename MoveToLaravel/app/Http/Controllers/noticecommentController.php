@@ -21,12 +21,14 @@ class noticecommentController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'comment' => 'required'
+        ]);
+
         $id = $request->id;
-        $page = $request->page;
         $comment = $request->comment;
 
-        $userId = Auth::user()['userId'];
-    
+        $userId = Auth::user()['userId'];    
         $datas = DB::table('users')
         ->join('affiliations','affiliations.affNum','=','users.affNum')
         ->where('users.userId', '=' , $userId)
@@ -46,7 +48,26 @@ class noticecommentController extends Controller
             'comment' => $comment,
         ]);
 
-        return redirect('notice/noticeBoard?id=$id&page=$page');
+        $date = DB::table('notices_comments')
+                ->where('userNick', '=', Auth::user()['userNick'])
+                ->orderBy('created_at', 'desc')
+                ->take(1)->get();
+
+        $dateInfo = json_decode($date, true);
+
+        foreach($dateInfo as $createDate){
+            $created_at = $createDate['created_at'];
+        }
+ 
+        $jsonData = array(
+            'board_num' => $id,
+            'userNick' => Auth::user()['userNick'],
+            'affName' => $affName,
+            'comment' => $comment,
+            'created_at' => $created_at,
+        );
+
+        return response()->json($jsonData);
     }
 
     /**
@@ -89,8 +110,24 @@ class noticecommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $tdId = $request->id;
+        $date = $request->date;
+        $writer = $request->userNick;
+        $userNick = Auth::user()->userNick;
+
+        $msgs = Notices_Comment::where('created_at', $date)->delete();
+        $result = true;
+
+        $jsonData = array(
+            'id' => $tdId,
+            'writer' => $writer,
+            'date' => $date,
+        );
+
+        return response()->json($jsonData);
+
     }
 }

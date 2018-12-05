@@ -166,7 +166,7 @@ class cominfoController extends Controller
             ->with('page', $page)
             ->with('msgs', $msgs);
         }else{
-            return redirect()->back()->with('message', '본인만 수정할 수 있습니다.');
+            return redirect('cominfo/cominfoBoard?page='.$page)->with('message', '권한이 없습니다.');
         }
     }
 
@@ -189,7 +189,7 @@ class cominfoController extends Controller
 
         $b->update([
             'title'=>$title,
-            'contents'=>$contents,
+            'content'=>$contents
         ]);
 
         return redirect('cominfo/cominfoBoard')
@@ -216,7 +216,7 @@ class cominfoController extends Controller
 
             return redirect('cominfo/cominfoBoard')->with('message', $id . '번 글이 삭제되었습니다.');
         }else{
-            return redirect()->back()->with('message', $msgs->userId . '정보');
+            return redirect('cominfo/cominfoBoard?page=' . $page)->with('message', '본인만 삭제할 수 있습니다');
         }
     }
 }

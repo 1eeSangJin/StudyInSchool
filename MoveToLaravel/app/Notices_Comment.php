@@ -9,5 +9,5 @@ class Notices_Comment extends Model
     //
     protected $table = 'notices_comments';
 
-    protected $fillable = ["board_num", "userNick", "affNmae", "comment"];
+    protected $fillable = ["board_num", "userNick", "affName", "comment"];
 }

@@ -13,24 +13,7 @@
 
 Route::get('test', 'testController@test_query');
 
-Route::get('main',function(){
-    if(Auth::check()){
-        $id = Auth::user()['userId'];
-
-        $datas = DB::table('users')
-        ->join('affiliations','affiliations.affNum','=','users.affNum')
-        ->where('users.userId', '=' , $id)
-        ->select('affiliations.affName')
-        ->get();
-
-        $results = json_decode($datas, true);
-
-        return view('main')->with('results', $results);
-
-    }else{
-        return view('main');
-    }
-})->name('main');
+Route::get('main', 'mainController@index')->name('main');
 
 
 //user//
@@ -58,7 +41,13 @@ Route::get('notice/viewNotice', 'noticeController@show');
 
 Route::post('notice/comment', 'noticecommentController@store');
 
+Route::get('notice/delComment', 'noticecommentController@destroy');
 
+Route::get('notice/modifyNotice_form', 'noticeController@edit');
+
+Route::post('notice/modifyNotice', 'noticeController@update');
+
+Route::post('notice/deleteNotice', 'noticeController@destroy');
 //notice//
 
 //cominfo//

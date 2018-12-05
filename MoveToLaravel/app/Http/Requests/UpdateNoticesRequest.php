@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBoardRequest extends FormRequest
+class UpdateNoticesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class UpdateBoardRequest extends FormRequest
     {
         return [
             //
-            'userNick' => 'required',
+            'title' => 'required',
             'contents' => 'required',
         ];
     }

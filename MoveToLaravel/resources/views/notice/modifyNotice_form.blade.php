@@ -1,14 +1,13 @@
 @extends('app')
 
 @section('content')
-    <div class = "column" id = "content">
+<div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
         <div class = "row">
             <h1 class = "ui huge header">
-                [컴정] 게시글 수정
+                [공지] 게시글 수정
             </h1>
         </div>
-
     <br>
 
     @if (count($errors) > 0)
@@ -17,7 +16,7 @@
         @endforeach
     @endif
 
-    <form action = "modifyCominfo?id={{ $id }}&page={{ $page }}" method = "post" class = "ui form">
+    <form action = "modifyNotice?id={{ $id }}&page={{ $page }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">내용</h2>
 
