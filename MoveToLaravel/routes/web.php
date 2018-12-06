@@ -39,15 +39,15 @@ Route::post('notice/writeNotice', 'noticeController@store');
 
 Route::get('notice/viewNotice', 'noticeController@show');
 
-Route::post('notice/comment', 'noticecommentController@store');
-
-Route::get('notice/delComment', 'noticecommentController@destroy');
-
 Route::get('notice/modifyNotice_form', 'noticeController@edit');
 
 Route::post('notice/modifyNotice', 'noticeController@update');
 
 Route::post('notice/deleteNotice', 'noticeController@destroy');
+
+Route::post('notice/save', 'noticecommentController@store');
+
+Route::post('notice/delComment', 'noticecommentController@destroy')->name('delete');
 //notice//
 
 //cominfo//

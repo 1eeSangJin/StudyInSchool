@@ -113,21 +113,19 @@ class noticecommentController extends Controller
     public function destroy(Request $request)
     {
         //
-        $tdId = $request->id;
+        $id = $request->id;
         $date = $request->date;
-        $writer = $request->userNick;
-        $userNick = Auth::user()->userNick;
+        $writer = $request->writer;
+        $tdId = $request->tdId;
 
-        $msgs = Notices_Comment::where('created_at', $date)->delete();
-        $result = true;
+        $msgs = Notices_Comment::where('board_num', $id and 'created_at', $date)->delete();
 
         $jsonData = array(
-            'id' => $tdId,
+            'tdId' => $tdId,
             'writer' => $writer,
             'date' => $date,
         );
 
         return response()->json($jsonData);
-
     }
 }

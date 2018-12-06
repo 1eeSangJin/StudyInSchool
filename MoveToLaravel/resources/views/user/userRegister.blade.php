@@ -10,11 +10,6 @@
     </div>
 
     <br>
-    @if (count($errors) > 0)
-        @foreach($errors->all() as $error)
-            <p class = "alert alert-danger">{{$error}}</p>
-        @endforeach
-    @endif
     <form action = "{{ route('register') }}" method = "post" class = "ui form">
         @csrf
         <h2 class = "ui dividing header">회원 정보 기입</h2>
@@ -98,7 +93,7 @@
         <div class = "field">
             <label>{{ __('휴대전화') }}</label>
             <div class = "four wide field">
-                <input type = "tel" name = "userPhone" id = "userPhone" placeholder = "전화번호 입력( - 를 함께 입력해주세요)" value = "{{old('userPhone')}}" required>
+                <input type = "tel" name = "userPhone" id = "userPhone" placeholder = "전화번호 입력( - 를 함께 입력해주세요)" value = "{{old('userPhone')}}">
             </div>
             @if ($errors->has('userPhone'))
             <span class="invalid-feedback" role="alert">

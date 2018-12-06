@@ -25,7 +25,7 @@
             <div class = "ui huge input">
                 <input type = "text" class = "form-control" name = "userId" id = "userId" placeholder = "아이디" required>
             </div>
-            <button type = "button" class = "ui red button" onclick = "location.href='signup_page.html'">회원가입</button>
+            <button type = "button" class = "ui red button" onclick = "location.href='userRegister'">회원가입</button>
             <br><br>
             <div class = "ui huge input">
                 <input type = "password" class = "form-control" name = "password" id = "password" placeholder = "비밀번호" required>

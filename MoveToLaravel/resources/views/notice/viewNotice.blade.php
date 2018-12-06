@@ -58,14 +58,14 @@
                 @endphp
                 @foreach($comments as $comment)
                 <tr>
-                    <td id = {{ $i }}>
-                    {{ $comment['userNick'] }} [{{ $comment['affName'] }}] <span style = "float:right;">{{$comment['created_at'] }}</span>
+                    <td id = "td{{ $i }}">
+                        <span id = "nickData{{$i}}">{{ $comment['userNick'] }}</span> [{{ $comment['affName'] }}] <span style = "float:right;" id = "comData{{$i}}">{{$comment['created_at'] }}</span>
                     <br>
                     @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
-                        <span style = "float:right;">
-                            <a href = "#">수정 &nbsp;|&nbsp; </a>
-                            <a href = "delComment?id={{ $i }}writer={{ $comment['userNick'] }}&date={{ $comment['created_at'] }}">삭제</a>
-                        </span>
+                    <div style = "float:right;" id="{{$i}}">
+                            <button id = "update" href = "#">수정</button> &nbsp;|&nbsp;
+                            <button class = "delete" type="submit">삭제</button>
+                        </div>
                     @endif
                     <br>
                     {{ $comment['comment'] }}
@@ -86,21 +86,22 @@
 
 @section('js')
 <script>
+    var token = $('meta[name="csrf-token"]').attr('content');
+
     $('#submit').click(function(){
-        var token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            url:'comment', //request 보낼 서버의 경로
+            url:'save', //request 보낼 서버의 경로
             type:'post', // 메소드(get, post, put 등)
-            data:{'comment': $("#comment").val(),
-                  'id': "{{$id}}",
-                  _token : token}, //보낼 데이터
+            data:{  'comment': $("#comment").val(),
+                    'id': "{{$id}}",
+                    _token : token}, //보낼 데이터
             success: function(data) {
                 if(data){
                     alert('댓글이 달렸습니다');
 
-                   // $("#commentTable tbody").append("<tr>");
-                    $("#commentTable tbody").append("<tr><td>" + data.userNick + "[" + data.affName + "]" + "<span style = 'float:right;'>"+ data.created_at +"</span><br><br>" + data.comment + "</td></tr>");
-                    //$("#commentTable").append("</tr>");
+                    $("#commentTable tbody").append("<tr><td>" + data.userNick + "[" + data.affName + "]" + "<span style = 'float:right;'>"+ data.created_at +
+                                                    "</span><br><br>" + data.comment + "</td></tr>");
+                    $("#comment").html("");
                 }
             },
             error: function(err) {
@@ -109,5 +110,44 @@
             }
         });
     })
+
+    $('.delete').click(function(){
+        var num = $(this).parent().attr('id');
+        $.ajax({
+            url:'delComment',
+            type:'post',
+            data:{  'id': "{{$id}}",
+                    'tdId' : num,
+                    'writer' : $("#nickData"+num).html(),
+                    'date': $("#comData"+num).html(),
+                    _token : token},
+            success: function(data){
+                if(data){
+                    alert("삭제되었습니다.");
+
+                    $("#td" + data.tdId).remove();
+                }
+            },
+            error: function(err){
+                alert("error");
+            }
+        });
+    })
+
+    // $('#update').click(function(){
+    //     $.ajax({
+    //         url:'updateComment',
+    //         type:'post',
+    //         data:{
+    //             _token : token,
+    //         },
+    //         success: function(data){
+
+    //         },
+    //         error: function(err){
+
+    //         }
+    //     });
+    // })
 </script>
 @endsection

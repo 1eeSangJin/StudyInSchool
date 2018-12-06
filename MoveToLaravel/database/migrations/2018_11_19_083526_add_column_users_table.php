@@ -32,5 +32,12 @@ class AddColumnUsersTable extends Migration
     public function down()
     {
         //
+        schema::dropIfExists('users', function(Blueprint $table){
+            $table->dropColumn('userId');
+            $table->dropColumn('userNick');
+            $table->dropColumn('sex');
+            $table->dropColumn('userPhone');
+            $table->dropColumn('affNum');
+        });
     }
 }
