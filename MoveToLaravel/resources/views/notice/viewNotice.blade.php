@@ -37,12 +37,12 @@
         <table>
             <td>
                 <span>댓글 </span>
-                <span>{{$count}} |&nbsp</span>
+                <span id = "cntSpan">{{$count}}</span> |&nbsp
             </td>
             
             <td>
                 <span>조회수 </span>
-                <span>{{ $msgs['hits'] }} |&nbsp</span>
+                <span>{{ $msgs['hits'] }}</span> |&nbsp
             </td>
 
             <td>
@@ -63,12 +63,12 @@
                     <br>
                     @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
                     <div style = "float:right;" id="{{$i}}">
-                            <button id = "update" href = "#">수정</button> &nbsp;|&nbsp;
-                            <button class = "delete" type="submit">삭제</button>
-                        </div>
+                            <button class = "update btn" type = "submit">수정</button> &nbsp;|&nbsp;
+                            <button class = "delete btn" type = "submit">삭제</button>
+                    </div>
                     @endif
                     <br>
-                    {{ $comment['comment'] }}
+                    <span id = "comment{{$i}}">{{ $comment['comment'] }}</span>
                     </td>
                 </tr>
                 @php
@@ -76,9 +76,10 @@
                 @endphp
                 @endforeach
             </table>
-
-            <textarea name="comment" id="comment" cols="140" rows="5"></textarea>
-            <button id="submit" type="submit" style="width: 15%; height: 7.858em;">등록</button>
+            <div class = 'desarea'>
+                <textarea name="comment" id="comment" cols="140" rows="5"></textarea>
+                <button class = "btn" id="submit" type="submit" style="width: 13%; height: 7.858em;">등록</button>
+            </div>
         </div>
     </div>
 </div>
@@ -87,6 +88,8 @@
 @section('js')
 <script>
     var token = $('meta[name="csrf-token"]').attr('content');
+    var i = {{$i}};
+    var count = 0;
 
     $('#submit').click(function(){
         $.ajax({
@@ -99,9 +102,14 @@
                 if(data){
                     alert('댓글이 달렸습니다');
 
-                    $("#commentTable tbody").append("<tr><td>" + data.userNick + "[" + data.affName + "]" + "<span style = 'float:right;'>"+ data.created_at +
-                                                    "</span><br><br>" + data.comment + "</td></tr>");
-                    $("#comment").html("");
+                    $("#commentTable tbody").append("<tr><td id=td" + i + ">" + data.userNick + "[" + data.affName + "]" +
+                                                    "<span style = 'float:right;'>"+ data.created_at +
+                                                    "</span><br>" + "<div style = 'float:right;' id=" + i + ">" + "</div>" + "<br>" + data.comment + "</td></tr>");
+                    $("#" + i).append("<button class = 'update btn' type = 'submit'>수정</button>"
+                                                        + "&nbsp | &nbsp" + "<button class = 'delete btn' type = 'submit'>삭제</button>");
+                    alert($("#comment").html());
+
+                    i++;
                 }
             },
             error: function(err) {
@@ -123,7 +131,7 @@
                     _token : token},
             success: function(data){
                 if(data){
-                    alert("삭제되었습니다.");
+                    alert("삭제되었습니다");
 
                     $("#td" + data.tdId).remove();
                 }
@@ -134,20 +142,33 @@
         });
     })
 
-    // $('#update').click(function(){
-    //     $.ajax({
-    //         url:'updateComment',
-    //         type:'post',
-    //         data:{
-    //             _token : token,
-    //         },
-    //         success: function(data){
+    $('.update').click(function(){
+        var num = $(this).parent().attr('id');
+        var trn = false;
+        $.ajax({
+            url:'showComment',
+            type:'post',
+            data:{  async: false,
+                    'id': "{{$id}}",
+                    'tdId' : num,
+                    'comment' : $("#comment" + num).html(), 
+                    _token : token},
+            success: function(data){
+                    if(count > 2){
+                        return trn;
+                    }
 
-    //         },
-    //         error: function(err){
+                    $("#"+num).remove();
+                    
+                    $("#comment"+num).append("<br><textarea name=comment id=comment" + num + " cols='140' rows='5'>"+ data.comment +"</textarea>");
+                    $("#comment"+num).append("<button class = 'updateComment btn' type = 'submit' style='width: 15%; height: 7.858em;'>수정</button");
+                    count = count+1;
+            },
+            error: function(err){
+                alert('error' + num);
+            }
+        });
 
-    //         }
-    //     });
-    // })
+    })
 </script>
 @endsection

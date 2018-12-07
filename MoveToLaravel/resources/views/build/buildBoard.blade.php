@@ -8,10 +8,10 @@
                 {{Session::get('message')}}
             </div>
         @endif
-
+        
         <div class = "row">
             <h1 class = "ui huge header">
-                유아교육과 갤러리
+                건축인테리어디자인계열
             </h1>
         </div>
 
@@ -21,26 +21,30 @@
             <div id = "carouselExampleSlidesOnly" class = "carousel slide" data-ride = "carousel">
                 <div class = "carousel-inner">
                     <div class = "carousel-item active">
-                        <img class = "d-block w-100" src = "/img/yg1.jpg" height="400px" alt = "첫번째 슬라이드">
+                        <img class = "d-block w-100" src = "/img/cominfo/cp.jpg" height="400px" alt = "첫번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "/img/yg3.PNG" height="400px" alt = "두번째 슬라이드">
+                        <img class = "d-block w-100" src = "/img/cominfo/japan.jpg" height="400px" alt = "두번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "/img/yg2.jpg" height="400px" alt = "세번째 슬라이드">
+                        <img class = "d-block w-100" src = "/img/cominfo/net.jpg" height="400px" alt = "세번째 슬라이드">
+                    </div>
+                    <div class = "carousel-item">
+                        <img class = "d-block w-100" src = "/img/cominfo/smartgame.jpg" height="400px" alt = "네번째 슬라이드">
                     </div>
                 </div>
             </div>
         </div>
 
         <table class="ui single line striped selectable table">
-            <thead>
+        <thead>
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
                     <th>글쓴이</th>
                     <th>날짜</th>
                     <th>조회</th>
+                    <th>추천수</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,7 +54,7 @@
                             {{$row['id']}}                             
                         </td>
                         <td>
-                            <a href = "viewEducate?id={{ $row['id'] }}&page={{ $page }}"> 
+                            <a href = "viewBuild?id={{ $row['id'] }}&page={{ $currentPage }}"> 
                             {{$row['title']}}
                             [{{ $count[$i] }}]
                             </a>
@@ -59,7 +63,7 @@
                             {{ $row['userNick'] }} [{{$row['affName']}}]                   
                         </td>
                         <td>
-                            {{ $row['date'] }}                       
+                            {{ $row['created_at'] }}                       
                         </td>
                         <td>
                             {{ $row['hits'] }}                             
@@ -68,16 +72,17 @@
                             {{ $row['recommend'] }}
                         </td>
                     </tr>
-                    @endforeach
+                @endforeach                              
             </tbody>
         </table>
-
+        <br>
         <div style="float:right;">
-            <button type = 'button' class = 'ui secondary button' onclick = location.href='writeEducate_form'>글쓰기</button>
+            <button type = 'button' class = 'ui secondary button' onclick = "location.href='writeBuild_form'">글쓰기</button>
         </div>
     </div>
-
+    
     <ul class = "pagination">
         {{$msgs->links()}}
     </ul>
+    
 @endsection

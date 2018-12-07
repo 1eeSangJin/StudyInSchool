@@ -47,7 +47,9 @@ Route::post('notice/deleteNotice', 'noticeController@destroy');
 
 Route::post('notice/save', 'noticecommentController@store');
 
-Route::post('notice/delComment', 'noticecommentController@destroy')->name('delete');
+Route::post('notice/delComment', 'noticecommentController@destroy');
+
+Route::post('notice/showComment', 'noticecommentController@update');
 //notice//
 
 //cominfo//

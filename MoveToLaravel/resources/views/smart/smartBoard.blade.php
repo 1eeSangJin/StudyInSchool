@@ -44,26 +44,40 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                </tr>
+                @foreach($msgs as $row)
+                    <tr>
+                        <td>
+                            {{$row['id']}}                             
+                        </td>
+                        <td>
+                            <a href = "viewSmart?id={{ $row['id'] }}&page={{ $page }}"> 
+                            {{$row['title']}}
+                            [{{ $count[$i] }}]
+                            </a>
+                        </td>
+                        <td>
+                            {{ $row['userNick'] }} [{{$row['affName']}}]                   
+                        </td>
+                        <td>
+                            {{ $row['date'] }}                       
+                        </td>
+                        <td>
+                            {{ $row['hits'] }}                             
+                        </td>
+                        <td>
+                            {{ $row['recommend'] }}
+                        </td>
+                    </tr>
+                    @endforeach
             </tbody>
         </table>
 
         <div style="float:right;">
-        <button type = 'button' class = 'ui secondary button' onclick = location.href='writeBuild_form'>글쓰기</button>
+        <button type = 'button' class = 'ui secondary button' onclick = location.href='writeSmart_form'>글쓰기</button>
         </div>
     </div>
+
+    <ul class = "pagination">
+        {{$msgs->links()}}
+    </ul>
 @endsection

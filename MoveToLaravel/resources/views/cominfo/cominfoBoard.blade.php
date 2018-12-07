@@ -56,7 +56,7 @@
                         <td>
                             <a href = "viewCominfo?id={{ $row['id'] }}&page={{ $currentPage }}"> 
                             {{$row['title']}}
-                            {{-- [{{ $count = $dao->countCommentComInfo($row['num']) }}]                     --}}
+                            [{{ $count[$i] }}]
                             </a>
                         </td>
                         <td>

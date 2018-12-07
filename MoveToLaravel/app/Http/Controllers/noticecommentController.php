@@ -12,8 +12,6 @@ class noticecommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function __construct(){
         return $this->middleware('auth');
@@ -70,45 +68,49 @@ class noticecommentController extends Controller
         return response()->json($jsonData);
     }
 
-    /**
+        /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    public function show(Request $request){
+        
+        $id = $request->id;
+        $comment = $request->comment;
+        $tdId = $request->tdId;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $jsonData = array(
+            'comment' => $comment,
+            'tdId' => $tdId,
+        );
+
+        return response()->json($jsonData);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $id = $request->id;
+        $comment = $request->comment;
+        $tdId = $request->tdId;
+
+        $jsonData = array(
+            'comment' => $comment,
+            'tdId' => $tdId,
+        );
+
+        return response()->json($jsonData);
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
@@ -118,7 +120,8 @@ class noticecommentController extends Controller
         $writer = $request->writer;
         $tdId = $request->tdId;
 
-        $msgs = Notices_Comment::where('board_num', $id and 'created_at', $date)->delete();
+        $msgs = Notices_Comment::where('board_num', $id)
+                                ->where('created_at', $date)->delete();
 
         $jsonData = array(
             'tdId' => $tdId,

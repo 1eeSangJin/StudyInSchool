@@ -57,3 +57,9 @@ html{
   #content table.ui.table thead th {
     border-bottom: 2px solid #eee !important;
   }
+
+  .desarea{
+    min-width: 490px;
+    position: relative;
+    display: inline-block;
+  }

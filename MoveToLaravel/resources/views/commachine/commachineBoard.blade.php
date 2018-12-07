@@ -50,9 +50,9 @@
                             {{$row['id']}}                             
                         </td>
                         <td>
-                            <a href = "viewCominfo?id={{ $row['id'] }}&page={{ $page }}"> 
+                            <a href = "viewCommachine?id={{ $row['id'] }}&page={{ $page }}"> 
                             {{$row['title']}}
-                            {{-- [{{ $count = $dao->countCommentComInfo($row['num']) }}]                     --}}
+                            [{{ $count[$i] }}]
                             </a>
                         </td>
                         <td>
@@ -76,4 +76,8 @@
             <button type = 'button' class = 'ui secondary button' onclick = location.href='writeCommachine_form'>글쓰기</button>
         </div>
     </div>
+
+    <ul class = "pagination">
+        {{$msgs->links()}}
+    </ul>
 @endsection
