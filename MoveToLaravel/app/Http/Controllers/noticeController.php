@@ -229,5 +229,12 @@ class noticeController extends Controller
     public function destroy(Request $request)
     {
         //
+        $id = $request->id;
+
+        $msgs = dept_board::find($id);
+
+        $msgs->delete();
+
+        return redirect()->intended('notice')->with('message', $id . '번 글이 삭제되었습니다.');
     }
 }
