@@ -21,12 +21,6 @@
                 <div class = "four wide field">
                     <input type = "text" name = "userNick" id = "userNick" value = "{{$userInfo['userNick']}}" readonly required>
                 </div>
-                <label>소속</label>
-                <div class = "four wide field">
-                    <?php foreach($getAff as $affName) :?>
-                    <input type="text" name = "affName" id = "affName" value = "{{$affName['affName']}}" readonly>
-                    <?php endforeach ?>
-                </div>
             </div>
   
             <div class = "field">
@@ -35,8 +29,6 @@
                     <input type = "text" name = "title" id = "title" required>
                 </div>
             </div>
-  
-  
   
             <div class="field">
                 <label>내용</label>

@@ -23,12 +23,6 @@
                 <div class = "four wide field">
                     <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
                 </div>
-                <label>소속</label>
-                <div class = "four wide field">
-                    @foreach($results as $affName)
-                        <input type="text" name = "affName" id = "affName" value = "{{$affName['affName']}}" readonly>
-                    @endforeach
-                </div>
             </div>
   
             <div class = "field">
@@ -37,8 +31,6 @@
                     <input type = "text" name = "title" id = "title" required>
                 </div>
             </div>
-  
-  
   
             <div class="field">
                 <label>내용</label>
