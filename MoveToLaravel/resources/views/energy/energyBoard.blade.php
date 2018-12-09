@@ -24,7 +24,7 @@
                         <img class = "d-block w-100" src = "/img/energy/1.jpg" height="400px" alt = "첫번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
-                        <img class = "d-block w-100" src = "/img/energy/3.jpg" height="400px" alt = "두번째 슬라이드">
+                        <img class = "d-block w-100" src = "/img/energy/2.jpg" height="400px" alt = "두번째 슬라이드">
                     </div>
                     <div class = "carousel-item">
                         <img class = "d-block w-100" src = "/img/energy/3.jpg" height="400px" alt = "세번째 슬라이드">

@@ -8,23 +8,24 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateBoardRequest;
 use DB;
 
-class educateController extends Controller
+class buildController extends Controller
 {
+
+    public function __construct(){
+        return $this->middleware('auth', ['except'=>'index']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function __construct(){
-        return $this->middleware('auth', ['except'=>'index']);
-    }
-    
     public function index(Request $request)
     {
         //
+
         $currentPage = $request->get("page");
-        $msgs = dept_board::where("dept_num", "=", "1101")->orderBy('id', 'desc')->paginate(3);
+        $msgs = dept_board::where("dept_num", "=", "501")->orderBy('id', 'desc')->paginate(3);
 
         if($currentPage<1){
             $currentPage = 1;
@@ -41,12 +42,12 @@ class educateController extends Controller
     
             $results = json_decode($datas, true);
     
-            return view('educate.educateBoard')
+            return view('build.buildBoard')
                 ->with('results', $results)
                 ->with('currentPage', $currentPage)
                 ->with('msgs', $msgs);
         }else{
-            return view('educate.educateBoard')
+            return view('build.buildBoard')
                 ->with('currentPage', $currentPage)
                 ->with('msgs',$msgs);
         }
@@ -60,18 +61,19 @@ class educateController extends Controller
     public function create()
     {
         //
-        $userId = Auth::user()['userId'];
+            $userId = Auth::user()['userId'];
     
-        $datas = DB::table('users')
-        ->join('affiliations','affiliations.affNum','=','users.affNum')
-        ->where('users.userId', '=' , $userId)
-        ->select('affiliations.affName')
-        ->get();
-
-        $results = json_decode($datas, true);
-
-        return view('educate.writeEducate_form')
-            ->with('results', $results);
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
+    
+            $results = json_decode($datas, true);
+    
+    
+            return view('cominfo.writeCominfo_form')
+                ->with('results', $results);
     }
 
     /**
@@ -89,7 +91,7 @@ class educateController extends Controller
         $contents = $request->contents;
 
         $b = dept_board::create([
-            'dept_num' => 1101,
+            'dept_num' => 101,
             'userNick' => $userNick,
             'title' => $title,
             'content' => $contents,
@@ -97,8 +99,7 @@ class educateController extends Controller
             'recommend' => 0,
             'affName' => $affName,
         ]);      
-
-        return redirect('educate/educateBoard');
+        return redirect('cominfo/cominfoBoard');
     }
 
     /**
@@ -127,7 +128,7 @@ class educateController extends Controller
 
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
-        return view('educate.viewEducate_form')
+        return view('cominfo.viewCominfo')
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
@@ -159,13 +160,13 @@ class educateController extends Controller
 
             $results = json_decode($datas, true);
 
-            return view('educate.modifyEducate_form')
-            ->with('results', $results)
-            ->with('id', $id)
-            ->with('page', $page)
-            ->with('msgs', $msgs);
+            return view('cominfo.modifyCominfo_form')
+                ->with('results', $results)
+                ->with('id', $id)
+                ->with('page', $page)
+                ->with('msgs', $msgs);
         }else{
-            return redirect('educate/educateBoard')->with('message', '본인만 수정할 수 있습니다.');
+            return redirect('cominfo/cominfoBoard?page='.$page)->with('message', '권한이 없습니다.');
         }
     }
 
@@ -191,10 +192,9 @@ class educateController extends Controller
             'content'=>$contents
         ]);
 
-        return redirect('educate/educateBoard')
+        return redirect('cominfo/cominfoBoard')
             ->with('message', $id . '번 글이 수정되었습니다.');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -214,9 +214,9 @@ class educateController extends Controller
         if(Auth::user()['userNick'] == $msgs->userNick){
             $msgs->delete();
 
-            return redirect('educate/educateBoard')->with('message', $id . '번 글이 삭제되었습니다.');
+            return redirect('cominfo/cominfoBoard')->with('message', $id . '번 글이 삭제되었습니다.');
         }else{
-            return redirect('educate/educateBoard?page=' . $page)->with('message', '본인만 삭제할 수 있습니다');
+            return redirect('cominfo/cominfoBoard?page=' . $page)->with('message', '본인만 삭제할 수 있습니다');
         }
     }
 }

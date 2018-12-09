@@ -183,7 +183,7 @@ class noticeController extends Controller
             ->with('page', $page)
             ->with('msgs', $msgs);
         }else{
-            return redirect('notice/noticeBoard?page='.$page)->with('message', '본인만 수정할 수 있습니다.');
+            return redirect('notice/noticeBoard?page='.$page)->with('message', '권한이 없습니다.');
         }
     }
 
@@ -231,7 +231,7 @@ class noticeController extends Controller
         //
         $id = $request->id;
 
-        $msgs = dept_board::find($id);
+        $msgs = Notice::find($id);
 
         $msgs->delete();
 

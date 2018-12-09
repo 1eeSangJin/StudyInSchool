@@ -22,7 +22,7 @@
                 </div>
 
                 <div class = "item">
-                    <span onclick = "location.href='../energy/electBoard'">신재생에너지전기계열</span>
+                    <span onclick = "location.href='../energy/energyBoard'">신재생에너지전기계열</span>
                 </div>
 
                 <div class = "item">

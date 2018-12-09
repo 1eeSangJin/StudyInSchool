@@ -151,22 +151,21 @@ class cominfoController extends Controller
         $msgs = dept_board::find($id);
 
         if(Auth::user()['userNick'] == $msgs->userNick){
-    
-        $datas = DB::table('users')
-        ->join('affiliations','affiliations.affNum','=','users.affNum')
-        ->where('users.userId', '=' , $userId)
-        ->select('affiliations.affName')
-        ->get();
+            $datas = DB::table('users')
+            ->join('affiliations','affiliations.affNum','=','users.affNum')
+            ->where('users.userId', '=' , $userId)
+            ->select('affiliations.affName')
+            ->get();
 
-        $results = json_decode($datas, true);
+            $results = json_decode($datas, true);
 
-        return view('cominfo.modifyCominfo_form')
-            ->with('results', $results)
-            ->with('id', $id)
-            ->with('page', $page)
-            ->with('msgs', $msgs);
+            return view('cominfo.modifyCominfo_form')
+                ->with('results', $results)
+                ->with('id', $id)
+                ->with('page', $page)
+                ->with('msgs', $msgs);
         }else{
-            return redirect('cominfo/cominfoBoard?page='.$page)->with('message', '권한이 없습니다.');
+            return redirect('cominfo/cominfoBoard?page='.$page)->with('message', '본인만 수정할 수 있습니다..');
         }
     }
 

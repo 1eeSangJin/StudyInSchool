@@ -230,6 +230,21 @@ Route::post('welfare/modifyWelfare', 'welfareController@update');
 Route::post('welfare/deleteWelfare', 'welfareController@destroy');
 //welfare//
 
+//build
+Route::get('build/buildBoard', 'buildController@index');
+
+Route::get('build/viewBuild', 'buildController@show');
+
+Route::get('build/writeBuild_form', 'buildController@create');
+
+Route::post('build/writeBuild', 'buildController@store');
+
+Route::get('build/modifyBuild_form', 'buildController@edit');
+
+Route::post('build/modifyBuild', 'buildController@update');
+
+Route::post('build/deleteBuild', 'buildController@destroy');
+//
 
 
 Auth::routes();

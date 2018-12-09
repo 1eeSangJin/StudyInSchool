@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use DB;
 use App\dept_board;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateBoardRequest;
+use DB;
 
 class commachineController extends Controller
 {
@@ -71,7 +72,7 @@ class commachineController extends Controller
         $results = json_decode($datas, true);
 
         return view('commachine.writeCommachine_form')
-            ->with('results', $results);;
+            ->with('results', $results);
     }
 
     /**
@@ -98,7 +99,7 @@ class commachineController extends Controller
             'affName' => $affName,
         ]);      
 
-        return redirect('commachine/writeCommachine_form');
+        return redirect('commachine/commachineBoard');
     }
 
     /**
@@ -107,7 +108,7 @@ class commachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
         $userId = Auth::user()['userId'];
@@ -127,11 +128,11 @@ class commachineController extends Controller
 
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
-        return view('commachine.writeCommachine_form')
-        ->with('results', $results)
-        ->with('id', $id)
-        ->with('page', $page)
-        ->with('msgs', $msgs);
+        return view('commachine.viewCommachine_form')
+            ->with('results', $results)
+            ->with('id', $id)
+            ->with('page', $page)
+            ->with('msgs', $msgs);
     }
 
     /**
@@ -140,7 +141,7 @@ class commachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
         $userId = Auth::user()['userId'];
@@ -159,13 +160,13 @@ class commachineController extends Controller
 
             $results = json_decode($datas, true);
 
-            return view('commachine.writeCommachine_form')
+            return view('commachine.modifyCommachine_form')
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
             ->with('msgs', $msgs);
         }else{
-            return redirect('commachine/writeCommachine_form')->with('message', '본인만 수정할 수 있습니다.');
+            return redirect('commachine/commachineBoard')->with('message', '본인만 수정할 수 있습니다.');
         }
     }
 
@@ -176,9 +177,23 @@ class commachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBoardRequest $request)
     {
         //
+        $id = $request->id;
+        $page = $request->page;
+        $title = $request->title;
+        $contents = $request->contents;
+
+        $b = dept_board::find($id);
+
+        $b->update([
+            'title'=>$title,
+            'content'=>$contents
+        ]);
+
+        return redirect('commachine/commachineBoard')
+            ->with('message', $id . '번 글이 수정되었습니다.');
     }
 
     /**
@@ -187,8 +202,22 @@ class commachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $userId = Auth::user()['userId'];
+
+        $id = $request->id;
+        $page = $request->page;
+
+        $msgs = dept_board::find($id);
+
+        if(Auth::user()['userNick'] == $msgs->userNick){
+            $msgs->delete();
+
+            return redirect('commachine/commachineBoard')->with('message', $id . '번 글이 삭제되었습니다.');
+        }else{
+            return redirect('commachine/commachineoBoard?page=' . $page)->with('message', '본인만 삭제할 수 있습니다');
+        }
     }
 }

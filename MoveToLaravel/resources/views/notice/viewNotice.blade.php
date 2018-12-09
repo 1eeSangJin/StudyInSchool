@@ -89,7 +89,6 @@
 <script>
     var token = $('meta[name="csrf-token"]').attr('content');
     var i = {{$i}};
-    var count = 0;
 
     $('#submit').click(function(){
         $.ajax({
@@ -107,7 +106,7 @@
                                                     "</span><br>" + "<div style = 'float:right;' id=" + i + ">" + "</div>" + "<br>" + data.comment + "</td></tr>");
                     $("#" + i).append("<button class = 'update btn' type = 'submit'>수정</button>"
                                                         + "&nbsp | &nbsp" + "<button class = 'delete btn' type = 'submit'>삭제</button>");
-                    alert($("#comment").html());
+                    $("#comment").val(" ");
 
                     i++;
                 }
@@ -144,31 +143,16 @@
 
     $('.update').click(function(){
         var num = $(this).parent().attr('id');
-        var trn = false;
-        $.ajax({
-            url:'showComment',
-            type:'post',
-            data:{  async: false,
-                    'id': "{{$id}}",
-                    'tdId' : num,
-                    'comment' : $("#comment" + num).html(), 
-                    _token : token},
-            success: function(data){
-                    if(count > 2){
-                        return trn;
-                    }
+        var comment = $("#comment"+num).html();
+        $("#"+num).remove();
+         
+        $("#comment"+num).append("<br><textarea name=comment id=comment" + num + " cols='140' rows='5'>"+ comment +"</textarea>");
+        $("#comment"+num).append("<div style = 'float:right;'><button class = 'updat btn' type = 'submit'>수정</button>" + "&nbsp;|&nbsp" + "<button class = 'cancel btn' type = 'submit'>수정 취소</button>");
+    })
 
-                    $("#"+num).remove();
-                    
-                    $("#comment"+num).append("<br><textarea name=comment id=comment" + num + " cols='140' rows='5'>"+ data.comment +"</textarea>");
-                    $("#comment"+num).append("<button class = 'updateComment btn' type = 'submit' style='width: 15%; height: 7.858em;'>수정</button");
-                    count = count+1;
-            },
-            error: function(err){
-                alert('error' + num);
-            }
-        });
-
+    $('#cancel').click(function(){
+       $('#comment'+num).remove(); 
+       $('#comment'+num).remove();
     })
 </script>
 @endsection
