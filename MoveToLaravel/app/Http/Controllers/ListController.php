@@ -96,8 +96,6 @@ class ListController extends Controller
         $u->save();
 
         return redirect('user/userList')->with('message', $id.'번 회원정보가 수정되었습니다.');
-
-
     }
 
     /**
@@ -116,7 +114,5 @@ class ListController extends Controller
         $user->delete();
 
         return redirect('user/userList')->with('message', $id.'번 회원이 삭제되었습니다.');
-
-
     }
 }
