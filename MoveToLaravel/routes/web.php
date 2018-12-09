@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('test', 'testController@test_query');
-
 Route::get('main', 'mainController@index')->name('main');
 
 
@@ -28,6 +26,14 @@ Route::get('user/userUpdate', 'userController@showUpdateUserForm');
 Route::post('user/userUpdate', 'userController@update');
 
 Route::post('user/deleteUser', 'userController@destroy');
+
+Route::get('user/userList', 'ListController@index');
+
+Route::get('user/updateUser', 'ListController@edit');
+
+Route::post('user/updat', 'ListController@update');
+
+Route::post('user/del', 'ListController@destroy');
 //user//
 
 //notice//
@@ -315,7 +321,6 @@ Route::post('build/delComment', 'buildcommentController@destroy');
 
 Route::post('build/showComment', 'buildcommentController@update');
 //
-
 
 Auth::routes();
 

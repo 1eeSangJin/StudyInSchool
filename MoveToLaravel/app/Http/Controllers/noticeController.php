@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateNoticesRequest;
 use DB;
 use App\Notice;
 use App\Notices_Comment;
+use App\Middleware\CheckAdmin;
 
 class noticeController extends Controller
 {
@@ -17,7 +18,7 @@ class noticeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct(){
-        return $this->middleware('auth', ['except'=>['index', 'show']]);
+        return $this->middleware('CheckAdmin', ['except'=>['index', 'show']]);
     }
 
     public function index(Request $request)
@@ -230,11 +231,13 @@ class noticeController extends Controller
     {
         //
         $id = $request->id;
+        $board_num = $id;
 
         $msgs = Notice::find($id);
-
+        $comments = Notices_Comment::find($board_num);
         $msgs->delete();
-
+        $comments->delete();
+        
         return redirect()->intended('notice')->with('message', $id . '번 글이 삭제되었습니다.');
     }
 }

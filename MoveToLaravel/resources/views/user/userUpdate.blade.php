@@ -57,7 +57,7 @@
                 </div>
 
                 <button type = "submit" class = "ui secondary button">정보수정</button>
-                <button type = "button" class = "ui secondary button" onclick = "location.href='main.php'">돌아가기</button>
+                <button type = "button" class = "ui secondary button" onclick = "location.href='main'">돌아가기</button>
                 <a href="deleteUser" onclick="return confirm('회원정보를 삭제하시겠습니까?')" class="ui negative button">회원정보 삭제</a>
             </form>
         </div>

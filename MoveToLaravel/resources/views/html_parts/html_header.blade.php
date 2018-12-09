@@ -71,7 +71,7 @@
                 @if(Auth::user()->userNick == 'Administrator')
                     <div class = 'item'>직책 : 관리자</div>
                     <div class = 'item'><strong>{{ Auth::user()->userNick }}</strong>님 환영합니다.</div>
-                    <a class = 'item' href="viewUsers">{{ __('회원목록') }}</a>
+                    <a class = 'item' href="../user/userList">{{ __('회원목록') }}</a>
                     <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
                     <form action="{{ route('logout') }}" method="post" id = "logout-form">

@@ -104,8 +104,7 @@
                     $("#commentTable tbody").append("<tr><td id=td" + i + ">" + data.userNick + "[" + data.affName + "]" +
                                                     "<span style = 'float:right;'>"+ data.created_at +
                                                     "</span><br>" + "<div style = 'float:right;' id=" + i + ">" + "</div>" + "<br>" + data.comment + "</td></tr>");
-                    $("#" + i).append("<button class = 'update btn' type = 'submit'>수정</button>"
-                                                        + "&nbsp | &nbsp" + "<button class = 'delete btn' type = 'submit'>삭제</button>");
+                    $("#" + i).append("<button class='update btn' type='submit'>수정</button>" + "&nbsp | &nbsp" + "<button class = 'delete btn' type = 'submit'>삭제</button>");
                     $("#comment").val(" ");
 
                     i++;
@@ -117,6 +116,10 @@
             }
         });
     })
+
+    function test(){
+        alert('tt');
+    }
 
     $('.delete').click(function(){
         var num = $(this).parent().attr('id');
@@ -140,8 +143,9 @@
             }
         });
     })
-
+$(document).ready(function(){
     $('.update').click(function(){
+        alert('tt');
         var num = $(this).parent().attr('id');
         var comment = $("#comment"+num).html();
         $("#"+num).remove();
@@ -149,7 +153,7 @@
         $("#comment"+num).append("<br><textarea name=comment id=comment" + num + " cols='140' rows='5'>"+ comment +"</textarea>");
         $("#comment"+num).append("<div style = 'float:right;'><button class = 'updat btn' type = 'submit'>수정</button>" + "&nbsp;|&nbsp" + "<button class = 'cancel btn' type = 'submit'>수정 취소</button>");
     })
-
+});
     $('#cancel').click(function(){
        $('#comment'+num).remove(); 
        $('#comment'+num).remove();

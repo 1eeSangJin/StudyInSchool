@@ -31,6 +31,10 @@
                 <input type = "password" class = "form-control" name = "password" id = "password" placeholder = "비밀번호" required>
             </div>
             <button type = "submit" class = "ui black button">로그인</button>
+            <br>
+            <a class="btn btn-link" href="{{ route('password.request') }}">
+                    {{ __('비밀번호를 까먹으셨습니까?') }}
+            </a>
         </form>
     </div>
 @endsection

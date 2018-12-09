@@ -87,7 +87,7 @@
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('sex') }}</strong>
             </span>
-        @endif
+            @endif
         </div>
 
         <div class = "field">

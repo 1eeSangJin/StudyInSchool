@@ -16,6 +16,8 @@ class mainController extends Controller
 
         $latest = dept_board::orderBy('created_at', 'desc')->paginate(4);
 
+        $popular = dept_board::where('');
+
         $dept = DB::table('dept_boards')
             ->join('departments', 'departments.dept_num', '=', 'dept_boards.dept_num')
             ->select('departments.dept_name')
