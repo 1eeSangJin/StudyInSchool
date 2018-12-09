@@ -23,7 +23,7 @@
 
     <div id = "contents">
         <span style = "float:right;">
-            <a href = "deleteCominfo?id={{ $msgs['id'] }}&page={{ $page }}" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
+            <a href = "deleteNotice?id={{ $msgs['id'] }}&page={{ $page }}" onclick = "return confirm('정말 삭제하시겠습니까?')" class = "ui secondary button">삭제</a>
             <button class = 'ui secondary button' onclick = "location.href='modifyNotice_form?id={{ $msgs['id'] }}&page={{ $page }}'">수정</button>
             <button class = 'ui secondary button' onclick = "location.href='noticeBoard?page={{ $page }}'">목록</button>
         </span>

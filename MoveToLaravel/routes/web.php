@@ -67,7 +67,11 @@ Route::post('cominfo/modifyCominfo', 'cominfoController@update');
 
 Route::get('cominfo/deleteCominfo', 'cominfoController@destroy');
 
-Route::get('cominfo/comment', 'cominfoController@writeComment');
+Route::post('cominfo/save', 'cominfocommentController@store');
+
+Route::post('cominfo/delComment', 'cominfocommentController@destroy');
+
+Route::post('cominfo/showComment', 'cominfocommentController@update');
 //cominfo//
 
 //commachine//
@@ -84,6 +88,12 @@ Route::get('commachine/modifyCommachine_form', 'commachineController@edit');
 Route::post('commachine/modifyCommachine', 'commachineController@update');
 
 Route::post('commachine/deleteCommachine', 'commachineController@destroy');
+
+Route::post('commachine/save', 'commcommentController@store');
+
+Route::post('commachine/delComment', 'commcommentController@destroy');
+
+Route::post('commachine/showComment', 'commcommentController@update');
 //commachine//
 
 //contents//
@@ -99,7 +109,13 @@ Route::get('contents/modifyContents_form', 'contentsController@edit');
 
 Route::post('contents/modifyContents', 'contentsController@update');
 
-Route::post('comntents/deleteContents', 'contentsController@destroy');
+Route::post('contents/deleteContents', 'contentsController@destroy');
+
+Route::post('contents/save', 'contentscommentController@store');
+
+Route::post('contents/delComment', 'contentscommentController@destroy');
+
+Route::post('contents/showComment', 'contentscommentController@update');
 //contents//
 
 //educate//
@@ -116,6 +132,12 @@ Route::get('educate/modifyEducate_form', 'educateController@edit');
 Route::post('educate/modifyEducate', 'educateController@update');
 
 Route::post('educate/deleteEducate', 'educateController@destroy');
+
+Route::post('educate/save', 'educatecommentController@store');
+
+Route::post('educate/delComment', 'educatecommentController@destroy');
+
+Route::post('edcuate/showComment', 'edcuatecommentController@update');
 //educate//
 
 //electinfo//
@@ -132,6 +154,12 @@ Route::get('electinfo/modifyElectinfo_form', 'electinfoController@edit');
 Route::post('electinfo/modifyElectinfo', 'electinfoController@update');
 
 Route::post('electinfo/deleteElectinfo', 'electinfoController@destroy');
+
+Route::post('electinfo/save', 'electinfocommentController@store');
+
+Route::post('electinfo/delComment', 'electinfocommentController@destroy');
+
+Route::post('electinfo/showComment', 'electinfocommentController@update');
 //electinfo//
 
 //energy//
@@ -148,6 +176,12 @@ Route::get('energy/modifyEnergy_form', 'energyController@edit');
 Route::post('energy/modifyEnergy', 'energyController@update');
 
 Route::post('energy/deleteEnergy', 'energyController@destroy');
+
+Route::post('energy/save', 'energycommentController@store');
+
+Route::post('energy/delComment', 'enegycommentController@destroy');
+
+Route::post('energy/showComment', 'energycommentController@update');
 //energy//
 
 //nurse//
@@ -164,6 +198,12 @@ Route::get('nurse/modifyNurse_form', 'nurseController@edit');
 Route::post('nurse/modifyNurse', 'nurseController@update');
 
 Route::post('nurse/deleteNurse', 'nurseController@destroy');
+
+Route::post('nurse/save', 'nursecommentController@store');
+
+Route::post('nurse/delComment', 'nursecommentController@destroy');
+
+Route::post('nurse/showComment', 'nursecommentController@update');
 //nurse//
 
 //seesighting//
@@ -180,6 +220,12 @@ Route::get('seesighting/modifySeesighting_form', 'seesightingController@edit');
 Route::post('seesighting/modifySeesighting', 'seesightingController@update');
 
 Route::post('seesighting/deleteSeesighting', 'seesightingController@destroy');
+
+Route::post('seesighting/save', 'seecommentController@store');
+
+Route::post('seesighting/delComment', 'seecommentController@destroy');
+
+Route::post('seesighting/showComment', 'seecommentController@update');
 //seesighting//
 
 //smart//
@@ -196,6 +242,12 @@ Route::get('smart/modifySmart_form', 'smartController@edit');
 Route::post('smart/modifySmart', 'smartController@update');
 
 Route::post('smart/deleteSmart', 'smartController@destroy');
+
+Route::post('smart/save', 'smartcommentController@store');
+
+Route::post('smart/delComment', 'smartcommentController@destroy');
+
+Route::post('smart/showComment', 'smartcommentController@update');
 //smart//
 
 //soldier//
@@ -212,6 +264,12 @@ Route::get('soldier/modifySoldier_form', 'soldierController@edit');
 Route::post('soldier/modifySoldier', 'soldierController@update');
 
 Route::post('soldier/deleteSoldier', 'soldierController@destroy');
+
+Route::post('soldier/save', 'soldiercommentController@store');
+
+Route::post('soldier/delComment', 'soldiercommentController@destroy');
+
+Route::post('soldier/showComment', 'soldiercommentController@update');
 //soldier//
 
 //welfare//
@@ -228,6 +286,12 @@ Route::get('welfare/modifyWelfare_form', 'welfareController@edit');
 Route::post('welfare/modifyWelfare', 'welfareController@update');
 
 Route::post('welfare/deleteWelfare', 'welfareController@destroy');
+
+Route::post('welfare/save', 'welfarecommentController@store');
+
+Route::post('welfare/delComment', 'welfarecommentController@destroy');
+
+Route::post('welfare/showComment', 'welfarecommentController@update');
 //welfare//
 
 //build
@@ -244,6 +308,12 @@ Route::get('build/modifyBuild_form', 'buildController@edit');
 Route::post('build/modifyBuild', 'buildController@update');
 
 Route::post('build/deleteBuild', 'buildController@destroy');
+
+Route::post('build/save', 'buildcommentController@store');
+
+Route::post('build/delComment', 'buildcommentController@destroy');
+
+Route::post('build/showComment', 'buildcommentController@update');
 //
 
 

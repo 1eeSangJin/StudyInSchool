@@ -34,7 +34,7 @@
         </div>
         
         <button type = "submit" class = "ui secondary button" id = "submit_button">수정하기</button>
-        <button type = "button" class = "ui secondary button" onclick = "location.href='cominfoBoard.php'">돌아가기</button>
+        <button type = "button" class = "ui secondary button" onclick = "location.href='soldierBoard.php'">돌아가기</button>
     </form>
   </div>
 @endsection
