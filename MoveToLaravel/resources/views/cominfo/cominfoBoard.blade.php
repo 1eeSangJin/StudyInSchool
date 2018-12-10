@@ -62,6 +62,9 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 0;
+                @endphp
                 @foreach($msgs as $row)
                     <tr>
                         <td>
@@ -70,7 +73,7 @@
                         <td>
                             <a href = "viewCominfo?id={{ $row['id'] }}&page={{ $currentPage }}"> 
                             {{$row['title']}}
-                            {{-- [{{ $count[$i] }}] --}}
+                            [{{ $count[$i] }}]
                             </a>
                         </td>
                         <td>
@@ -86,6 +89,9 @@
                             {{ $row['recommend'] }}
                         </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                 @endforeach                              
             </tbody>
         </table>

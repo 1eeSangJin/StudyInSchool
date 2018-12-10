@@ -21,9 +21,18 @@
             <div class = "two field">
                 <label>작성자</label>
                 <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "{{$userInfo['userNick']}}" readonly required>
+                    <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
                 </div>
             </div>
+
+            @foreach($results as $affName)
+                <div class = "field">
+                    <label>전공</label>
+                    <div class = "twelve wide field">
+                        <input type = "text" name = "affName" id = "affName" value = "{{ $affName['affName'] }}" required>
+                    </div>
+                </div>
+            @endforeach
   
             <div class = "field">
                 <label>제목</label>

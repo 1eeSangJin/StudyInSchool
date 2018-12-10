@@ -92,9 +92,9 @@
                 <button type = 'button' class = 'ui secondary button' onclick = location.href='writeNotice_form'>글쓰기</button>
             </div>
         @endif
+
+        <ul class = "pagination">
+            {{$msgs->links()}}
+        </ul>
     </div>
-    
-    <ul class = "pagination">
-        {{$msgs->links()}}
-    </ul>
 @endsection

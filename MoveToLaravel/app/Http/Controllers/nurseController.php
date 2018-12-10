@@ -7,6 +7,7 @@ use App\dept_board;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateBoardRequest;
 use DB;
+use App\Dept_Boards_Comment;
 
 class nurseController extends Controller
 {
@@ -27,6 +28,14 @@ class nurseController extends Controller
         $currentPage = $request->get("page");
         $msgs = dept_board::where("dept_num", "=", "1201")->orderBy('id', 'desc')->paginate(3);
 
+        $arr = array();
+        $i = 0;
+
+        foreach($msgs as $row){  
+            $arr[$i] =  Dept_Boards_Comment::where("board_num", "=", $row['id'])->count();
+            $i++;
+        }
+
         if($currentPage<1){
             $currentPage = 1;
         }
@@ -43,11 +52,13 @@ class nurseController extends Controller
             $results = json_decode($datas, true);
     
             return view('nurse.nurseBoard')
+                ->with('count', $arr)
                 ->with('results', $results)
                 ->with('currentPage', $currentPage)
                 ->with('msgs', $msgs);
         }else{
             return view('nurse.nurseBoard')
+                ->with('count', $arr)
                 ->with('currentPage', $currentPage)
                 ->with('msgs',$msgs);
         }

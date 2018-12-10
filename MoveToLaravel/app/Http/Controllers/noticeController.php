@@ -29,6 +29,7 @@ class noticeController extends Controller
 
         $arr = array();
         $i = 0;
+        
         foreach($msgs as $row){  
             $arr[$i] =  Notices_Comment::where("board_num", "=", $row['id'])->count();
             $i++;

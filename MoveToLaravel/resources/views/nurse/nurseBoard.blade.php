@@ -46,13 +46,16 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 0;
+                @endphp
                 @foreach($msgs as $row)
                     <tr>
                         <td>
                             {{$row['id']}}                             
                         </td>
                         <td>
-                            <a href = "viewNurse?id={{ $row['id'] }}&page={{ $page }}"> 
+                            <a href = "viewNurse?id={{ $row['id'] }}&page={{ $currentPage }}"> 
                             {{$row['title']}}
                             [{{ $count[$i] }}]
                             </a>
@@ -70,6 +73,9 @@
                             {{ $row['recommend'] }}
                         </td>
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                     @endforeach
             </tbody>
         </table>
