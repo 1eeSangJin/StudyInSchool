@@ -7,11 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Dept_Boards_Comment;
 use DB;
 
-class ContentsCommentController extends Controller
+class BuildCommentController extends Controller
 {
-    public function __construct(){
-        return $this->middleware('auth');
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,7 +41,7 @@ class ContentsCommentController extends Controller
         }
 
         Dept_Boards_Comment::create([
-            'dept_num' => 901,
+            'dept_num' => 501,
             'board_num' => $id,
             'userNick' => Auth::user()['userNick'],
             'affName' => $affName,
@@ -52,7 +50,7 @@ class ContentsCommentController extends Controller
 
         $date = DB::table('dept_boards_comments')
                 ->where('userNick', '=', Auth::user()['userNick'])
-                ->where('dept_num', '=', '901')
+                ->where('dept_num', '=', '501')
                 ->orderBy('created_at', 'desc')
                 ->take(1)->get();
 

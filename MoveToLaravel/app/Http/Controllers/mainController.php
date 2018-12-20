@@ -12,28 +12,32 @@ class mainController extends Controller
 {
     //
     public function index(){
-        $nick = Auth::user()['userNick'];
+        $name = Auth::user()['name'];
 
-        $latest = dept_board::orderBy('created_at', 'desc')->paginate(4);
+        $latest = dept_board::orderBy('created_at', 'desc')->take(4)->get();
 
-        $popular = dept_board::where('');
 
         $dept = DB::table('dept_boards')
             ->join('departments', 'departments.dept_num', '=', 'dept_boards.dept_num')
             ->select('departments.dept_name')
+            ->orderBy('dept_boards.created_at', 'desc')
             ->get();
 
         $deptName = json_decode($dept, true);
 
+        $dept_name = array();
+        $i = 0;
+
         foreach($deptName as $name){
-            $dept_name = $name['dept_name'];
+            $dept_name[$i] = $name['dept_name'];
+            $i++;
         }
 
         if(Auth::check()){
 
             $datas = DB::table('users')
             ->join('affiliations','affiliations.affNum','=','users.affNum')
-            ->where('users.userNick', '=' , $nick)
+            ->where('users.userNick', '=' , $name)
             ->select('affiliations.affName')
             ->get();
     

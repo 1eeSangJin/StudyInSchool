@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,14 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    public function authenticate(Request $request)
+    {
+        if (Auth::attempt(['userId' => $userId, 'password' => $password, 'activated' => 1])) {
+            // Authentication passed...
+            return redirect()->intended('main');
+        }
+    }
 
     /**
      * Where to redirect users after login.

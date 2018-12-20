@@ -77,6 +77,16 @@
                     <form action="{{ route('logout') }}" method="post" id = "logout-form">
                         @csrf
                     </form>
+                @elseif(Auth::user()->activated == 2)
+                    @foreach($results as $affName)
+                        <div class = 'item'>{{ $affName['affName'] }}</div>
+                    @endforeach
+                    <div class = 'item'><strong>{{ Auth::user()->name }}</strong>님 환영합니다.</div>
+                    <a class = 'item' href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">{{ __('로그아웃') }}</a>
+                    <form action="{{ route('logout') }}" method="post" id = "logout-form">
+                        @csrf
+                    </form>
                 @else
                     @foreach($results as $affName)
                         <div class = 'item'>전공 : {{ $affName['affName'] }}</div>
@@ -89,6 +99,7 @@
                         @csrf
                     </form>
                 @endif
+
             @endguest
         </div>
     </div>

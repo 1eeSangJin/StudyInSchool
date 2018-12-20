@@ -136,12 +136,18 @@ class commachineController extends Controller
 
         $msgs = dept_board::find($id);
 
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
-        return view('commachine.viewCommachine_form')
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,201)->count();
+
+        return view('commachine.viewCommachine')
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
+            ->with('count', $count)
+            ->with('comments', $comments)
             ->with('msgs', $msgs);
     }
 
@@ -161,6 +167,12 @@ class commachineController extends Controller
 
         $msgs = dept_board::find($id);
 
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,201)->count();
+
+        $msgs -> update(['hits'=>$msgs->hits+1]);
+
         if(Auth::user()['userNick'] == $msgs->userNick){
             $datas = DB::table('users')
             ->join('affiliations','affiliations.affNum','=','users.affNum')
@@ -174,6 +186,8 @@ class commachineController extends Controller
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
+            ->with('count', $count)
+            ->with('comments', $comments)
             ->with('msgs', $msgs);
         }else{
             return redirect('commachine/commachineBoard')->with('message', '본인만 수정할 수 있습니다.');

@@ -34,47 +34,43 @@
         <div class = "ui divider"></div>
         <br>
           
-        <table>
-            <td>
-                <span>댓글 </span>
-                <span id = "cntSpan">{{$count}}</span> |&nbsp
-            </td>
-            
-            <td>
-                <span>조회수 </span>
-                <span>{{ $msgs['hits'] }}</span> |&nbsp
-            </td>
 
-            <td>
-                <span>추천수 </span>
-                <span>{{ $msgs['recommend']}} </span>
-            </td>
-        </table>
+        <span>댓글 </span>
+        <span id = "cntSpan">{{$count}}</span> |&nbsp
+
+        <span>조회수 </span>
+        <span>{{ $msgs['hits'] }}</span> |&nbsp
+
+        <span>추천수 </span>
+        <span>{{ $msgs['recommend']}} </span>
+
 
         <div class = "jumbotron">
             <table class = "ui celled table" id = "commentTable" name = "commentTable">
                 @php
                     $i = 1;   
                 @endphp
-                @foreach($comments as $comment)
-                <tr>
-                    <td id = "td{{ $i }}">
-                        <span id = "nickData{{$i}}">{{ $comment['userNick'] }}</span> [{{ $comment['affName'] }}] <span style = "float:right;" id = "comData{{$i}}">{{$comment['created_at'] }}</span>
-                    <br>
-                    @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
-                    <div style = "float:right;" id="{{$i}}">
-                            <button class = "update btn" type = "submit">수정</button> &nbsp;|&nbsp;
-                            <button class = "delete btn" type = "submit">삭제</button>
-                    </div>
-                    @endif
-                    <br>
-                    <span id = "comment{{$i}}">{{ $comment['comment'] }}</span>
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-                @endforeach
+                <tbody>
+                    @foreach($comments as $comment)
+                    <tr>
+                        <td id = "td{{ $i }}">
+                            <span id = "nickData{{$i}}">{{ $comment['userNick'] }}</span> [{{ $comment['affName'] }}] <span style = "float:right;" id = "comData{{$i}}">{{$comment['created_at'] }}</span>
+                        <br>
+                        @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
+                        <div style = "float:right;" id="{{$i}}">
+                                <button class = "update btn" type = "submit">수정</button> &nbsp;|&nbsp;
+                                <button class = "delete btn" type = "submit">삭제</button>
+                        </div>
+                        @endif
+                        <br>
+                        <span id = "comment{{$i}}">{{ $comment['comment'] }}</span>
+                        </td>
+                    </tr>
+                        @php
+                            $i++;
+                        @endphp
+                    @endforeach
+                </tbody>
             </table>
             <div class = 'desarea'>
                 <textarea name="comment" id="comment" cols="140" rows="5"></textarea>

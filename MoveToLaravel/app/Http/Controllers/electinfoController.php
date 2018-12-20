@@ -83,7 +83,7 @@ class electinfoController extends Controller
             $results = json_decode($datas, true);
     
     
-            return view('electinfo.writeCominfo_form')
+            return view('electinfo.writeElectinfo_form')
                 ->with('results', $results);
     }
 
@@ -136,6 +136,10 @@ class electinfoController extends Controller
         $page = $request->page;
 
         $msgs = dept_board::find($id);
+        
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,101)->count();
 
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
@@ -143,6 +147,8 @@ class electinfoController extends Controller
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
+            ->with('count', $count)
+            ->with('comments', $comments)
             ->with('msgs', $msgs);
     }
 

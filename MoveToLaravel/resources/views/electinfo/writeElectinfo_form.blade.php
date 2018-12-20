@@ -5,7 +5,7 @@
 
     <div class = "column" id = "content">
         <div class = "ui hidden section divider"></div>
-        <img src="/img/" height="400px" alt="헤더사진">
+        {{-- <img src="/img/" height="400px" alt="헤더사진"> --}}
         <div class = "ui hidden section divider"></div>
         <div class = "row">
             <h1 class = "ui huge header">
@@ -18,28 +18,31 @@
         <form action = "writeElectinfo" method = "post" class = "ui form">
             @csrf
             <h2 class = "ui dividing header">작성내용</h2>
-            <div class = "two field">
-                <label>작성자</label>
-                <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
+
+            @if(Auth::user()->activated == 1)
+                <div class = "two field">
+                    <label>작성자</label>
+                    <div class = "four wide field">
+                        <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
+                    </div>
                 </div>
-            </div>
+            @elseif(Auth::user()->activated == 2)
+                <div class = "two field">
+                    <label>작성자</label>
+                    <div class = "four wide field">
+                        <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->name }}" readonly required>
+                    </div>
+                </div>
+            @endif
 
             @foreach($results as $affName)
                 <div class = "field">
                     <label>전공</label>
                     <div class = "twelve wide field">
-                        <input type = "text" name = "affName" id = "affName" value = "{{ $affName['affName'] }}" required>
+                        <input type = "text" name = "affName" id = "affName" value = "{{ $affName['affName'] }}" required readonly>
                     </div>
                 </div>
             @endforeach
-
-            <div class = "field">
-                <label>전공</label>
-                <div class = "twelve wide field">
-                    <input type = "text" name = "title" id = "title" value = "" required>
-                </div>
-            </div>
   
             <div class = "field">
                 <label>제목</label>

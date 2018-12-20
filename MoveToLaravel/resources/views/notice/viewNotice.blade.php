@@ -34,47 +34,41 @@
         <div class = "ui divider"></div>
         <br>
           
-        <table>
-            <td>
-                <span>댓글 </span>
-                <span id = "cntSpan">{{$count}}</span> |&nbsp
-            </td>
-            
-            <td>
-                <span>조회수 </span>
-                <span>{{ $msgs['hits'] }}</span> |&nbsp
-            </td>
+        <span>댓글 </span>
+        <span id = "cntSpan">{{$count}}</span> |&nbsp
 
-            <td>
-                <span>추천수 </span>
-                <span>{{ $msgs['recommend']}} </span>
-            </td>
-        </table>
+        <span>조회수 </span>
+        <span>{{ $msgs['hits'] }}</span> |&nbsp
+
+        <span>추천수 </span>
+        <span>{{ $msgs['recommend']}} </span>
 
         <div class = "jumbotron">
             <table class = "ui celled table" id = "commentTable" name = "commentTable">
                 @php
                     $i = 1;   
                 @endphp
-                @foreach($comments as $comment)
-                <tr>
-                    <td id = "td{{ $i }}">
-                        <span id = "nickData{{$i}}">{{ $comment['userNick'] }}</span> [{{ $comment['affName'] }}] <span style = "float:right;" id = "comData{{$i}}">{{$comment['created_at'] }}</span>
-                    <br>
-                    @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
-                    <div style = "float:right;" id="{{$i}}">
-                            <button class = "update btn" type = "submit">수정</button> &nbsp;|&nbsp;
-                            <button class = "delete btn" type = "submit">삭제</button>
-                    </div>
-                    @endif
-                    <br>
-                    <span id = "comment{{$i}}">{{ $comment['comment'] }}</span>
-                    </td>
-                </tr>
-                @php
-                    $i++;
-                @endphp
-                @endforeach
+                <tbody>
+                    @foreach($comments as $comment)
+                    <tr>
+                        <td id = "td{{ $i }}">
+                            <span id = "nickData{{$i}}">{{ $comment['userNick'] }}</span> [{{ $comment['affName'] }}] <span style = "float:right;" id = "comData{{$i}}">{{$comment['created_at'] }}</span>
+                        <br>
+                        @if(Auth::check() && Auth::user()->userNick == $comment['userNick'])
+                        <div style = "float:right;" id="{{$i}}">
+                                <button class = "update btn" type = "submit">수정</button> &nbsp;|&nbsp;
+                                <button class = "delete btn" type = "submit">삭제</button>
+                        </div>
+                        @endif
+                        <br>
+                        <span id = "comment{{$i}}">{{ $comment['comment'] }}</span>
+                        </td>
+                    </tr>
+                        @php
+                            $i++;
+                        @endphp
+                    @endforeach
+                </tbody>
             </table>
             <div class = 'desarea'>
                 <textarea name="comment" id="comment" cols="140" rows="5"></textarea>
@@ -99,13 +93,13 @@
                     _token : token}, //보낼 데이터
             success: function(data) {
                 if(data){
-                    alert('댓글이 달렸습니다');
+                    alert("댓글이 달렸습니다");
 
-                    $("#commentTable tbody").append("<tr><td id=td" + i + ">" + data.userNick + "[" + data.affName + "]" +
+                    $("#commentTable tbody").append("<tr><td id=td" + i + ">" + data.userNick + " [" + data.affName + "]" +
                                                     "<span style = 'float:right;'>"+ data.created_at +
                                                     "</span><br>" + "<div style = 'float:right;' id=" + i + ">" + "</div>" + "<br>" + data.comment + "</td></tr>");
                     $("#" + i).append("<button class='update btn' type='submit'>수정</button>" + "&nbsp | &nbsp" + "<button class = 'delete btn' type = 'submit'>삭제</button>");
-                    $("#comment").val(" ");
+                    $("#comment").val(" ");                           
 
                     i++;
                 }
@@ -116,10 +110,6 @@
             }
         });
     })
-
-    function test(){
-        alert('tt');
-    }
 
     $('.delete').click(function(){
         var num = $(this).parent().attr('id');
@@ -143,7 +133,7 @@
             }
         });
     })
-$(document).ready(function(){
+
     $('.update').click(function(){
         alert('tt');
         var num = $(this).parent().attr('id');
@@ -153,10 +143,11 @@ $(document).ready(function(){
         $("#comment"+num).append("<br><textarea name=comment id=comment" + num + " cols='140' rows='5'>"+ comment +"</textarea>");
         $("#comment"+num).append("<div style = 'float:right;'><button class = 'updat btn' type = 'submit'>수정</button>" + "&nbsp;|&nbsp" + "<button class = 'cancel btn' type = 'submit'>수정 취소</button>");
     })
-});
-    $('#cancel').click(function(){
+
+    $('.cancel').click(function(){
        $('#comment'+num).remove(); 
        $('#comment'+num).remove();
     })
+    
 </script>
 @endsection

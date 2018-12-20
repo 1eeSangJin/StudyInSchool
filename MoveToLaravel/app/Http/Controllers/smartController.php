@@ -136,6 +136,10 @@ class smartController extends Controller
         $page = $request->page;
 
         $msgs = dept_board::find($id);
+        
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,101)->count();
 
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
@@ -143,6 +147,8 @@ class smartController extends Controller
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
+            ->with('count', $count)
+            ->with('comments', $comments)
             ->with('msgs', $msgs);
     }
 

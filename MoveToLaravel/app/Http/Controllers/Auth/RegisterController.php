@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -57,7 +58,7 @@ class RegisterController extends Controller
             'sex' => ['required'],
             'userPhone' => ['required'],
             'affNum' => ['required'],
-
+            'confirm_code' => ['requred'],
         ]);
     }
 
@@ -67,9 +68,11 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
+            'confirm_code' => $data['confirm'],
             'userId' => $data['userId'],
             'password' => Hash::make($data['password']),
             'email' => $data['email'],
@@ -78,7 +81,32 @@ class RegisterController extends Controller
             'sex' => $data['sex'],
             'userPhone' => $data['userPhone'],
             'affNum' => $data['affNum'],
-
         ]);
+
+        \Mail::send('user.confirm', compact('user'), function($message) use($user){
+            $message->to($user->email);
+            $message->subject("YEUNGJIN INSIDE에 오신 것을 환영합니다");
+        });
+
+        return redirect('main')->with('message', '가입 확인 메일을 확인 해 주세요.');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new RegisterController($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }

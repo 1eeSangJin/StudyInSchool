@@ -39,12 +39,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $i = 0;
+                    @endphp
                     @foreach($latest as $row)
                             <tr>
-                                <td>[{{ $dept_name}}]{{ $row['title'] }}</td>
+                                <td>[{{ $dept_name[$i]}}]{{ $row['title'] }}</td>
                                 <td>{{ $row['userNick'] }}</td>
                                 <td>{{ $row['created_at'] }}</td>
                             </td>
+                        @php
+                            $i++;
+                        @endphp
                     @endforeach
                 </tbody>
             </table>

@@ -15,18 +15,28 @@
         <form action = "writeCommachine" method = "post" class = "ui form">
             @csrf
             <h2 class = "ui dividing header">작성내용</h2>
-            <div class = "two field">
-                <label>작성자</label>
-                <div class = "four wide field">
-                    <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
+
+            @if(Auth::user()->activated == 1)
+                <div class = "two field">
+                    <label>작성자</label>
+                    <div class = "four wide field">
+                        <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->userNick }}" readonly required>
+                    </div>
                 </div>
-            </div>
+            @elseif(Auth::user()->activated == 2)
+                <div class = "two field">
+                    <label>작성자</label>
+                    <div class = "four wide field">
+                        <input type = "text" name = "userNick" id = "userNick" value = "{{ Auth::user()->name }}" readonly required>
+                    </div>
+                </div>
+            @endif
 
             @foreach($results as $affName)
                 <div class = "field">
                     <label>전공</label>
                     <div class = "twelve wide field">
-                        <input type = "text" name = "affName" id = "affName" value = "{{ $affName['affName'] }}" required>
+                        <input type = "text" name = "affName" id = "affName" value = "{{ $affName['affName'] }}" required readonly>
                     </div>
                 </div>
             @endforeach

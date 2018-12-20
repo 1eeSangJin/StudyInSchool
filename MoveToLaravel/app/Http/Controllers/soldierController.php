@@ -137,11 +137,17 @@ class soldierController extends Controller
 
         $msgs = dept_board::find($id);
 
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,101)->count();
+        
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
         return view('soldier.viewSoldier')
             ->with('results', $results)
             ->with('id', $id)
+            ->with('count', $count)
+            ->with('comments', $comments)
             ->with('page', $page)
             ->with('msgs', $msgs);
     }

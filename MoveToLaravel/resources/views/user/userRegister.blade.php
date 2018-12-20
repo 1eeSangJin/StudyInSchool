@@ -14,6 +14,8 @@
         @csrf
         <h2 class = "ui dividing header">회원 정보 기입</h2>
 
+        <input type="hidden" name="confirm" value = "{{str_random(60)}}">
+
         <div class = "field">
             <label>{{ __('아이디') }}</label>
             <div class = "four wide field">

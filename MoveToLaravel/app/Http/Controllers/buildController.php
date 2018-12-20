@@ -81,7 +81,7 @@ class buildController extends Controller
             $results = json_decode($datas, true);
     
     
-            return view('cominfo.writeCominfo_form')
+            return view('build.writeBuild_form')
                 ->with('results', $results);
     }
 
@@ -94,21 +94,39 @@ class buildController extends Controller
     public function store(Request $request)
     {
         //
-        $userNick = $request->userNick;
-        $affName = $request->affName;
-        $title = $request->title;
-        $contents = $request->contents;
+        if(Auth::user()->activated == 1){
+            $userNick = $request->userNick;
+            $affName = $request->affName;
+            $title = $request->title;
+            $contents = $request->contents;
 
-        $b = dept_board::create([
-            'dept_num' => 101,
-            'userNick' => $userNick,
-            'title' => $title,
-            'content' => $contents,
-            'hits' => 0,
-            'recommend' => 0,
-            'affName' => $affName,
-        ]);      
-        return redirect('cominfo/cominfoBoard');
+            $b = dept_board::create([
+                'dept_num' => 501,
+                'userNick' => $userNick,
+                'title' => $title,
+                'content' => $contents,
+                'hits' => 0,
+                'recommend' => 0,
+                'affName' => $affName,
+            ]);      
+
+            return redirect('build/buildBoard');
+        }elseif(Auth::user()->activated == 1){
+            $userNick = $request->userNick;
+            $affName = $request->affName;
+            $title = $request->title;
+            $contents = $request->contents;
+
+            $b = dept_board::create([
+                'dept_num' => 501,
+                'userNick' => $userNick,
+                'title' => $title,
+                'content' => $contents,
+                'hits' => 0,
+                'recommend' => 0,
+                'affName' => $affName,
+            ]);
+        }
     }
 
     /**
@@ -137,7 +155,7 @@ class buildController extends Controller
 
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
-        return view('cominfo.viewCominfo')
+        return view('build.viewBuild')
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
@@ -175,7 +193,7 @@ class buildController extends Controller
                 ->with('page', $page)
                 ->with('msgs', $msgs);
         }else{
-            return redirect('cominfo/cominfoBoard?page='.$page)->with('message', '권한이 없습니다.');
+            return redirect('build/buildBoard?page='.$page)->with('message', '권한이 없습니다.');
         }
     }
 

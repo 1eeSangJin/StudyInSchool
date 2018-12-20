@@ -16,7 +16,7 @@ class userController extends Controller
     //
 
     public function __construct(){
-        return $this->middleware('guest', ['except'=>['showUpdateUserForm, update']]);
+        return $this->middleware('guest', ['except'=>['showUpdateUserForm', 'update']]);
     }
 
     public function showLoginForm(){
@@ -39,7 +39,7 @@ class userController extends Controller
         $results = json_decode($datas, true);
 
         return view('user.userUpdate')
-            ->with('$results', $results);
+            ->with('results', $results);
     }
 
     public function update(UpdateUsersRequest $request){
@@ -60,7 +60,22 @@ class userController extends Controller
         $u->save();
 
         return redirect('main');
-        
-    
     }
+
+    public function confirm($code){
+
+        $user = User::whereConfirmCode($code)->first();
+
+        if(!$user){
+            return redirect(route('users.create'))->with('message', '가입 확인 실패! 잘못된 정보입니다. ');
+        }
+
+        $user->activated = 1;
+        $user->confirm_code = null;
+        $user->save();
+
+        Auth::login($user);
+        return redirect('main')->with('message', $user->name . '님 환영합니다.');
+    }
+
 }

@@ -15,12 +15,14 @@ class AddColumnUsersTable extends Migration
     {
         //
         schema::table('users', function(Blueprint $table){
-            $table->string('userId',255)->unique();
-            $table->string('userNick',255)->unique();
-            $table->char('sex',60);
-            $table->char('userPhone', 50);
-            $table->integer('affNum');
+            $table->string('userId',255)->unique()->nullable();
+            $table->string('userNick',255)->unique()->nullable();
+            $table->char('sex',60)->nullable();
+            $table->char('userPhone', 50)->nullable();
+            $table->integer('affNum')->nullable();
             $table->foreign('affNum')->references('affNum')->on('affiliations');
+            $table->string('confirm_code', 60)->nullable();
+            $table->boolean('activated')->default(0);
         });
     }
 
@@ -38,6 +40,8 @@ class AddColumnUsersTable extends Migration
             $table->dropColumn('sex');
             $table->dropColumn('userPhone');
             $table->dropColumn('affNum');
+            $table->dropColumn('confirm_code');
+            $table->dropColumn('activated');
         });
     }
 }

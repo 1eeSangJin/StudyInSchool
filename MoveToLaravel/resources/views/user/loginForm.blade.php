@@ -35,6 +35,9 @@
             <a class="btn btn-link" href="{{ route('password.request') }}">
                     {{ __('비밀번호를 까먹으셨습니까?') }}
             </a>
+            <a class="btn btn-link" href="{{ url('/redirect') }}">
+                    {{ __('구글로 로그인') }}
+            </a>
         </form>
     </div>
 @endsection

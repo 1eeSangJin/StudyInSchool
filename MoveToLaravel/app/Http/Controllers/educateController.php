@@ -136,12 +136,18 @@ class educateController extends Controller
 
         $msgs = dept_board::find($id);
 
+        $comments = Dept_Boards_Comment::where("board_num", "=", $id)->get();
+
+        $count =  Dept_Boards_Comment::where("board_num", "=", $id)->where('dept_num', "=" ,101)->count();
+
         $msgs -> update(['hits'=>$msgs->hits+1]);
 
         return view('educate.viewEducate_form')
             ->with('results', $results)
             ->with('id', $id)
             ->with('page', $page)
+            ->with('comments', $comments)
+            ->with('count', $count)
             ->with('msgs', $msgs);
     }
 
