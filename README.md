@@ -1,6 +1,6 @@
 # StudyInSchool
 
-PHP, Laravel
+学校でPHP, Laravelを勉強しながらやってきた物のコードがあるホルダーです。
 
- MoveToLaravel
+MoveToLaravel：
 このホルダーにLaravelで作ったプロジェクトのこーどがあります。
